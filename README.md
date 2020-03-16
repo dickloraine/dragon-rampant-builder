@@ -1,4 +1,4 @@
-Visit the app: [https://dickloraine.github.io/dragon-rampant-builder](https://dickloraine.github.io/dragon-rampant-builder).
+Visit the app: [https://dickloraine.github.io/dragon-rampant-builder/](https://dickloraine.github.io/dragon-rampant-builder/).
 
 ## About
 
