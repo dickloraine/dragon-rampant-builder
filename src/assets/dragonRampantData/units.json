@@ -1,0 +1,484 @@
+{
+  "Unit": {
+    "name": "Unit",
+    "points": 0,
+    "stats": {
+      "attack": 0,
+      "move": 0,
+      "shoot": 0,
+      "courage": 0,
+      "armour": 0,
+      "attackValue": 0,
+      "defenceValue": 0,
+      "shootValue": 0,
+      "shootRange": "-",
+      "movement": 0,
+      "strengthPoints": 0
+    },
+    "rules": {},
+    "options": {},
+    "fantasticalRules": []
+  },
+  "Elite Riders": {
+    "name": "Elite Riders",
+    "type": "mounted",
+    "points": 6,
+    "stats": {
+      "attack": 5,
+      "move": 7,
+      "shoot": 0,
+      "courage": 3,
+      "armour": 4,
+      "attackValue": 3,
+      "defenceValue": 5,
+      "shootValue": 0,
+      "shootRange": 0,
+      "movement": 10,
+      "strengthPoints": 6
+    },
+    "rules": [
+      "Wild Charge",
+      "Counter-charge"
+    ],
+    "options": {
+      "Mounted missiles": {
+        "points": 2,
+        "remove": [
+          "Wild Charge",
+          "Counter-charge"
+        ],
+        "setStats": {
+          "shoot": 6,
+          "shootValue": 5,
+          "shootRange": 12
+        }
+      },
+      "Level Headed": {
+        "points": 2,
+        "remove": [
+          "Wild Charge"
+        ],
+        "setStats": {
+          "move": 5
+        }
+      }
+    },
+    "fantasticalRules": ["any"]
+  },
+  "Heavy Riders": {
+    "name": "Heavy Riders",
+    "type": "mounted",
+    "points": 4,
+    "stats": {
+      "attack": 5,
+      "move": 5,
+      "shoot": 0,
+      "courage": 4,
+      "armour": 3,
+      "attackValue": 4,
+      "defenceValue": 5,
+      "shootValue": 0,
+      "shootRange": 0,
+      "movement": 10,
+      "strengthPoints": 6
+    },
+    "rules": [
+      "Counter-charge"
+    ],
+    "options": {
+      "Mounted missiles": {
+        "points": 1,
+        "setStats": {
+          "shoot": 6,
+          "shootValue": 5,
+          "shootRange": 12
+        }
+      },
+      "Chariots": {
+        "points": 2,
+        "add": [
+          "May not enter rough terrain"
+        ],
+        "setStats": {
+          "armour": 4
+        }
+      }
+    },
+    "fantasticalRules": ["any"]
+  },
+  "Light Riders": {
+    "name": "Light Riders",
+    "type": "mounted",
+    "points": 4,
+    "stats": {
+      "attack": 7,
+      "move": 5,
+      "shoot": 6,
+      "courage": 5,
+      "armour": 3,
+      "attackValue": 5,
+      "defenceValue": 6,
+      "shootValue": 5,
+      "shootRange": 12,
+      "movement": 12,
+      "strengthPoints": 6
+    },
+    "rules": [
+      "Skirmish",
+      "Evade"
+    ],
+    "options": {
+      "Short range missiles": {
+        "points": -1,
+        "setStats": {
+          "shootRange": 6
+        }
+      }
+    },
+    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Summoner", "Cleric", "Slayer"]
+  },
+  "Greater Warbeasts": {
+    "name": "Greater Warbeasts",
+    "type": "mounted",
+    "points": 6,
+    "stats": {
+      "attack": 5,
+      "move": 6,
+      "shoot": 0,
+      "courage": 3,
+      "armour": 4,
+      "attackValue": 3,
+      "defenceValue": 6,
+      "shootValue": 0,
+      "shootRange": 0,
+      "movement": 10,
+      "strengthPoints": 6
+    },
+    "rules": [
+      "Ranger",
+      "Wild Charge"
+    ],
+    "options": {
+      "Flame or Spore Attack": {
+        "points": 2,
+        "setStats": {
+          "shoot": 6,
+          "shootValue": 5,
+          "shootRange": 12
+        },
+        "remove": [
+          "Wild Charge"
+        ]
+      },
+      "Ponderous": {
+        "points": 1,
+        "remove": [
+          "Wild Charge"
+        ]
+      },
+      "Cunning": {
+        "points": 2,
+        "setStats": {
+          "defenceValue": 5
+        }
+      }
+    },
+    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Summoner", "Cleric", "Slayer"]
+  },
+  "Lesser Warbeasts": {
+    "name": "Lesser Warbeasts",
+    "type": "mounted",
+    "points": 4,
+    "stats": {
+      "attack": 5,
+      "move": 6,
+      "shoot": 0,
+      "courage": 4,
+      "armour": 3,
+      "attackValue": 4,
+      "defenceValue": 6,
+      "shootValue": 0,
+      "shootRange": 0,
+      "movement": 12,
+      "strengthPoints": 6
+    },
+    "rules": [
+      "Ranger",
+      "Wild Charge",
+      "Fleet Footed"
+    ],
+    "options": {
+      "Flame or Spore Attack": {
+        "points": 2,
+        "setStats": {
+          "shoot": 6,
+          "shootValue": 5,
+          "shootRange": 12
+        },
+        "remove": [
+          "Wild Charge"
+        ]
+      },
+      "Cunning": {
+        "points": 2,
+        "setStats": {
+          "defenceValue": 5
+        }
+      }
+    },
+    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Summoner", "Cleric", "Slayer"]
+  },
+  "Elite Foot": {
+    "name": "Elite Foot",
+    "type": "foot",
+    "points": 6,
+    "stats": {
+      "attack": 5,
+      "move": 5,
+      "shoot": 0,
+      "courage": 3,
+      "armour": 4,
+      "attackValue": 3,
+      "defenceValue": 4,
+      "shootValue": 0,
+      "shootRange": 0,
+      "movement": 6,
+      "strengthPoints": 6
+    },
+    "rules": [
+      "Ranger"
+    ],
+    "options": {
+      "Missiles": {
+        "points": 2,
+        "setStats": {
+          "shoot": 6,
+          "shootValue": 5,
+          "shootRange": 18
+        }
+      }
+    },
+    "fantasticalRules": ["any"]
+  },
+  "Heavy Foot": {
+    "name": "Heavy Foot",
+    "type": "foot",
+    "points": 4,
+    "stats": {
+      "attack": 6,
+      "move": 5,
+      "shoot": 0,
+      "courage": 4,
+      "armour": 3,
+      "attackValue": 5,
+      "defenceValue": 4,
+      "shootValue": 0,
+      "shootRange": 0,
+      "movement": 6,
+      "strengthPoints": 12
+    },
+    "rules": [
+      "Wall of Spears"
+    ],
+    "options": {
+      "Offensive": {
+        "points": 2,
+        "setStats": {
+          "attackValue": 4
+        },
+        "remove": [
+          "Wall of Spears"
+        ]
+      }
+    },
+    "fantasticalRules": ["any"]
+  },
+  "Light Foot": {
+    "name": "Light Foot",
+    "type": "foot",
+    "points": 3,
+    "stats": {
+      "attack": 6,
+      "move": 5,
+      "shoot": 0,
+      "courage": 4,
+      "armour": 2,
+      "attackValue": 5,
+      "defenceValue": 4,
+      "shootValue": 0,
+      "shootRange": 0,
+      "movement": 8,
+      "strengthPoints": 12
+    },
+    "rules": [
+      "Wall of Spears"
+    ],
+    "options": {
+      "Offensive": {
+        "points": 2,
+        "setStats": {
+          "attackValue": 4
+        },
+        "remove": [
+          "Wall of Spears"
+        ]
+      },
+      "Short range missiles": {
+        "points": 1,
+        "setStats": {
+          "shoot": 6,
+          "shootValue": 5,
+          "shootRange": 6
+        }
+      },
+      "Mixed Weapons": {
+        "points": 2,
+        "setStats": {
+          "shoot": 6,
+          "shootValue": 5,
+          "shootRange": 12
+        },
+        "remove": [
+          "Wall of Spears"
+        ]
+      }
+    },
+    "fantasticalRules": ["any"]
+  },
+  "Bellicose Foot": {
+    "name": "Bellicose Foot",
+    "type": "foot",
+    "points": 4,
+    "stats": {
+      "attack": 5,
+      "move": 6,
+      "shoot": 0,
+      "courage": 4,
+      "armour": 2,
+      "attackValue": 3,
+      "defenceValue": 6,
+      "shootValue": 0,
+      "shootRange": 0,
+      "movement": 8,
+      "strengthPoints": 12
+    },
+    "rules": [
+      "Ranger",
+      "Wild Charge",
+      "Counter-charge vs. foot",
+      "Fleet Footed"
+    ],
+    "options": {
+      "Terrifically Shiny Armour": {
+        "points": 2,
+        "setStats": {
+          "armour": 3
+        }
+      }
+    },
+    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Summoner", "Cleric", "Slayer"]
+  },
+  "Heavy Missiles": {
+    "name": "Heavy Missiles",
+    "type": "foot",
+    "points": 4,
+    "stats": {
+      "attack": 7,
+      "move": 6,
+      "shoot": 7,
+      "courage": 4,
+      "armour": 2,
+      "attackValue": 6,
+      "defenceValue": 5,
+      "shootValue": 4,
+      "shootRange": 18,
+      "movement": 6,
+      "strengthPoints": 12
+    },
+    "rules": [],
+    "options": {
+      "Weighty Projectiles": {
+        "points": -1,
+        "setStats": {
+          "shootRange": 12
+        }
+      }
+    },
+    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Cleric", "Slayer"]
+  },
+  "Light Missiles": {
+    "name": "Light Missiles",
+    "type": "foot",
+    "points": 4,
+    "stats": {
+      "attack": 7,
+      "move": 6,
+      "shoot": 6,
+      "courage": 4,
+      "armour": 2,
+      "attackValue": 6,
+      "defenceValue": 5,
+      "shootValue": 5,
+      "shootRange": 18,
+      "movement": 6,
+      "strengthPoints": 12
+    },
+    "rules": [],
+    "options": {
+      "Sharpshooter": {
+        "points": 2,
+        "setStats": {
+          "shootValue": 4
+        }
+      }
+    },
+    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Cleric", "Slayer"]
+  },
+  "Scouts": {
+    "name": "Scouts",
+    "type": "foot",
+    "points": 2,
+    "stats": {
+      "attack": 7,
+      "move": 5,
+      "shoot": 7,
+      "courage": 5,
+      "armour": 1,
+      "attackValue": 6,
+      "defenceValue": 6,
+      "shootValue": 5,
+      "shootRange": 12,
+      "movement": 8,
+      "strengthPoints": 6
+    },
+    "rules": [
+      "Hard to target",
+      "Skirmish",
+      "Evade",
+      "Fleet Footed"
+    ],
+    "options": {},
+    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Summoner", "Exploder", "Cleric", "Slayer"]
+  },
+  "Ravenous Hordes": {
+    "name": "Ravenous Hordes",
+    "type": "foot",
+    "points": 1,
+    "stats": {
+      "attack": 7,
+      "move": 6,
+      "shoot": 0,
+      "courage": 5,
+      "armour": 1,
+      "attackValue": 6,
+      "defenceValue": 6,
+      "shootValue": 0,
+      "shootRange": 0,
+      "movement": 6,
+      "strengthPoints": 12
+    },
+    "rules": [],
+    "options": {},
+    "fantasticalRules": ["No Feelings", "Venomous", "Hatred", "Fear"]
+  }
+}

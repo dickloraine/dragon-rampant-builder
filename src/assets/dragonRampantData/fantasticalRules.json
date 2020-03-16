@@ -1,0 +1,74 @@
+{
+    "Cleric": {
+        "name": "Cleric",
+        "points": 4
+    },
+    "Slayer": {
+        "name": "Slayer",
+        "points": 4
+    },
+    "Exploder": {
+        "name": "Exploder",
+        "points": 2
+    },
+    "Fear": {
+        "name": "Fear",
+        "points": 2
+    },
+    "Fearful": {
+        "name": "Fearful",
+        "points": -2
+    },
+    "Flying": {
+        "name": "Flying",
+        "points": 2
+    },
+    "Burrowing": {
+        "name": "Burrowing",
+        "points": 2
+    },
+    "Hatred": {
+        "name": "Hatred",
+        "points": 1
+    },
+    "Invisibility": {
+        "name": "Invisibility",
+        "points": 3
+    },
+    "Enchanted Weapons": {
+        "name": "Enchanted Weapons",
+        "points": 1
+    },
+    "Blessed Weapons": {
+        "name": "Blessed Weapons",
+        "points": 2
+    },
+    "Mystical Armour": {
+        "name": "Mystical Armour",
+        "points": 2
+    },
+    "Spellcaster": {
+        "name": "Spellcaster",
+        "points": 4
+    },
+    "Wizardlings": {
+        "name": "Wizardlings",
+        "points": 2
+    },
+    "Summoner": {
+        "name": "Summoner",
+        "points": 3
+    },
+    "No Feelings": {
+        "name": "No Feelings",
+        "points": 0
+    },
+    "Unstoppable March of the Dead": {
+        "name": "Unstoppable March of the Dead",
+        "points": 0
+    },
+    "Venomous": {
+        "name": "Venomous",
+        "points": 2
+    }
+}
