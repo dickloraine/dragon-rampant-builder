@@ -1,5 +1,12 @@
 import React from 'react';
-import { Card, CardContent, Typography, CardHeader, Chip } from '@material-ui/core';
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardHeader,
+  Chip,
+  Hidden
+} from '@material-ui/core';
 import {
   BarChart,
   Bar,
@@ -94,54 +101,56 @@ export default function Statistics(props) {
           color="primary"
           style={{ marginRight: 25, marginBottom: 25 }}
         />
-        <Typography variant="h6" style={{ marginTop: 25 }}>
-          Unit Distribution
-        </Typography>
-        <BarChart
-          width={500}
-          height={300}
-          data={dataUnitTypes}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="Units" fill={COLORS[0]} minPointSize={3}>
-            <LabelList dataKey="Units" position="top" />
-          </Bar>
-          <Bar dataKey="Points" fill={COLORS[1]} minPointSize={3}>
-            <LabelList dataKey="Points" position="top" />
-          </Bar>
-        </BarChart>
-        {unitsCost > 0 && (
-          <div>
-            <Typography variant="h6" style={{ marginTop: 25 }}>
-              Point Distribution
-            </Typography>
-            <PieChart width={800} height={400}>
-              <Pie
-                data={dataPoints}
-                dataKey="value"
-                label={renderCustomizedLabel}
-                labelLine={false}
-                outerRadius={80}
-              >
-                {dataPoints.map((entry, index) => (
-                  <Cell key={entry} fill={COLORS[index]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </div>
-        )}
+        <Hidden xsDown>
+          <Typography variant="h6" style={{ marginTop: 25 }}>
+            Unit Distribution
+          </Typography>
+          <BarChart
+            width={500}
+            height={300}
+            data={dataUnitTypes}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 5
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="Units" fill={COLORS[0]} minPointSize={3}>
+              <LabelList dataKey="Units" position="top" />
+            </Bar>
+            <Bar dataKey="Points" fill={COLORS[1]} minPointSize={3}>
+              <LabelList dataKey="Points" position="top" />
+            </Bar>
+          </BarChart>
+          {unitsCost > 0 && (
+            <div>
+              <Typography variant="h6" style={{ marginTop: 25 }}>
+                Point Distribution
+              </Typography>
+              <PieChart width={800} height={400}>
+                <Pie
+                  data={dataPoints}
+                  dataKey="value"
+                  label={renderCustomizedLabel}
+                  labelLine={false}
+                  outerRadius={80}
+                >
+                  {dataPoints.map((entry, index) => (
+                    <Cell key={entry} fill={COLORS[index]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </div>
+          )}
+        </Hidden>
       </CardContent>
     </Card>
   );
