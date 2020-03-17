@@ -22,38 +22,39 @@ import {
 } from 'recharts';
 import { objFilter, objReduce } from '../../helpers/utils';
 
-export default function Statistics(props) {
+export default function Statistics({
+  armyCost,
+  units,
+  unitData,
+  fantasticalRulesData
+}) {
   const optionPoints = objReduce(
-    props.units,
+    units,
     (accumulator, unit) =>
       unit.options.reduce(
-        (acc, option) => acc + props.unitData[unit.name].options[option].points,
+        (acc, option) => acc + unitData[unit.name].options[option].points,
         accumulator
       ),
     0
   );
 
   const fantasticalPoints = objReduce(
-    props.units,
+    units,
     (accumulator, unit) =>
       unit.fantasticalRules.reduce(
-        (acc, option) => acc + props.fantasticalRulesData[option].points,
+        (acc, option) => acc + fantasticalRulesData[option].points,
         accumulator
       ),
     0
   );
 
   const COLORS = ['#8884d8', '#82ca9d', '#FF8042'];
-  const totalPoints = props.armyCost;
-  const unitCount = Object.keys(props.units).length;
-  const mounted = objFilter(props.units, u => u.type === 'mounted');
-  const foot = objFilter(props.units, u => u.type === 'foot');
-  const ranged = objFilter(props.units, u => u.stats.shoot > 0);
-  const unitsCost = objReduce(
-    props.units,
-    (acc, u) => acc + props.unitData[u.name].points,
-    0
-  );
+  const totalPoints = armyCost;
+  const unitCount = Object.keys(units).length;
+  const mounted = objFilter(units, u => u.type === 'mounted');
+  const foot = objFilter(units, u => u.type === 'foot');
+  const ranged = objFilter(units, u => u.stats.shoot > 0);
+  const unitsCost = objReduce(units, (acc, u) => acc + unitData[u.name].points, 0);
 
   const dataUnitTypes = [
     {

@@ -7,19 +7,30 @@ import GridOnIcon from '@material-ui/icons/GridOn';
 import NotesIcon from '@material-ui/icons/Notes';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
+import Load from './Load';
+import Save from './Save';
+import Delete from './Delete';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
     marginBottom: 25
   },
 
-  title: {
-    flexGrow: 1
+  flexing: {
+    display: 'flex',
+    flexGrow: 1,
+    alignItems: 'center'
+  },
+
+  flexingend: {
+    display: 'flex',
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   }
 }));
 
-export default function BuilderAppBar({ ui, setUIOption }) {
+export default function BuilderAppBar({ ui, setUIOption, armyCost, save, load }) {
   const classes = useStyles();
 
   function ToggleUIButton({ option, Icon, title }) {
@@ -31,7 +42,7 @@ export default function BuilderAppBar({ ui, setUIOption }) {
             setUIOption(option, !ui[option]);
           }}
         >
-          <Icon color={ui[option] ? 'inherit' : 'disabled'} />
+          <Icon fontSize="small" color={ui[option] ? 'inherit' : 'disabled'} />
         </IconButton>
       </Tooltip>
     );
@@ -41,11 +52,22 @@ export default function BuilderAppBar({ ui, setUIOption }) {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <Hidden xsDown>
-            <Typography variant="h5" className={classes.title}>
-              Dragon Rampant Army Builder
-            </Typography>
-
+          <div className={classes.flexing}>
+            <Hidden smDown>
+              <Typography variant="h5">
+                Dragon Rampant Army Builder&nbsp;&nbsp;
+              </Typography>
+            </Hidden>
+            <Hidden mdUp>
+              <Typography variant="h5" className={classes.flexing}>
+                DRAB
+              </Typography>
+            </Hidden>
+            <Save onClick={save} />
+            <Load onClick={load} />
+            <Delete />
+          </div>
+          <div className={classes.flexingend}>
             <ToggleUIButton
               option="showStats"
               Icon={GridOnIcon}
@@ -57,36 +79,23 @@ export default function BuilderAppBar({ ui, setUIOption }) {
               Icon={FormatListBulletedIcon}
               title="Show Options"
             />
-            <Typography variant="h6">
-              &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
-              <Fab color="secondary" size="small">
-                <Typography variant="h6">{ui.armyCost}</Typography>
-              </Fab>
-            </Typography>
-          </Hidden>
-          <Hidden smUp>
-            <Typography variant="h5" className={classes.title}>
-              DRAB
-            </Typography>
-
-            <ToggleUIButton
-              option="showStats"
-              Icon={GridOnIcon}
-              title="Show Statblock"
-            />
-            <ToggleUIButton option="showRules" Icon={NotesIcon} title="Show Rules" />
-            <ToggleUIButton
-              option="showOptions"
-              Icon={FormatListBulletedIcon}
-              title="Show Options"
-            />
-            <Typography variant="h6">
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <Fab color="secondary" size="small">
-                <Typography variant="h6">{ui.armyCost}</Typography>
-              </Fab>
-            </Typography>
-          </Hidden>
+            <Hidden smDown>
+              <Typography variant="h6">
+                &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
+                <Fab color="secondary" size="small">
+                  <Typography variant="h6">{armyCost}</Typography>
+                </Fab>
+              </Typography>
+            </Hidden>
+            <Hidden mdUp>
+              <Typography variant="h6">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <Fab color="secondary" size="small">
+                  <Typography variant="h6">{armyCost}</Typography>
+                </Fab>
+              </Typography>
+            </Hidden>
+          </div>
         </Toolbar>
       </AppBar>
       <Toolbar />

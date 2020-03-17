@@ -27,7 +27,12 @@ export default function Options({ unit, optionsData, onChange }) {
       <FormGroup>
         {Object.keys(optionsData).map(option => (
           <FormControlLabel
-            control={<Checkbox onChange={handleChange(option)} />}
+            control={
+              <Checkbox
+                onChange={handleChange(option)}
+                checked={unit.options.includes(option)}
+              />
+            }
             label={
               <Typography>
                 {option}{' '}
