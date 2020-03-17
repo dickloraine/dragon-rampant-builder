@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import NotesIcon from '@material-ui/icons/Notes';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-import { IconButton, Fab, Tooltip } from '@material-ui/core';
+import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,22 +41,52 @@ export default function BuilderAppBar({ ui, setUIOption }) {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h5" className={classes.title}>
-            Dragon Rampant Army Builder
-          </Typography>
-          <ToggleUIButton option="showStats" Icon={GridOnIcon} title="Show Statblock" />
-          <ToggleUIButton option="showRules" Icon={NotesIcon} title="Show Rules" />
-          <ToggleUIButton
-            option="showOptions"
-            Icon={FormatListBulletedIcon}
-            title="Show Options"
-          />
-          <Typography variant="h6">
-            &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
-            <Fab color="secondary" size="small">
-              <Typography variant="h6">{ui.armyCost}</Typography>
-            </Fab>
-          </Typography>
+          <Hidden xsDown>
+            <Typography variant="h5" className={classes.title}>
+              Dragon Rampant Army Builder
+            </Typography>
+
+            <ToggleUIButton
+              option="showStats"
+              Icon={GridOnIcon}
+              title="Show Statblock"
+            />
+            <ToggleUIButton option="showRules" Icon={NotesIcon} title="Show Rules" />
+            <ToggleUIButton
+              option="showOptions"
+              Icon={FormatListBulletedIcon}
+              title="Show Options"
+            />
+            <Typography variant="h6">
+              &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
+              <Fab color="secondary" size="small">
+                <Typography variant="h6">{ui.armyCost}</Typography>
+              </Fab>
+            </Typography>
+          </Hidden>
+          <Hidden smUp>
+            <Typography variant="h5" className={classes.title}>
+              DRAB
+            </Typography>
+
+            <ToggleUIButton
+              option="showStats"
+              Icon={GridOnIcon}
+              title="Show Statblock"
+            />
+            <ToggleUIButton option="showRules" Icon={NotesIcon} title="Show Rules" />
+            <ToggleUIButton
+              option="showOptions"
+              Icon={FormatListBulletedIcon}
+              title="Show Options"
+            />
+            <Typography variant="h6">
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <Fab color="secondary" size="small">
+                <Typography variant="h6">{ui.armyCost}</Typography>
+              </Fab>
+            </Typography>
+          </Hidden>
         </Toolbar>
       </AppBar>
       <Toolbar />
