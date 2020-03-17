@@ -68,7 +68,7 @@ export default function Statistics(props) {
 
   const dataPoints = [
     { name: 'Units', value: unitsCost },
-    { name: 'Options', value: optionPoints },
+    { name: 'Options', value: optionPoints < 0 ? 0 : optionPoints },
     { name: 'Fantastical Rules', value: fantasticalPoints }
   ];
 
