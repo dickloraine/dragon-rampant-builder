@@ -87,7 +87,10 @@ export default function Statistics(props) {
           style={{ marginRight: 25, marginBottom: 25 }}
         />
         <Chip
-          label={totalPoints / unitCount + ' Points per unit'}
+          label={
+            (totalPoints / (unitCount ? unitCount : 1)).toPrecision(3) +
+            ' Points per unit'
+          }
           color="primary"
           style={{ marginRight: 25, marginBottom: 25 }}
         />
