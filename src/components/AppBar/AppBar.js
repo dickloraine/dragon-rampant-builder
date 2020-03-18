@@ -8,7 +8,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
 import Load from './Load';
 import Save from './Save';
-import Delete from './Delete';
 import SideMenu from './SideMenu';
 
 const useStyles = makeStyles(theme => ({
@@ -75,9 +74,7 @@ export default function AppBar({
               </Typography>
             </Hidden>
             <Hidden mdUp>
-              <Typography variant="h5" className={classes.flexing}>
-                &nbsp;&nbsp;DRAB
-              </Typography>
+              <Typography variant="h5">&nbsp;&nbsp;DRAB&nbsp;&nbsp;</Typography>
             </Hidden>
             <Save onClick={saveList} />
             <Load onClick={loadList} />
