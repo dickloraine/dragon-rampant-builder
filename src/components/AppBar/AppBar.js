@@ -73,10 +73,9 @@ export default function AppBar({
               <Typography variant="h5">
                 &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
               </Typography>
-              <Save onClick={saveList} />
-              <Load onClick={loadList} />
-              <Delete onClick={removeList} />
             </Hidden>
+            <Save onClick={saveList} />
+            <Load onClick={loadList} />
             <Hidden mdUp>
               <Typography variant="h5" className={classes.flexing}>
                 &nbsp;&nbsp;DRAB
