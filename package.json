@@ -2,7 +2,7 @@
   "name": "dragon-rampant-builder",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://dickloraine.github.io/dragon-rampant-builder",
+  "homepage": "https://dickloraine.github.io/dragon-rampant-builder/",
   "dependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
