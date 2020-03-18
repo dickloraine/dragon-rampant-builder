@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
+import { AppBar as AppBarMaterial } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -13,18 +13,24 @@ import SideMenu from './SideMenu';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
     marginBottom: 25
   },
-  menuButton: {
-    marginRight: theme.spacing(2)
+
+  flexing: {
+    display: 'flex',
+    flexGrow: 1,
+    alignItems: 'center'
   },
-  title: {
-    flexGrow: 1
+
+  flexingend: {
+    display: 'flex',
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   }
 }));
 
-export default function BuilderAppBar({
+export default function AppBar({
   ui,
   setUIOption,
   setUIOptions,
@@ -59,57 +65,56 @@ export default function BuilderAppBar({
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed">
+      <AppBarMaterial position="fixed">
         <Toolbar>
-          <SideMenu
-            className={classes.menuButton}
-            loadList={loadList}
-            saveList={saveList}
-            removeList={removeList}
-          />
-          <Hidden smDown>
-            <Typography className={classes.title} variant="h5">
-              &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
-            </Typography>
-            <Save onClick={saveList} />
-            <Load onClick={loadList} />
-            <Delete onClick={removeList} />
-          </Hidden>
-          <Hidden mdUp>
-            <Typography variant="h5" className={classes.title}>
-              &nbsp;&nbsp;DRAB
-            </Typography>
-          </Hidden>
-          <ToggleUIButton
-            option="viewMode"
-            Icon={VisibilityIcon}
-            title="View mode"
-            onClick={changeViewMode}
-          />
-          <ToggleUIButton
-            option="editMode"
-            Icon={EditIcon}
-            title="Edit mode"
-            onClick={changeViewMode}
-          />
-          <Hidden smDown>
-            <Typography variant="h6">
-              &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
-              <Fab color="secondary" size="small">
-                <Typography variant="h6">{armyCost}</Typography>
-              </Fab>
-            </Typography>
-          </Hidden>
-          <Hidden mdUp>
-            <Typography variant="h6">
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <Fab color="secondary" size="small">
-                <Typography variant="h6">{armyCost}</Typography>
-              </Fab>
-            </Typography>
-          </Hidden>
+          <div className={classes.flexing}>
+            <SideMenu loadList={loadList} saveList={saveList} removeList={removeList} />
+            <Hidden smDown>
+              <Typography variant="h5">
+                &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
+              </Typography>
+              <Save onClick={saveList} />
+              <Load onClick={loadList} />
+              <Delete onClick={removeList} />
+            </Hidden>
+            <Hidden mdUp>
+              <Typography variant="h5" className={classes.flexing}>
+                &nbsp;&nbsp;DRAB
+              </Typography>
+            </Hidden>
+          </div>
+          <div className={classes.flexingend}>
+            <ToggleUIButton
+              option="viewMode"
+              Icon={VisibilityIcon}
+              title="View mode"
+              onClick={changeViewMode}
+            />
+            <ToggleUIButton
+              option="editMode"
+              Icon={EditIcon}
+              title="Edit mode"
+              onClick={changeViewMode}
+            />
+            <Hidden smDown>
+              <Typography variant="h6">
+                &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
+                <Fab color="secondary" size="small">
+                  <Typography variant="h6">{armyCost}</Typography>
+                </Fab>
+              </Typography>
+            </Hidden>
+            <Hidden mdUp>
+              <Typography variant="h6">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <Fab color="secondary" size="small">
+                  <Typography variant="h6">{armyCost}</Typography>
+                </Fab>
+              </Typography>
+            </Hidden>
+          </div>
         </Toolbar>
-      </AppBar>
+      </AppBarMaterial>
       <Toolbar />
     </div>
   );

@@ -4,7 +4,7 @@ import { Fab, Box, Typography, Container } from '@material-ui/core';
 import Unit from 'components/Unit';
 import unitData from 'assets/dragonRampantData/units.json';
 import fantasticalRulesData from 'assets/dragonRampantData/fantasticalRules.json';
-import BuilderAppBar from '../AppBar';
+import AppBar from '../AppBar';
 import Statistics from './Statistics';
 import FormControl from '@material-ui/core/FormControl';
 import store from 'store';
@@ -111,7 +111,7 @@ class App extends React.Component {
   render() {
     return (
       <Container>
-        <BuilderAppBar
+        <AppBar
           setUIOption={this.setUIOption}
           setUIOptions={this.setUIOptions}
           ui={this.state.ui}
