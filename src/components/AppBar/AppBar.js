@@ -14,6 +14,7 @@ import SideMenu from './SideMenu';
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
+    minWidth: 0,
     marginBottom: 25
   },
   menuButton: {
@@ -100,8 +101,16 @@ export default function BuilderAppBar({
               </Fab>
             </Typography>
           </Hidden>
-          <Hidden mdUp>
+          <Hidden mdUp xsDown>
             <Typography variant="h6">
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <Fab color="secondary" size="small">
+                <Typography variant="h6">{armyCost}</Typography>
+              </Fab>
+            </Typography>
+          </Hidden>
+          <Hidden smUp>
+            <Typography variant="h6" style={{ paddingRight: 125 }}>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <Fab color="secondary" size="small">
                 <Typography variant="h6">{armyCost}</Typography>
