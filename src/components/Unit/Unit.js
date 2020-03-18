@@ -82,24 +82,28 @@ function Unit({ id, unit, updateUnit, updateArmyCost, data, setUnit, removeUnit,
         }
       />
       <CardContent>
-        {ui.showStats && <StatBlock stats={unit.stats} />}
-        {ui.showRules && <SpecialRules rules={unit.rules} />}
-        {ui.showOptions && (
-          <Options
-            onChange={handleChange}
-            optionsData={data.unitData[unit.name].options}
-            unit={unit}
-          />
+        {!ui.editMode && (
+          <>
+            <StatBlock stats={unit.stats} />
+            <SpecialRules rules={unit.rules} />
+          </>
         )}
-        {ui.showOptions && (
-          <Box>
-            <FantasticalRules
+        {!ui.viewMode && (
+          <>
+            <Options
               onChange={handleChange}
-              unitData={data.unitData[unit.name]}
-              fantasticalRulesData={data.fantasticalRulesData}
+              optionsData={data.unitData[unit.name].options}
               unit={unit}
             />
-          </Box>
+            <Box>
+              <FantasticalRules
+                onChange={handleChange}
+                unitData={data.unitData[unit.name]}
+                fantasticalRulesData={data.fantasticalRulesData}
+                unit={unit}
+              />
+            </Box>
+          </>
         )}
       </CardContent>
     </Card>

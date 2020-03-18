@@ -4,7 +4,7 @@ import { Fab, Box, Typography, Container } from '@material-ui/core';
 import Unit from 'components/Unit';
 import unitData from 'assets/dragonRampantData/units.json';
 import fantasticalRulesData from 'assets/dragonRampantData/fantasticalRules.json';
-import BuilderAppBar from './BuilderAppBar';
+import BuilderAppBar from '../AppBar';
 import Statistics from './Statistics';
 import FormControl from '@material-ui/core/FormControl';
 import store from 'store';
@@ -24,9 +24,8 @@ class App extends React.Component {
         fantasticalRulesData: fantasticalRulesData
       },
       ui: {
-        showStats: true,
-        showRules: true,
-        showOptions: true
+        viewMode: false,
+        editMode: false
       }
     };
   }
@@ -84,6 +83,12 @@ class App extends React.Component {
     });
   };
 
+  setUIOptions = newAttributes => {
+    this.setState({
+      ui: { ...this.state.ui, ...newAttributes }
+    });
+  };
+
   save = () => {
     if (this.state.name === 'New List') return false;
     store.set(this.state.name, this.state);
@@ -91,7 +96,8 @@ class App extends React.Component {
   };
 
   load = name => {
-    const newState = store.get(name);
+    let newState = store.get(name);
+    newState = { ...newState, ui: this.state.ui };
     this.setState(newState);
   };
 
@@ -100,6 +106,7 @@ class App extends React.Component {
       <Container>
         <BuilderAppBar
           setUIOption={this.setUIOption}
+          setUIOptions={this.setUIOptions}
           ui={this.state.ui}
           armyCost={this.state.armyCost}
           save={this.save}

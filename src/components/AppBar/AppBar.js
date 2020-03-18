@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import EditIcon from '@material-ui/icons/Edit';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import NotesIcon from '@material-ui/icons/Notes';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
@@ -30,23 +32,37 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function BuilderAppBar({ ui, setUIOption, armyCost, save, load }) {
+export default function BuilderAppBar({
+  ui,
+  setUIOption,
+  setUIOptions,
+  armyCost,
+  save,
+  load
+}) {
   const classes = useStyles();
 
-  function ToggleUIButton({ option, Icon, title }) {
+  const changeViewMode = (clicked, newState) => {
+    const notClicked = clicked === 'viewMode' ? 'editMode' : 'viewMode';
+    let newStates = { [clicked]: newState };
+    if (newState) newStates = { ...newStates, [notClicked]: false };
+    setUIOptions(newStates);
+  };
+
+  const ToggleUIButton = ({ option, Icon, title, onClick = setUIOption }) => {
     return (
       <Tooltip title={title}>
         <IconButton
           color="inherit"
           onClick={() => {
-            setUIOption(option, !ui[option]);
+            onClick(option, !ui[option]);
           }}
         >
           <Icon fontSize="small" color={ui[option] ? 'inherit' : 'disabled'} />
         </IconButton>
       </Tooltip>
     );
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -69,15 +85,16 @@ export default function BuilderAppBar({ ui, setUIOption, armyCost, save, load })
           </div>
           <div className={classes.flexingend}>
             <ToggleUIButton
-              option="showStats"
-              Icon={GridOnIcon}
-              title="Show Statblock"
+              option="viewMode"
+              Icon={VisibilityIcon}
+              title="View mode"
+              onClick={changeViewMode}
             />
-            <ToggleUIButton option="showRules" Icon={NotesIcon} title="Show Rules" />
             <ToggleUIButton
-              option="showOptions"
-              Icon={FormatListBulletedIcon}
-              title="Show Options"
+              option="editMode"
+              Icon={EditIcon}
+              title="Edit mode"
+              onClick={changeViewMode}
             />
             <Hidden smDown>
               <Typography variant="h6">
