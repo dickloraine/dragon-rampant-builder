@@ -74,13 +74,13 @@ export default function AppBar({
                 &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
               </Typography>
             </Hidden>
-            <Save onClick={saveList} />
-            <Load onClick={loadList} />
             <Hidden mdUp>
               <Typography variant="h5" className={classes.flexing}>
                 &nbsp;&nbsp;DRAB
               </Typography>
             </Hidden>
+            <Save onClick={saveList} />
+            <Load onClick={loadList} />
           </div>
           <div className={classes.flexingend}>
             <ToggleUIButton
