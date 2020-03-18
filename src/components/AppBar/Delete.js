@@ -1,11 +1,11 @@
 import React from 'react';
 import store from 'store';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import SimpleDialog from '../SimpleDialog';
 import { Success } from '../Toast';
 
-export default function Delete() {
+export default function Delete({ onClick, showText = false }) {
   const [open, setOpen] = React.useState(false);
   const [openSuccess, setOpenSuccess] = React.useState(false);
 
@@ -13,8 +13,7 @@ export default function Delete() {
 
   const handleClose = value => {
     setOpen(false);
-    if (value === 'Delete all') store.clearAll();
-    else store.remove(value);
+    onClick(value);
     if (value) setOpenSuccess(true);
   };
 
@@ -32,6 +31,7 @@ export default function Delete() {
           <DeleteIcon />
         </IconButton>
       </Tooltip>
+      {showText && <Typography onClick={handleClickOpen}>Delete</Typography>}
       <SimpleDialog
         open={open}
         onClose={handleClose}

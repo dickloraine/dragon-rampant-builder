@@ -89,16 +89,21 @@ class App extends React.Component {
     });
   };
 
-  save = () => {
+  saveList = () => {
     if (this.state.name === 'New List') return false;
     store.set(this.state.name, this.state);
     return true;
   };
 
-  load = name => {
+  loadList = name => {
     let newState = store.get(name);
     newState = { ...newState, ui: this.state.ui };
     this.setState(newState);
+  };
+
+  removeList = name => {
+    if (name === 'Delete all') store.clearAll();
+    else store.remove(name);
   };
 
   render() {
@@ -109,8 +114,9 @@ class App extends React.Component {
           setUIOptions={this.setUIOptions}
           ui={this.state.ui}
           armyCost={this.state.armyCost}
-          save={this.save}
-          load={this.load}
+          saveList={this.saveList}
+          loadList={this.loadList}
+          removeList={this.removeList}
         />
         <Box>
           <FormControl>

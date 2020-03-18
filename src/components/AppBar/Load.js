@@ -1,10 +1,10 @@
 import React from 'react';
 import store from 'store';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
-import { Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import SimpleDialog from '../SimpleDialog';
 
-export default function Load({ onClick }) {
+export default function Load({ onClick, showText = false }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => setOpen(true);
@@ -27,6 +27,7 @@ export default function Load({ onClick }) {
           <SaveOutlinedIcon />
         </IconButton>
       </Tooltip>
+      {showText && <Typography onClick={handleClickOpen}>Load</Typography>}
       <SimpleDialog
         open={open}
         onClose={handleClose}

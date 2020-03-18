@@ -1,9 +1,9 @@
 import React from 'react';
-import { Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { Error, Success } from '../Toast';
 
-export default function Save({ onClick }) {
+export default function Save({ onClick, showText = false }) {
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openError, setOpenError] = React.useState(false);
 
@@ -19,6 +19,7 @@ export default function Save({ onClick }) {
           <SaveIcon />
         </IconButton>
       </Tooltip>
+      {showText && <Typography onClick={saveRoster}>Save</Typography>}
       <Success
         message="Saved!"
         open={openSuccess}

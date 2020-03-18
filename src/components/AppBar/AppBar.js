@@ -9,6 +9,7 @@ import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
 import Load from './Load';
 import Save from './Save';
 import Delete from './Delete';
+import SideMenu from './SideMenu';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,8 +35,9 @@ export default function BuilderAppBar({
   setUIOption,
   setUIOptions,
   armyCost,
-  save,
-  load
+  saveList,
+  loadList,
+  removeList
 }) {
   const classes = useStyles();
 
@@ -66,19 +68,20 @@ export default function BuilderAppBar({
       <AppBar position="fixed">
         <Toolbar>
           <div className={classes.flexing}>
+            <SideMenu loadList={loadList} saveList={saveList} removeList={removeList} />
             <Hidden smDown>
               <Typography variant="h5">
-                Dragon Rampant Army Builder&nbsp;&nbsp;
+                &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
               </Typography>
+              <Save onClick={saveList} />
+              <Load onClick={loadList} />
+              <Delete onClick={removeList} />
             </Hidden>
             <Hidden mdUp>
               <Typography variant="h5" className={classes.flexing}>
-                DRAB
+                &nbsp;&nbsp;DRAB
               </Typography>
             </Hidden>
-            <Save onClick={save} />
-            <Load onClick={load} />
-            <Delete />
           </div>
           <div className={classes.flexingend}>
             <ToggleUIButton
