@@ -26,7 +26,7 @@ export default function Delete() {
   };
 
   return (
-    <div>
+    <>
       <Tooltip title="Delete List">
         <IconButton color="inherit" onClick={handleClickOpen}>
           <DeleteIcon />
@@ -43,6 +43,6 @@ export default function Delete() {
         open={openSuccess}
         setOpen={val => setOpenSuccess(val)}
       />
-    </div>
+    </>
   );
 }

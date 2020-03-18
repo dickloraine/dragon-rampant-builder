@@ -13,7 +13,7 @@ export default function Save({ onClick }) {
   };
 
   return (
-    <div>
+    <>
       <Tooltip title="Save">
         <IconButton color="inherit" onClick={saveRoster}>
           <SaveIcon />
@@ -29,6 +29,6 @@ export default function Save({ onClick }) {
         open={openError}
         setOpen={val => setOpenError(val)}
       />
-    </div>
+    </>
   );
 }

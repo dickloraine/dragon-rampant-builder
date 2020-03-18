@@ -26,7 +26,7 @@ function FantasticalRules({ unitData, onChange, fantasticalRulesData, unit }) {
   const handleOpen = () => setOpen(true);
 
   return (
-    <div>
+    <>
       <FormLabel onClick={handleOpen} component="legend">
         Fantastical Rules <ArrowDropDownIcon />
       </FormLabel>
@@ -94,7 +94,7 @@ function FantasticalRules({ unitData, onChange, fantasticalRulesData, unit }) {
           ))}
         </Select>
       </FormControl>
-    </div>
+    </>
   );
 }
 

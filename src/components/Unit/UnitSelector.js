@@ -14,7 +14,7 @@ export default function UnitSelector({ name, options, points, onClose }) {
   };
 
   return (
-    <div>
+    <>
       <Typography variant="h5" onClick={handleClickOpen}>
         <Chip label={points} color="primary" />
         &nbsp;&nbsp;
@@ -28,6 +28,6 @@ export default function UnitSelector({ name, options, points, onClose }) {
         options={options}
         title="Choose unit type"
       />
-    </div>
+    </>
   );
 }

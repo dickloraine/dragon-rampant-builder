@@ -130,7 +130,7 @@ export default function Statistics({
             </Bar>
           </BarChart>
           {unitsCost > 0 && (
-            <div>
+            <>
               <Typography variant="h6" style={{ marginTop: 25 }}>
                 Point Distribution
               </Typography>
@@ -149,7 +149,7 @@ export default function Statistics({
                 <Tooltip />
                 <Legend />
               </PieChart>
-            </div>
+            </>
           )}
         </Hidden>
       </CardContent>

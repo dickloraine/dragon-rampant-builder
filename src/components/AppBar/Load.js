@@ -21,7 +21,7 @@ export default function Load({ onClick }) {
   };
 
   return (
-    <div>
+    <>
       <Tooltip title="Load">
         <IconButton color="inherit" onClick={handleClickOpen}>
           <SaveOutlinedIcon />
@@ -33,6 +33,6 @@ export default function Load({ onClick }) {
         options={getSaved()}
         title="Choose List to load"
       />
-    </div>
+    </>
   );
 }

@@ -16,5 +16,5 @@ export default function SpecialRules({ rules }) {
       </Container>
     );
   }
-  return <div></div>;
+  return <></>;
 }
