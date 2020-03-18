@@ -11,19 +11,19 @@ export default function Delete() {
 
   const handleClickOpen = () => setOpen(true);
 
-  function handleClose(value) {
+  const handleClose = value => {
     setOpen(false);
     if (value === 'Delete all') store.clearAll();
     else store.remove(value);
     if (value) setOpenSuccess(true);
-  }
+  };
 
-  function getSaved() {
+  const getSaved = () => {
     const saved = [];
     store.each((val, key) => saved.push(key));
     saved.push('Delete all');
     return saved;
-  }
+  };
 
   return (
     <div>

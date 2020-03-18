@@ -31,7 +31,7 @@ class App extends React.Component {
     };
   }
 
-  addUnit() {
+  addUnit = () => {
     const id = this.state.nextID;
     this.setState({
       nextID: id + 1,
@@ -41,18 +41,18 @@ class App extends React.Component {
       },
       unitOrder: [...this.state.unitOrder, id]
     });
-  }
+  };
 
-  setUnit(id, name) {
+  setUnit = (id, name) => {
     this.setState({
       units: {
         ...this.state.units,
         [id]: { ...this.state.data.unitData[name], options: [], fantasticalRules: [] }
       }
     });
-  }
+  };
 
-  removeUnit(id) {
+  removeUnit = id => {
     const units = { ...this.state.units };
     const cost = units[id].points;
     delete units[id];
@@ -61,49 +61,49 @@ class App extends React.Component {
       units: { ...units },
       unitOrder: this.state.unitOrder.filter(val => val !== id)
     });
-  }
+  };
 
-  updateUnit(id, newAttributes) {
+  updateUnit = (id, newAttributes) => {
     this.setState({
       units: {
         ...this.state.units,
         [id]: { ...this.state.units[id], ...newAttributes }
       }
     });
-  }
+  };
 
-  updateArmyCost(cost) {
+  updateArmyCost = cost => {
     this.setState({
       armyCost: this.state.armyCost + cost
     });
-  }
+  };
 
-  setUIOption(option, value) {
+  setUIOption = (option, value) => {
     this.setState({
       ui: { ...this.state.ui, [option]: value }
     });
-  }
+  };
 
-  save() {
+  save = () => {
     if (this.state.name === 'New List') return false;
     store.set(this.state.name, this.state);
     return true;
-  }
+  };
 
-  load(name) {
+  load = name => {
     const newState = store.get(name);
     this.setState(newState);
-  }
+  };
 
   render() {
     return (
       <Container>
         <BuilderAppBar
-          setUIOption={(option, value) => this.setUIOption(option, value)}
+          setUIOption={this.setUIOption}
           ui={this.state.ui}
           armyCost={this.state.armyCost}
-          save={() => this.save()}
-          load={name => this.load(name)}
+          save={this.save}
+          load={this.load}
         />
         <Box>
           <FormControl>
@@ -127,10 +127,10 @@ class App extends React.Component {
                 id={id}
                 key={id}
                 unit={this.state.units[id]}
-                updateUnit={newAttributes => this.updateUnit(id, newAttributes)}
-                updateArmyCost={cost => this.updateArmyCost(cost)}
-                removeUnit={() => this.removeUnit(id)}
-                setUnit={name => this.setUnit(id, name)}
+                updateUnit={this.updateUnit}
+                updateArmyCost={this.updateArmyCost}
+                removeUnit={this.removeUnit}
+                setUnit={this.setUnit}
                 data={this.state.data}
                 ui={this.state.ui}
               />
@@ -138,7 +138,7 @@ class App extends React.Component {
             <Fab
               color="secondary"
               style={{ marginLeft: 25, marginBottom: 25 }}
-              onClick={() => this.addUnit()}
+              onClick={this.addUnit}
             >
               <AddIcon />
             </Fab>

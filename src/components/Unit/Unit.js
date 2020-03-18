@@ -10,18 +10,18 @@ import StatBlock from './StatBlock';
 import SpecialRules from './SpecialRules';
 
 function Unit({ id, unit, updateUnit, updateArmyCost, data, setUnit, removeUnit, ui }) {
-  function setPoints(cost) {
+  const setPoints = cost => {
     const oldCost = unit.points;
-    updateUnit({ points: cost });
+    updateUnit(id, { points: cost });
     updateArmyCost(cost - oldCost);
-  }
+  };
 
-  function changeUnit(unitName) {
+  const changeUnit = unitName => {
     setPoints(data.unitData[unitName].points);
-    setUnit(unitName);
-  }
+    setUnit(id, unitName);
+  };
 
-  function handleChange(unit) {
+  const handleChange = unit => {
     const unitData = data.unitData[unit.name];
     const oldPoints = unit.points;
     unit = {
@@ -61,22 +61,22 @@ function Unit({ id, unit, updateUnit, updateArmyCost, data, setUnit, removeUnit,
 
     unit = { ...unit, points: points };
     updateArmyCost(points - oldPoints);
-    updateUnit({ ...unit });
-  }
+    updateUnit(id, { ...unit });
+  };
 
   return (
-    <Card variant="outlined" style={{ marginBottom: 25, width: 370 }}>
+    <Card variant="outlined" style={{ marginBottom: 25, width: 400 }}>
       <CardHeader
         title={
           <UnitSelector
             name={unit.name}
-            onClose={u => changeUnit(u)}
+            onClose={changeUnit}
             options={data.unitNames}
             points={unit.points}
           />
         }
         action={
-          <Button onClick={() => removeUnit()}>
+          <Button onClick={() => removeUnit(id)}>
             <CloseIcon />
           </Button>
         }
@@ -86,7 +86,7 @@ function Unit({ id, unit, updateUnit, updateArmyCost, data, setUnit, removeUnit,
         {ui.showRules && <SpecialRules rules={unit.rules} />}
         {ui.showOptions && (
           <Options
-            onChange={oldUnit => handleChange(oldUnit)}
+            onChange={handleChange}
             optionsData={data.unitData[unit.name].options}
             unit={unit}
           />
@@ -94,7 +94,7 @@ function Unit({ id, unit, updateUnit, updateArmyCost, data, setUnit, removeUnit,
         {ui.showOptions && (
           <Box>
             <FantasticalRules
-              onChange={oldUnit => handleChange(oldUnit)}
+              onChange={handleChange}
               unitData={data.unitData[unit.name]}
               fantasticalRulesData={data.fantasticalRulesData}
               unit={unit}

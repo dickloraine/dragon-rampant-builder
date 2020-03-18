@@ -4,13 +4,13 @@
  * @param {function} fun A function accepting two arguments, the value and the key. must returns a boolean. (val, key) => bool
  * @return {Object} Returns a new Object, containing the filtered entries
  */
-function objFilter(obj, fun) {
+const objFilter = (obj, fun) => {
   let filtered = {};
   for (const k in obj) {
     if (fun(obj[k], k)) filtered = { ...filtered, [k]: obj[k] };
   }
   return filtered;
-}
+};
 
 /**
  * Map over an object

@@ -8,10 +8,10 @@ export default function UnitSelector({ name, options, points, onClose }) {
 
   const handleClickOpen = () => setOpen(true);
 
-  function handleClose(value) {
+  const handleClose = value => {
     setOpen(false);
     if (value !== name) onClose(value);
-  }
+  };
 
   return (
     <div>

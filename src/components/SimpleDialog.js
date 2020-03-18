@@ -7,13 +7,8 @@ import Dialog from '@material-ui/core/Dialog';
 export default function SimpleDialog(props) {
   const { onClose, selectedValue, open, options, title } = props;
 
-  function handleClose() {
-    onClose(selectedValue);
-  }
-
-  function handleListItemClick(value) {
-    onClose(value);
-  }
+  const handleClose = () => onClose(selectedValue);
+  const handleListItemClick = value => onClose(value);
 
   return (
     <Dialog onClose={handleClose} open={open}>

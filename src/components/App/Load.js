@@ -9,16 +9,16 @@ export default function Load({ onClick }) {
 
   const handleClickOpen = () => setOpen(true);
 
-  function handleClose(value) {
+  const handleClose = value => {
     setOpen(false);
     if (value) onClick(value);
-  }
+  };
 
-  function getSaved() {
+  const getSaved = () => {
     const saved = [];
     store.each((val, key) => saved.push(key));
     return saved;
-  }
+  };
 
   return (
     <div>

@@ -7,10 +7,10 @@ export default function Save({ onClick }) {
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openError, setOpenError] = React.useState(false);
 
-  function saveRoster() {
+  const saveRoster = () => {
     if (onClick()) setOpenSuccess(true);
     else setOpenError(true);
-  }
+  };
 
   return (
     <div>
