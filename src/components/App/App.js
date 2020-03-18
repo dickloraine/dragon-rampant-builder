@@ -30,6 +30,8 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount = () => this.addUnit();
+
   addUnit = () => {
     const id = this.state.nextID;
     this.setState({
@@ -148,14 +150,14 @@ class App extends React.Component {
                 ui={this.state.ui}
               />
             ))}
-            <Fab
-              color="secondary"
-              style={{ marginLeft: 25, marginBottom: 25 }}
-              onClick={this.addUnit}
-            >
-              <AddIcon />
-            </Fab>
           </Box>
+          <Fab
+            color="secondary"
+            style={{ marginLeft: 25, marginBottom: 25 }}
+            onClick={this.addUnit}
+          >
+            <AddIcon />
+          </Fab>
           <Statistics
             armyCost={this.state.armyCost}
             units={this.state.units}

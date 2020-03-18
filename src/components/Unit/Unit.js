@@ -65,7 +65,7 @@ function Unit({ id, unit, updateUnit, updateArmyCost, data, setUnit, removeUnit,
   };
 
   return (
-    <Card variant="outlined" style={{ marginBottom: 25, width: 400 }}>
+    <Card variant="outlined" style={{ marginBottom: 25, minWidth: 400 }}>
       <CardHeader
         title={
           <UnitSelector
