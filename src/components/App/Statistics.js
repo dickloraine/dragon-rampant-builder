@@ -81,7 +81,7 @@ export default function Statistics({
   ];
 
   return (
-    <Card variant="outlined" style={{ marginTop: 25, marginBottom: 25 }}>
+    <Card variant="outlined" style={{ marginTop: 25, marginBottom: 25, minWidth: 400 }}>
       <CardHeader title="Statistics" />
       <CardContent>
         <Chip
