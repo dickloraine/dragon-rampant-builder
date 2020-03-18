@@ -13,20 +13,14 @@ import SideMenu from './SideMenu';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    flexGrow: 1,
     marginBottom: 25
   },
-
-  flexing: {
-    display: 'flex',
-    flexGrow: 1,
-    alignItems: 'center'
+  menuButton: {
+    marginRight: theme.spacing(2)
   },
-
-  flexingend: {
-    display: 'flex',
-    flexGrow: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
+  title: {
+    flexGrow: 1
   }
 }));
 
@@ -67,52 +61,53 @@ export default function BuilderAppBar({
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <div className={classes.flexing}>
-            <SideMenu loadList={loadList} saveList={saveList} removeList={removeList} />
-            <Hidden smDown>
-              <Typography variant="h5">
-                &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
-              </Typography>
-              <Save onClick={saveList} />
-              <Load onClick={loadList} />
-              <Delete onClick={removeList} />
-            </Hidden>
-            <Hidden mdUp>
-              <Typography variant="h5" className={classes.flexing}>
-                &nbsp;&nbsp;DRAB
-              </Typography>
-            </Hidden>
-          </div>
-          <div className={classes.flexingend}>
-            <ToggleUIButton
-              option="viewMode"
-              Icon={VisibilityIcon}
-              title="View mode"
-              onClick={changeViewMode}
-            />
-            <ToggleUIButton
-              option="editMode"
-              Icon={EditIcon}
-              title="Edit mode"
-              onClick={changeViewMode}
-            />
-            <Hidden smDown>
-              <Typography variant="h6">
-                &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
-                <Fab color="secondary" size="small">
-                  <Typography variant="h6">{armyCost}</Typography>
-                </Fab>
-              </Typography>
-            </Hidden>
-            <Hidden mdUp>
-              <Typography variant="h6">
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Fab color="secondary" size="small">
-                  <Typography variant="h6">{armyCost}</Typography>
-                </Fab>
-              </Typography>
-            </Hidden>
-          </div>
+          <SideMenu
+            className={classes.menuButton}
+            loadList={loadList}
+            saveList={saveList}
+            removeList={removeList}
+          />
+          <Hidden smDown>
+            <Typography className={classes.title} variant="h5">
+              &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
+            </Typography>
+            <Save onClick={saveList} />
+            <Load onClick={loadList} />
+            <Delete onClick={removeList} />
+          </Hidden>
+          <Hidden mdUp>
+            <Typography variant="h5" className={classes.title}>
+              &nbsp;&nbsp;DRAB
+            </Typography>
+          </Hidden>
+          <ToggleUIButton
+            option="viewMode"
+            Icon={VisibilityIcon}
+            title="View mode"
+            onClick={changeViewMode}
+          />
+          <ToggleUIButton
+            option="editMode"
+            Icon={EditIcon}
+            title="Edit mode"
+            onClick={changeViewMode}
+          />
+          <Hidden smDown>
+            <Typography variant="h6">
+              &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
+              <Fab color="secondary" size="small">
+                <Typography variant="h6">{armyCost}</Typography>
+              </Fab>
+            </Typography>
+          </Hidden>
+          <Hidden mdUp>
+            <Typography variant="h6">
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <Fab color="secondary" size="small">
+                <Typography variant="h6">{armyCost}</Typography>
+              </Fab>
+            </Typography>
+          </Hidden>
         </Toolbar>
       </AppBar>
       <Toolbar />
