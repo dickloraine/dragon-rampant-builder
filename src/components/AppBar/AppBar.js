@@ -36,7 +36,8 @@ export default function AppBar({
   armyCost,
   saveList,
   loadList,
-  removeList
+  removeList,
+  getSavedLists
 }) {
   const classes = useStyles();
 
@@ -67,7 +68,12 @@ export default function AppBar({
       <AppBarMaterial position="fixed">
         <Toolbar>
           <div className={classes.flexing}>
-            <SideMenu loadList={loadList} saveList={saveList} removeList={removeList} />
+            <SideMenu
+              loadList={loadList}
+              saveList={saveList}
+              removeList={removeList}
+              getSavedLists={getSavedLists}
+            />
             <Hidden smDown>
               <Typography variant="h5">
                 &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
@@ -77,7 +83,7 @@ export default function AppBar({
               <Typography variant="h5">&nbsp;&nbsp;DRAB&nbsp;&nbsp;</Typography>
             </Hidden>
             <Save onClick={saveList} />
-            <Load onClick={loadList} />
+            <Load onClick={loadList} getSavedLists={getSavedLists} />
           </div>
           <div className={classes.flexingend}>
             <ToggleUIButton

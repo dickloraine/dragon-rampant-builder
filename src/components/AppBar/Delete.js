@@ -1,11 +1,10 @@
 import React from 'react';
-import store from 'store';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import SimpleDialog from '../SimpleDialog';
 import { Success } from '../Toast';
 
-export default function Delete({ onClick, showText = false }) {
+export default function Delete({ onClick, getSavedLists, showText = false }) {
   const [open, setOpen] = React.useState(false);
   const [openSuccess, setOpenSuccess] = React.useState(false);
 
@@ -18,8 +17,7 @@ export default function Delete({ onClick, showText = false }) {
   };
 
   const getSaved = () => {
-    const saved = [];
-    store.each((val, key) => saved.push(key));
+    const saved = getSavedLists();
     saved.push('Delete all');
     return saved;
   };

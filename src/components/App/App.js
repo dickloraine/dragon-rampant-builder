@@ -93,19 +93,31 @@ class App extends React.Component {
 
   saveList = () => {
     if (this.state.name === 'New List') return false;
-    store.set(this.state.name, this.state);
+    let savedLists = store.get('savedRosters') || [];
+    savedLists = { ...savedLists, [this.state.name]: this.state };
+    store.set('savedRosters', savedLists);
     return true;
   };
 
   loadList = name => {
-    let newState = store.get(name);
+    let newState = store.get('savedRosters')[name];
     newState = { ...newState, ui: this.state.ui };
     this.setState(newState);
   };
 
+  getSavedLists = () => {
+    const savedLists = [];
+    for (const list in store.get('savedRosters')) savedLists.push(list);
+    return savedLists;
+  };
+
   removeList = name => {
-    if (name === 'Delete all') store.clearAll();
-    else store.remove(name);
+    if (name === 'Delete all') store.set('savedRosters', []);
+    else {
+      let savedLists = store.get('savedRosters');
+      savedLists = Object.keys(savedLists).filter(val => val !== name);
+      store.set('savedRosters', savedLists);
+    }
   };
 
   render() {
@@ -119,6 +131,7 @@ class App extends React.Component {
           saveList={this.saveList}
           loadList={this.loadList}
           removeList={this.removeList}
+          getSavedLists={this.getSavedLists}
         />
         <Box>
           <FormControl>

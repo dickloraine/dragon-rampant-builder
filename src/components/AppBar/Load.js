@@ -1,10 +1,9 @@
 import React from 'react';
-import store from 'store';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import SimpleDialog from '../SimpleDialog';
 
-export default function Load({ onClick, showText = false }) {
+export default function Load({ onClick, getSavedLists, showText = false }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => setOpen(true);
@@ -12,12 +11,6 @@ export default function Load({ onClick, showText = false }) {
   const handleClose = value => {
     setOpen(false);
     if (value) onClick(value);
-  };
-
-  const getSaved = () => {
-    const saved = [];
-    store.each((val, key) => saved.push(key));
-    return saved;
   };
 
   return (
@@ -31,7 +24,7 @@ export default function Load({ onClick, showText = false }) {
       <SimpleDialog
         open={open}
         onClose={handleClose}
-        options={getSaved()}
+        options={getSavedLists()}
         title="Choose List to load"
       />
     </>
