@@ -99,34 +99,34 @@ export default function Statistics({
           color="primary"
           style={{ marginRight: 25, marginBottom: 25 }}
         />
-        <Typography variant="h6" style={{ marginTop: 25 }}>
-          Unit Distribution
-        </Typography>
-        <ResponsiveContainer height={350}>
-          <BarChart
-            data={dataUnitTypes}
-            margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="Units" fill={COLORS[0]} minPointSize={3}>
-              <LabelList dataKey="Units" position="top" />
-            </Bar>
-            <Bar dataKey="Points" fill={COLORS[1]} minPointSize={3}>
-              <LabelList dataKey="Points" position="top" />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
         {unitsCost > 0 && (
           <>
+            <Typography variant="h6" style={{ marginTop: 25 }}>
+              Unit Distribution
+            </Typography>
+            <ResponsiveContainer height={350}>
+              <BarChart
+                data={dataUnitTypes}
+                margin={{
+                  top: 20,
+                  right: 30,
+                  left: 20,
+                  bottom: 5
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="Units" fill={COLORS[0]} minPointSize={3}>
+                  <LabelList dataKey="Units" position="top" />
+                </Bar>
+                <Bar dataKey="Points" fill={COLORS[1]} minPointSize={3}>
+                  <LabelList dataKey="Points" position="top" />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
             <Typography variant="h6" style={{ marginTop: 25 }}>
               Point Distribution
             </Typography>
