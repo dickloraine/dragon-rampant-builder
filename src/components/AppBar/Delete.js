@@ -2,18 +2,21 @@ import React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import SimpleDialog from '../SimpleDialog';
-import { Success } from '../Toast';
 
-export default function Delete({ onClick, getSavedLists, showText = false }) {
+export default function Delete({
+  onClick,
+  getSavedLists,
+  showSuccess,
+  showText = false
+}) {
   const [open, setOpen] = React.useState(false);
-  const [openSuccess, setOpenSuccess] = React.useState(false);
 
   const handleClickOpen = () => setOpen(true);
 
   const handleClose = value => {
     setOpen(false);
     onClick(value);
-    if (value) setOpenSuccess(true);
+    if (value) showSuccess('Deleted!');
   };
 
   const getSaved = () => {
@@ -35,11 +38,6 @@ export default function Delete({ onClick, getSavedLists, showText = false }) {
         onClose={handleClose}
         options={getSaved()}
         title="Choose List to delete"
-      />
-      <Success
-        message="Deleted!"
-        open={openSuccess}
-        setOpen={val => setOpenSuccess(val)}
       />
     </>
   );

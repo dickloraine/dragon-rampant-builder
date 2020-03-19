@@ -9,6 +9,7 @@ import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
 import Load from './Load';
 import Save from './Save';
 import SideMenu from './SideMenu';
+import { Error, Success } from '../Toast';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,7 +40,21 @@ export default function AppBar({
   removeList,
   getSavedLists
 }) {
+  const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
+  const [successMessage, setSuccessMessage] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState('');
   const classes = useStyles();
+
+  const showError = message => {
+    setErrorMessage(message);
+    setOpenError(true);
+  };
+
+  const showSuccess = message => {
+    setSuccessMessage(message);
+    setOpenSuccess(true);
+  };
 
   const changeViewMode = (clicked, newState) => {
     const notClicked = clicked === 'viewMode' ? 'editMode' : 'viewMode';
@@ -73,6 +88,8 @@ export default function AppBar({
               saveList={saveList}
               removeList={removeList}
               getSavedLists={getSavedLists}
+              showError={showError}
+              showSuccess={showSuccess}
             />
             <Hidden smDown>
               <Typography variant="h5">
@@ -82,7 +99,7 @@ export default function AppBar({
             <Hidden mdUp>
               <Typography variant="h5">&nbsp;&nbsp;DRAB&nbsp;&nbsp;</Typography>
             </Hidden>
-            <Save onClick={saveList} />
+            <Save onClick={saveList} showError={showError} showSuccess={showSuccess} />
             <Load onClick={loadList} getSavedLists={getSavedLists} />
           </div>
           <div className={classes.flexingend}>
@@ -118,6 +135,16 @@ export default function AppBar({
         </Toolbar>
       </AppBarMaterial>
       <Toolbar />
+      <Success
+        message={successMessage}
+        open={openSuccess}
+        setOpen={val => setOpenSuccess(val)}
+      />
+      <Error
+        message={errorMessage}
+        open={openError}
+        setOpen={val => setOpenError(val)}
+      />
     </div>
   );
 }

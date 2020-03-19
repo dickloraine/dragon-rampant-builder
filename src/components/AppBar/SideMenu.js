@@ -7,7 +7,14 @@ import Load from './Load';
 import Save from './Save';
 import Delete from './Delete';
 
-export default function SideMenu({ loadList, saveList, removeList, getSavedLists }) {
+export default function SideMenu({
+  loadList,
+  saveList,
+  removeList,
+  getSavedLists,
+  showError,
+  showSuccess
+}) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = open => event => {
@@ -26,7 +33,12 @@ export default function SideMenu({ loadList, saveList, removeList, getSavedLists
     <>
       <List>
         <ListItem button key={'Save'}>
-          <Save onClick={doAndClose(saveList)} showText={true} />
+          <Save
+            onClick={doAndClose(saveList)}
+            showError={showError}
+            showSuccess={showSuccess}
+            showText={true}
+          />
         </ListItem>
         <ListItem button key={'Load'}>
           <Load
@@ -39,6 +51,7 @@ export default function SideMenu({ loadList, saveList, removeList, getSavedLists
           <Delete
             onClick={doAndClose(removeList)}
             getSavedLists={getSavedLists}
+            showSuccess={showSuccess}
             showText={true}
           />
         </ListItem>
