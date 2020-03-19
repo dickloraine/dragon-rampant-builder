@@ -32,7 +32,8 @@ class App extends React.Component {
   }
 
   componentDidMount = () => {
-    this.setState({ ui: store.get('uiOptions') });
+    const uiInfos = { viewMode: false, editMode: false, ...store.get('uiOptions') };
+    this.setState({ ui: uiInfos });
     this.addUnit();
   };
 

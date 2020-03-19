@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardHeader,
-  Chip,
-  Hidden
-} from '@material-ui/core';
+import { Card, CardContent, Typography, CardHeader, Chip } from '@material-ui/core';
 import {
   BarChart,
   Bar,
@@ -109,7 +102,7 @@ export default function Statistics({
         <Typography variant="h6" style={{ marginTop: 25 }}>
           Unit Distribution
         </Typography>
-        <ResponsiveContainer height={400}>
+        <ResponsiveContainer height={350}>
           <BarChart
             data={dataUnitTypes}
             margin={{
