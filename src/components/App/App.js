@@ -26,13 +26,27 @@ class App extends React.Component {
       ui: {
         viewMode: false,
         editMode: false
-      }
+      },
+      forceInputUpdate: 0
     };
   }
 
   componentDidMount = () => {
     this.setState({ ui: store.get('uiOptions') });
     this.addUnit();
+  };
+
+  reload = () => {
+    this.setState({
+      name: 'New List',
+      forceInputUpdate: this.state.forceUpdateKey ? 0 : 1,
+      armyCost: 0,
+      nextID: 1,
+      units: {
+        0: { ...this.state.data.unitData.Unit, options: [], fantasticalRules: [] }
+      },
+      unitOrder: [0]
+    });
   };
 
   addUnit = () => {
@@ -106,7 +120,11 @@ class App extends React.Component {
 
   loadList = name => {
     let newState = store.get('savedRosters')[name];
-    newState = { ...newState, ui: this.state.ui };
+    newState = {
+      ...newState,
+      ui: this.state.ui,
+      forceInputUpdate: this.state.forceUpdateKey ? 0 : 1
+    };
     this.setState(newState);
   };
 
@@ -133,6 +151,7 @@ class App extends React.Component {
           setUIOptions={this.setUIOptions}
           ui={this.state.ui}
           armyCost={this.state.armyCost}
+          reload={this.reload}
           saveList={this.saveList}
           loadList={this.loadList}
           removeList={this.removeList}
@@ -143,6 +162,7 @@ class App extends React.Component {
             <Typography
               style={{ border: 0, marginBottom: 25 }}
               variant="h4"
+              key={this.state.forceInputUpdate}
               component="Input"
               id="component-simple"
               value={this.state.name}

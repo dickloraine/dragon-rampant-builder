@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AppBar as AppBarMaterial } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import ReplayIcon from '@material-ui/icons/Replay';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
 import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
@@ -35,6 +36,7 @@ export default function AppBar({
   setUIOption,
   setUIOptions,
   armyCost,
+  reload,
   saveList,
   loadList,
   removeList,
@@ -99,6 +101,9 @@ export default function AppBar({
             <Hidden mdUp>
               <Typography variant="h5">&nbsp;&nbsp;DRAB&nbsp;&nbsp;</Typography>
             </Hidden>
+            <IconButton color="inherit" onClick={reload}>
+              <ReplayIcon />
+            </IconButton>
             <Save onClick={saveList} showError={showError} showSuccess={showSuccess} />
             <Load onClick={loadList} getSavedLists={getSavedLists} />
           </div>
