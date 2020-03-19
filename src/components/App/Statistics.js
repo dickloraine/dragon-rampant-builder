@@ -18,7 +18,8 @@ import {
   Legend,
   LabelList,
   PieChart,
-  Pie
+  Pie,
+  ResponsiveContainer
 } from 'recharts';
 import { objFilter, objReduce } from '../../helpers/utils';
 
@@ -81,7 +82,10 @@ export default function Statistics({
   ];
 
   return (
-    <Card variant="outlined" style={{ marginTop: 25, marginBottom: 25, minWidth: 400 }}>
+    <Card
+      variant="outlined"
+      style={{ marginTop: 25, marginBottom: 25, minWidth: 400, maxWidth: 800 }}
+    >
       <CardHeader title="Statistics" />
       <CardContent>
         <Chip
@@ -102,13 +106,11 @@ export default function Statistics({
           color="primary"
           style={{ marginRight: 25, marginBottom: 25 }}
         />
-        <Hidden xsDown>
-          <Typography variant="h6" style={{ marginTop: 25 }}>
-            Unit Distribution
-          </Typography>
+        <Typography variant="h6" style={{ marginTop: 25 }}>
+          Unit Distribution
+        </Typography>
+        <ResponsiveContainer height={400}>
           <BarChart
-            width={500}
-            height={300}
             data={dataUnitTypes}
             margin={{
               top: 20,
@@ -129,12 +131,14 @@ export default function Statistics({
               <LabelList dataKey="Points" position="top" />
             </Bar>
           </BarChart>
-          {unitsCost > 0 && (
-            <>
-              <Typography variant="h6" style={{ marginTop: 25 }}>
-                Point Distribution
-              </Typography>
-              <PieChart width={800} height={400}>
+        </ResponsiveContainer>
+        {unitsCost > 0 && (
+          <>
+            <Typography variant="h6" style={{ marginTop: 25 }}>
+              Point Distribution
+            </Typography>
+            <ResponsiveContainer height={300}>
+              <PieChart>
                 <Pie
                   data={dataPoints}
                   dataKey="value"
@@ -149,9 +153,9 @@ export default function Statistics({
                 <Tooltip />
                 <Legend />
               </PieChart>
-            </>
-          )}
-        </Hidden>
+            </ResponsiveContainer>
+          </>
+        )}
       </CardContent>
     </Card>
   );
