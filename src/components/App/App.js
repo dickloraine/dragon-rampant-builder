@@ -30,7 +30,10 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount = () => this.addUnit();
+  componentDidMount = () => {
+    this.setState({ ui: store.get('uiOptions') });
+    this.addUnit();
+  };
 
   addUnit = () => {
     const id = this.state.nextID;
@@ -83,12 +86,14 @@ class App extends React.Component {
     this.setState({
       ui: { ...this.state.ui, [option]: value }
     });
+    store.set('uiOptions', { ...this.state.ui, [option]: value });
   };
 
   setUIOptions = newAttributes => {
     this.setState({
       ui: { ...this.state.ui, ...newAttributes }
     });
+    store.set('uiOptions', { ...this.state.ui, ...newAttributes });
   };
 
   saveList = () => {
