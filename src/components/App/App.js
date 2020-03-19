@@ -190,13 +190,15 @@ class App extends React.Component {
               />
             ))}
           </Box>
-          <Fab
-            color="secondary"
-            style={{ marginLeft: 25, marginBottom: 25 }}
-            onClick={this.addUnit}
-          >
-            <AddIcon />
-          </Fab>
+          {!this.state.ui.viewMode && (
+            <Fab
+              color="secondary"
+              style={{ marginLeft: 25, marginBottom: 25 }}
+              onClick={this.addUnit}
+            >
+              <AddIcon />
+            </Fab>
+          )}
           <Statistics
             armyCost={this.state.armyCost}
             units={this.state.units}
