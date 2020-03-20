@@ -4,10 +4,19 @@ import { Fab, Box, Typography, Container } from '@material-ui/core';
 import Unit from 'components/Unit';
 import unitData from 'assets/dragonRampantData/units.json';
 import fantasticalRulesData from 'assets/dragonRampantData/fantasticalRules.json';
+import rulesData from 'assets/dragonRampantData/rules.json';
 import AppBar from '../AppBar';
+import RulesSummary from './RulesSummary';
 import Statistics from './Statistics';
 import FormControl from '@material-ui/core/FormControl';
 import store from 'store';
+
+const DEFAULT_UI_OPTIONS = {
+  viewMode: false,
+  editMode: false,
+  rulesSummaryExpanded: true,
+  statisticsExpanded: true
+};
 
 class App extends React.Component {
   constructor(props) {
@@ -21,18 +30,19 @@ class App extends React.Component {
       data: {
         unitData: unitData,
         unitNames: Object.keys(unitData).slice(1),
-        fantasticalRulesData: fantasticalRulesData
+        fantasticalRulesData: fantasticalRulesData,
+        rulesData: rulesData
       },
-      ui: {
-        viewMode: false,
-        editMode: false
-      },
+      ui: { ...DEFAULT_UI_OPTIONS },
       forceInputUpdate: 0
     };
   }
 
   componentDidMount = () => {
-    const uiInfos = { viewMode: false, editMode: false, ...store.get('uiOptions') };
+    const uiInfos = {
+      ...DEFAULT_UI_OPTIONS,
+      ...store.get('uiOptions')
+    };
     this.setState({ ui: uiInfos });
     this.addUnit();
   };
@@ -124,6 +134,7 @@ class App extends React.Component {
     newState = {
       ...newState,
       ui: this.state.ui,
+      data: this.state.data,
       forceInputUpdate: this.state.forceUpdateKey ? 0 : 1
     };
     this.setState(newState);
@@ -165,7 +176,6 @@ class App extends React.Component {
               variant="h4"
               key={this.state.forceInputUpdate}
               component="Input"
-              id="component-simple"
               value={this.state.name}
               onChange={e => this.setState({ name: e.target.value })}
             />
@@ -199,11 +209,19 @@ class App extends React.Component {
               <AddIcon />
             </Fab>
           )}
+          <RulesSummary
+            units={this.state.units}
+            rulesData={this.state.data.rulesData}
+            ui={this.state.ui}
+            setUIOption={this.setUIOption}
+          />
           <Statistics
             armyCost={this.state.armyCost}
             units={this.state.units}
             unitData={this.state.data.unitData}
             fantasticalRulesData={this.state.data.fantasticalRulesData}
+            ui={this.state.ui}
+            setUIOption={this.setUIOption}
           />
         </Box>
       </Container>

@@ -1,5 +1,13 @@
 import React from 'react';
-import { Card, CardContent, Typography, CardHeader, Chip } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {
+  Typography,
+  Chip,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  Container
+} from '@material-ui/core';
 import {
   BarChart,
   Bar,
@@ -20,7 +28,9 @@ export default function Statistics({
   armyCost,
   units,
   unitData,
-  fantasticalRulesData
+  fantasticalRulesData,
+  ui,
+  setUIOption
 }) {
   const optionPoints = objReduce(
     units,
@@ -75,82 +85,86 @@ export default function Statistics({
   ];
 
   return (
-    <Card
-      variant="outlined"
-      style={{ marginTop: 25, marginBottom: 25, minWidth: 400, maxWidth: 800 }}
+    <ExpansionPanel
+      expanded={ui.statisticsExpanded}
+      onChange={() => setUIOption('statisticsExpanded', !ui.statisticsExpanded)}
+      style={{ minWidth: 400, maxWidth: 800 }}
     >
-      <CardHeader title="Statistics" />
-      <CardContent>
-        <Chip
-          label={totalPoints + ' Points'}
-          color="primary"
-          style={{ marginRight: 25, marginBottom: 25 }}
-        />
-        <Chip
-          label={unitCount + ' Units'}
-          color="primary"
-          style={{ marginRight: 25, marginBottom: 25 }}
-        />
-        <Chip
-          label={
-            (totalPoints / (unitCount ? unitCount : 1)).toPrecision(3) +
-            ' Points per unit'
-          }
-          color="primary"
-          style={{ marginRight: 25, marginBottom: 25 }}
-        />
-        {unitsCost > 0 && (
-          <>
-            <Typography variant="h6" style={{ marginTop: 25 }}>
-              Unit Distribution
-            </Typography>
-            <ResponsiveContainer height={350}>
-              <BarChart
-                data={dataUnitTypes}
-                margin={{
-                  top: 20,
-                  right: 30,
-                  left: 20,
-                  bottom: 5
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="Units" fill={COLORS[0]} minPointSize={3}>
-                  <LabelList dataKey="Units" position="top" />
-                </Bar>
-                <Bar dataKey="Points" fill={COLORS[1]} minPointSize={3}>
-                  <LabelList dataKey="Points" position="top" />
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-            <Typography variant="h6" style={{ marginTop: 25 }}>
-              Point Distribution
-            </Typography>
-            <ResponsiveContainer height={300}>
-              <PieChart>
-                <Pie
-                  data={dataPoints}
-                  dataKey="value"
-                  label={renderCustomizedLabel}
-                  labelLine={false}
-                  outerRadius={80}
+      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography variant="h5">Statistics</Typography>
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails>
+        <Container style={{ minWidth: 400, maxWidth: 800 }}>
+          <Chip
+            label={totalPoints + ' Points'}
+            color="primary"
+            style={{ marginRight: 25, marginBottom: 25 }}
+          />
+          <Chip
+            label={unitCount + ' Units'}
+            color="primary"
+            style={{ marginRight: 25, marginBottom: 25 }}
+          />
+          <Chip
+            label={
+              (totalPoints / (unitCount ? unitCount : 1)).toPrecision(3) +
+              ' Points per unit'
+            }
+            color="primary"
+            style={{ marginRight: 25, marginBottom: 25 }}
+          />
+          {unitsCost > 0 && (
+            <>
+              <Typography variant="h6" style={{ marginTop: 25 }}>
+                Unit Distribution
+              </Typography>
+              <ResponsiveContainer height={350}>
+                <BarChart
+                  data={dataUnitTypes}
+                  margin={{
+                    top: 20,
+                    right: 30,
+                    left: 20,
+                    bottom: 5
+                  }}
                 >
-                  {dataPoints.map((entry, index) => (
-                    <Cell key={entry} fill={COLORS[index]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </>
-        )}
-      </CardContent>
-    </Card>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Legend />
+                  <Bar dataKey="Units" fill={COLORS[0]} minPointSize={3}>
+                    <LabelList dataKey="Units" position="top" />
+                  </Bar>
+                  <Bar dataKey="Points" fill={COLORS[1]} minPointSize={3}>
+                    <LabelList dataKey="Points" position="top" />
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+              <Typography variant="h6" style={{ marginTop: 25 }}>
+                Point Distribution
+              </Typography>
+              <ResponsiveContainer height={300}>
+                <PieChart>
+                  <Pie
+                    data={dataPoints}
+                    dataKey="value"
+                    label={renderCustomizedLabel}
+                    labelLine={false}
+                    outerRadius={80}
+                  >
+                    {dataPoints.map((entry, index) => (
+                      <Cell key={entry} fill={COLORS[index]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </>
+          )}
+        </Container>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
   );
 }
 
