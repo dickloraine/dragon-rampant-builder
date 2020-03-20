@@ -5,8 +5,10 @@ import Unit from 'components/Unit';
 import unitData from 'assets/dragonRampantData/units.json';
 import fantasticalRulesData from 'assets/dragonRampantData/fantasticalRules.json';
 import rulesData from 'assets/dragonRampantData/rules.json';
+import spellData from 'assets/dragonRampantData/spells.json';
 import AppBar from '../AppBar';
 import RulesSummary from './RulesSummary';
+import SpellTable from './SpellTable';
 import Statistics from './Statistics';
 import FormControl from '@material-ui/core/FormControl';
 import store from 'store';
@@ -15,6 +17,7 @@ const DEFAULT_UI_OPTIONS = {
   viewMode: false,
   editMode: false,
   rulesSummaryExpanded: true,
+  spellsExpanded: false,
   statisticsExpanded: true
 };
 
@@ -31,7 +34,8 @@ class App extends React.Component {
         unitData: unitData,
         unitNames: Object.keys(unitData).slice(1),
         fantasticalRulesData: fantasticalRulesData,
-        rulesData: rulesData
+        rulesData: rulesData,
+        spellData: spellData
       },
       ui: { ...DEFAULT_UI_OPTIONS },
       forceInputUpdate: 0
@@ -155,6 +159,18 @@ class App extends React.Component {
     }
   };
 
+  getSpecialRules = () => {
+    let specialRules = new Set();
+    for (const id in this.state.units) {
+      for (const rule of this.state.units[id].rules) {
+        if (this.state.data.rulesData[this.state.data.rulesData[rule]])
+          specialRules.add(this.state.data.rulesData[rule]);
+        else specialRules.add(rule);
+      }
+    }
+    return [...specialRules].sort();
+  };
+
   render() {
     return (
       <Container>
@@ -210,10 +226,16 @@ class App extends React.Component {
             </Fab>
           )}
           <RulesSummary
-            units={this.state.units}
+            getSpecialRules={this.getSpecialRules}
             rulesData={this.state.data.rulesData}
             rulesSummaryExpanded={this.state.ui.rulesSummaryExpanded}
             setUIOption={this.setUIOption}
+          />
+          <SpellTable
+            getSpecialRules={this.getSpecialRules}
+            spellsExpanded={this.state.ui.spellsExpanded}
+            setUIOption={this.setUIOption}
+            spellData={this.state.data.spellData}
           />
           <Statistics
             armyCost={this.state.armyCost}

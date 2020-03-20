@@ -11,21 +11,12 @@ import {
 } from '@material-ui/core';
 
 export default function RulesSummary({
-  units,
+  getSpecialRules,
   setUIOption,
   rulesData,
   rulesSummaryExpanded
 }) {
-  const getSpecialRules = () => {
-    let specialRules = new Set();
-    for (const id in units) {
-      for (const rule of units[id].rules) {
-        if (rulesData[rulesData[rule]]) specialRules.add(rulesData[rule]);
-        else specialRules.add(rule);
-      }
-    }
-    return [...specialRules].sort();
-  };
+  const specialRules = getSpecialRules();
 
   return (
     <ExpansionPanel
@@ -38,7 +29,7 @@ export default function RulesSummary({
       </ExpansionPanelSummary>
       <ExpansionPanelDetails style={{ maxWidth: 800 }}>
         <List>
-          {getSpecialRules().map(rule => (
+          {specialRules.map(rule => (
             <ListItem key={rule}>
               <ListItemText primary={rule} secondary={rulesData[rule] || ''} />
             </ListItem>
