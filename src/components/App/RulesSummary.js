@@ -10,7 +10,12 @@ import {
   ExpansionPanelDetails
 } from '@material-ui/core';
 
-export default function RulesSummary({ units, setUIOption, rulesData, ui }) {
+export default function RulesSummary({
+  units,
+  setUIOption,
+  rulesData,
+  rulesSummaryExpanded
+}) {
   const getSpecialRules = () => {
     let specialRules = new Set();
     for (const id in units) {
@@ -24,14 +29,14 @@ export default function RulesSummary({ units, setUIOption, rulesData, ui }) {
 
   return (
     <ExpansionPanel
-      expanded={ui.rulesSummaryExpanded}
-      onChange={() => setUIOption('rulesSummaryExpanded', !ui.rulesSummaryExpanded)}
-      style={{ minWidth: 400, maxWidth: 800 }}
+      expanded={rulesSummaryExpanded}
+      onChange={() => setUIOption('rulesSummaryExpanded', !rulesSummaryExpanded)}
+      style={{ maxWidth: 1210 }}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="h5">Rules Summary</Typography>
       </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      <ExpansionPanelDetails style={{ maxWidth: 800 }}>
         <List>
           {getSpecialRules().map(rule => (
             <ListItem key={rule}>

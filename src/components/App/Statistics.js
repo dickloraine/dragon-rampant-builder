@@ -5,31 +5,18 @@ import {
   Chip,
   ExpansionPanel,
   ExpansionPanelSummary,
-  ExpansionPanelDetails,
-  Container
+  ExpansionPanelDetails
 } from '@material-ui/core';
-import {
-  BarChart,
-  Bar,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  LabelList,
-  PieChart,
-  Pie,
-  ResponsiveContainer
-} from 'recharts';
 import { objFilter, objReduce } from '../../helpers/utils';
+import UnitDistributionChart from './UnitDistributionChart';
+import PointDistributionChart from './PointDistributionChart';
 
 export default function Statistics({
   armyCost,
   units,
   unitData,
   fantasticalRulesData,
-  ui,
+  statisticsExpanded,
   setUIOption
 }) {
   const optionPoints = objReduce(
@@ -86,15 +73,15 @@ export default function Statistics({
 
   return (
     <ExpansionPanel
-      expanded={ui.statisticsExpanded}
-      onChange={() => setUIOption('statisticsExpanded', !ui.statisticsExpanded)}
-      style={{ minWidth: 400, maxWidth: 800 }}
+      expanded={statisticsExpanded}
+      onChange={() => setUIOption('statisticsExpanded', !statisticsExpanded)}
+      style={{ minWidth: 400, maxWidth: 1210 }}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="h5">Statistics</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <Container style={{ minWidth: 400, maxWidth: 800 }}>
+        <div>
           <Chip
             label={totalPoints + ' Points'}
             color="primary"
@@ -107,7 +94,7 @@ export default function Statistics({
           />
           <Chip
             label={
-              (totalPoints / (unitCount ? unitCount : 1)).toPrecision(3) +
+              (totalPoints / (unitCount ? unitCount : 1)).toPrecision(2) +
               ' Points per unit'
             }
             color="primary"
@@ -118,79 +105,19 @@ export default function Statistics({
               <Typography variant="h6" style={{ marginTop: 25 }}>
                 Unit Distribution
               </Typography>
-              <ResponsiveContainer height={350}>
-                <BarChart
-                  data={dataUnitTypes}
-                  margin={{
-                    top: 20,
-                    right: 30,
-                    left: 20,
-                    bottom: 5
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Legend />
-                  <Bar dataKey="Units" fill={COLORS[0]} minPointSize={3}>
-                    <LabelList dataKey="Units" position="top" />
-                  </Bar>
-                  <Bar dataKey="Points" fill={COLORS[1]} minPointSize={3}>
-                    <LabelList dataKey="Points" position="top" />
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+              <UnitDistributionChart
+                data={dataUnitTypes}
+                height={300}
+                colors={COLORS}
+              />
               <Typography variant="h6" style={{ marginTop: 25 }}>
                 Point Distribution
               </Typography>
-              <ResponsiveContainer height={300}>
-                <PieChart>
-                  <Pie
-                    data={dataPoints}
-                    dataKey="value"
-                    label={renderCustomizedLabel}
-                    labelLine={false}
-                    outerRadius={80}
-                  >
-                    {dataPoints.map((entry, index) => (
-                      <Cell key={entry} fill={COLORS[index]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
+              <PointDistributionChart data={dataPoints} height={300} colors={COLORS} />
             </>
           )}
-        </Container>
+        </div>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
 }
-
-const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent
-}) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-  const percentValue = (percent * 100).toFixed(0);
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="black"
-      textAnchor={x > cx ? 'start' : 'end'}
-      dominantBaseline="central"
-    >
-      {percentValue > 0 ? `${percentValue}%` : ''}
-    </text>
-  );
-};

@@ -212,7 +212,7 @@ class App extends React.Component {
           <RulesSummary
             units={this.state.units}
             rulesData={this.state.data.rulesData}
-            ui={this.state.ui}
+            rulesSummaryExpanded={this.state.ui.rulesSummaryExpanded}
             setUIOption={this.setUIOption}
           />
           <Statistics
@@ -220,7 +220,7 @@ class App extends React.Component {
             units={this.state.units}
             unitData={this.state.data.unitData}
             fantasticalRulesData={this.state.data.fantasticalRulesData}
-            ui={this.state.ui}
+            statisticsExpanded={this.state.ui.statisticsExpanded}
             setUIOption={this.setUIOption}
           />
         </Box>
