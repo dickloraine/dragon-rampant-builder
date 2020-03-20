@@ -31,7 +31,7 @@ export default function RulesSummary({
     <ExpansionPanel
       expanded={rulesSummaryExpanded}
       onChange={() => setUIOption('rulesSummaryExpanded', !rulesSummaryExpanded)}
-      style={{ maxWidth: 1210 }}
+      style={{ minWidth: 400, maxWidth: 1210 }}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="h5">Rules Summary</Typography>
