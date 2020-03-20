@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7c8d86b6b7462341a81f687b12d9610d",
+    "revision": "e65af64ad6edda1c399019af8e737b54",
     "url": "/dragon-rampant-builder/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dragon-rampant-builder/static/js/2.7b22413e.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4b285d14b74dd9342e88",
-    "url": "/dragon-rampant-builder/static/js/main.c5221072.chunk.js"
+    "revision": "6d8f2bf4f6b5ca46b263",
+    "url": "/dragon-rampant-builder/static/js/main.94228964.chunk.js"
   },
   {
     "revision": "02fae0a539a3d323ace7",
