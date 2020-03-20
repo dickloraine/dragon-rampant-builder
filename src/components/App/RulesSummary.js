@@ -15,10 +15,10 @@ export default function RulesSummary({ units, setUIOption, rulesData, ui }) {
     let specialRules = new Set();
     for (const id in units) {
       for (const rule of units[id].rules) {
-        specialRules.add(rule);
+        if (!rulesData[rulesData[rule]]) specialRules.add(rule);
       }
     }
-    return [...specialRules];
+    return [...specialRules].sort();
   };
 
   return (
