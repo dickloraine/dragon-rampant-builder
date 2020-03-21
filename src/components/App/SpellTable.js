@@ -44,7 +44,7 @@ export default function SpellTable({
             <TableContainer>
               <Table size="small" style={{ minWidth: 650 }}>
                 <TableHead>
-                  <TableRow>
+                  <TableRow key="headspelltable">
                     <TableCell style={{ minWidth: 100 }}>Spell name</TableCell>
                     <Hidden smDown>
                       <TableCell align="center">Difficulty</TableCell>
@@ -59,7 +59,7 @@ export default function SpellTable({
                 </TableHead>
                 <TableBody>
                   {Object.values(spellData).map(spell => (
-                    <TableRow>
+                    <TableRow key={spell.name}>
                       <TableCell component="th" scope="row">
                         {spell.name}
                       </TableCell>

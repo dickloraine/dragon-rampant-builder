@@ -9,21 +9,11 @@ import FantasticalRules from './FantasticalRules';
 import StatBlock from './StatBlock';
 import SpecialRules from './SpecialRules';
 
-function Unit({ id, unit, updateUnit, updateArmyCost, data, setUnit, removeUnit, ui }) {
-  const setPoints = cost => {
-    const oldCost = unit.points;
-    updateUnit(id, { points: cost });
-    updateArmyCost(cost - oldCost);
-  };
-
-  const changeUnit = unitName => {
-    setPoints(data.unitData[unitName].points);
-    setUnit(id, unitName);
-  };
+function Unit({ id, unit, updateUnit, data, setUnit, removeUnit, ui }) {
+  const changeUnit = unitName => setUnit(id, unitName);
 
   const handleChange = unit => {
     const unitData = data.unitData[unit.name];
-    const oldPoints = unit.points;
     unit = {
       ...unitData,
       options: [...unit.options],
@@ -60,7 +50,6 @@ function Unit({ id, unit, updateUnit, updateArmyCost, data, setUnit, removeUnit,
     }
 
     unit = { ...unit, points: points };
-    updateArmyCost(points - oldPoints);
     updateUnit(id, { ...unit });
   };
 

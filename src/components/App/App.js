@@ -12,6 +12,7 @@ import SpellTable from './SpellTable';
 import Statistics from './Statistics';
 import FormControl from '@material-ui/core/FormControl';
 import store from 'store';
+import { objFilter, objReduce } from '../../helpers/utils';
 
 const DEFAULT_UI_OPTIONS = {
   viewMode: false,
@@ -161,15 +162,18 @@ class App extends React.Component {
 
   getSpecialRules = () => {
     let specialRules = new Set();
-    for (const id in this.state.units) {
-      for (const rule of this.state.units[id].rules) {
-        if (this.state.data.rulesData[this.state.data.rulesData[rule]])
-          specialRules.add(this.state.data.rulesData[rule]);
-        else specialRules.add(rule);
+    for (const unit of Object.values(this.state.units)) {
+      for (const rule of unit.rules) {
+        this.state.data.rulesData[this.state.data.rulesData[rule]]
+          ? specialRules.add(this.state.data.rulesData[rule])
+          : specialRules.add(rule);
       }
     }
     return [...specialRules].sort();
   };
+
+  getTotalPoints = () =>
+    objReduce(Object.values(this.state.units), (acc, unit) => acc + unit.points, 0);
 
   render() {
     return (
@@ -178,7 +182,7 @@ class App extends React.Component {
           setUIOption={this.setUIOption}
           setUIOptions={this.setUIOptions}
           ui={this.state.ui}
-          armyCost={this.state.armyCost}
+          armyCost={this.getTotalPoints()}
           reload={this.reload}
           saveList={this.saveList}
           loadList={this.loadList}
@@ -208,7 +212,6 @@ class App extends React.Component {
                 key={id}
                 unit={this.state.units[id]}
                 updateUnit={this.updateUnit}
-                updateArmyCost={this.updateArmyCost}
                 removeUnit={this.removeUnit}
                 setUnit={this.setUnit}
                 data={this.state.data}
@@ -238,7 +241,7 @@ class App extends React.Component {
             spellData={this.state.data.spellData}
           />
           <Statistics
-            armyCost={this.state.armyCost}
+            armyCost={this.getTotalPoints()}
             units={this.state.units}
             unitData={this.state.data.unitData}
             fantasticalRulesData={this.state.data.fantasticalRulesData}
