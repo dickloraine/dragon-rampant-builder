@@ -12,7 +12,7 @@ import SpellTable from './SpellTable';
 import Statistics from './Statistics';
 import FormControl from '@material-ui/core/FormControl';
 import store from 'store';
-import { objFilter, objReduce } from '../../helpers/utils';
+import { objReduce } from '../../helpers/utils';
 
 const DEFAULT_UI_OPTIONS = {
   viewMode: false,
@@ -27,7 +27,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       name: 'New List',
-      armyCost: 0,
       nextID: 0,
       units: {},
       unitOrder: [],
@@ -106,12 +105,6 @@ class App extends React.Component {
     });
   };
 
-  updateArmyCost = cost => {
-    this.setState({
-      armyCost: this.state.armyCost + cost
-    });
-  };
-
   setUIOption = (option, value) => {
     this.setState({
       ui: { ...this.state.ui, [option]: value }
@@ -129,20 +122,24 @@ class App extends React.Component {
   saveList = () => {
     if (this.state.name === 'New List') return false;
     let savedLists = store.get('savedRosters') || [];
-    savedLists = { ...savedLists, [this.state.name]: this.state };
+    savedLists = {
+      ...savedLists,
+      [this.state.name]: {
+        name: this.state.name,
+        nextID: this.state.nextID,
+        units: this.state.units,
+        unitOrder: this.state.unitOrder
+      }
+    };
     store.set('savedRosters', savedLists);
     return true;
   };
 
   loadList = name => {
-    let newState = store.get('savedRosters')[name];
-    newState = {
-      ...newState,
-      ui: this.state.ui,
-      data: this.state.data,
+    this.setState({
+      ...store.get('savedRosters')[name],
       forceInputUpdate: this.state.forceUpdateKey ? 0 : 1
-    };
-    this.setState(newState);
+    });
   };
 
   getSavedLists = () => {
