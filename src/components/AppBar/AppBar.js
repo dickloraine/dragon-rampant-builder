@@ -9,6 +9,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
 import Load from './Load';
 import Save from './Save';
+import Share from './Share';
 import SideMenu from './SideMenu';
 import { Error, Success } from '../Toast';
 
@@ -40,7 +41,9 @@ export default function AppBar({
   saveList,
   loadList,
   removeList,
-  getSavedLists
+  getSavedLists,
+  getListAsString,
+  rosterName
 }) {
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openError, setOpenError] = React.useState(false);
@@ -92,6 +95,8 @@ export default function AppBar({
               getSavedLists={getSavedLists}
               showError={showError}
               showSuccess={showSuccess}
+              getListAsString={getListAsString}
+              rosterName={rosterName}
             />
             <Hidden smDown>
               <Typography variant="h5">
@@ -106,6 +111,9 @@ export default function AppBar({
             </IconButton>
             <Save onClick={saveList} showError={showError} showSuccess={showSuccess} />
             <Load onClick={loadList} getSavedLists={getSavedLists} />
+            <Hidden xsDown>
+              <Share getListAsString={getListAsString} rosterName={rosterName} />
+            </Hidden>
           </div>
           <div className={classes.flexingend}>
             <ToggleUIButton

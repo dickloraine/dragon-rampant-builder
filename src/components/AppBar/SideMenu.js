@@ -1,11 +1,10 @@
 import React from 'react';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Divider, List, ListItem, Drawer } from '@material-ui/core';
 import Load from './Load';
 import Save from './Save';
 import Delete from './Delete';
+import Share from './Share';
 
 export default function SideMenu({
   loadList,
@@ -13,7 +12,9 @@ export default function SideMenu({
   removeList,
   getSavedLists,
   showError,
-  showSuccess
+  showSuccess,
+  getListAsString,
+  rosterName
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -24,6 +25,7 @@ export default function SideMenu({
     setOpen(open);
   };
 
+  const handleClose = () => setOpen(false);
   const doAndClose = func => (...values) => {
     func(...values);
     setOpen(false);
@@ -53,6 +55,15 @@ export default function SideMenu({
             getSavedLists={getSavedLists}
             showSuccess={showSuccess}
             showText={true}
+          />
+        </ListItem>
+        <Divider />
+        <ListItem button key={'Share'}>
+          <Share
+            getListAsString={getListAsString}
+            rosterName={rosterName}
+            showText={true}
+            closeSidebar={handleClose}
           />
         </ListItem>
       </List>

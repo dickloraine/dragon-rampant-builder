@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import { Fab, Box, Typography, Container } from '@material-ui/core';
 import Unit from 'components/Unit';
@@ -11,7 +11,15 @@ import RulesSummary from './RulesSummary';
 import SpellTable from './SpellTable';
 import Statistics from './Statistics';
 import FormControl from '@material-ui/core/FormControl';
+import {
+  BrowserRouter as Router,
+  Route,
+  useLocation,
+  useHistory
+} from 'react-router-dom';
 import store from 'store';
+import * as jsonpack from 'jsonpack/main';
+import pako from 'pako';
 import { objReduce } from '../../helpers/utils';
 
 const DEFAULT_UI_OPTIONS = {
@@ -47,8 +55,8 @@ class App extends React.Component {
       ...DEFAULT_UI_OPTIONS,
       ...store.get('uiOptions')
     };
+    // this.addUnit();
     this.setState({ ui: uiInfos });
-    this.addUnit();
   };
 
   reload = () => {
@@ -74,6 +82,7 @@ class App extends React.Component {
       },
       unitOrder: [...this.state.unitOrder, id]
     });
+    console.log(this.getListAsString());
   };
 
   setUnit = (id, name) => {
@@ -87,9 +96,7 @@ class App extends React.Component {
 
   removeUnit = id => {
     const units = { ...this.state.units };
-    const cost = units[id].points;
     delete units[id];
-    this.updateArmyCost(-cost);
     this.setState({
       units: { ...units },
       unitOrder: this.state.unitOrder.filter(val => val !== id)
@@ -157,6 +164,34 @@ class App extends React.Component {
     }
   };
 
+  getListAsString = () => {
+    let list = {
+      name: this.state.name,
+      nextID: this.state.nextID,
+      units: this.state.units,
+      unitOrder: this.state.unitOrder
+    };
+    list = jsonpack.pack(list);
+    list = pako.deflate(list, { to: 'string' });
+    list = btoa(list);
+    return list;
+  };
+
+  getStringListAsJson = list => {
+    list = atob(list);
+    list = pako.inflate(list, { to: 'string' });
+    list = jsonpack.unpack(list);
+    return list;
+  };
+
+  importFromString = list => {
+    list = this.getStringListAsJson(list);
+    this.setState({
+      ...list,
+      forceInputUpdate: this.state.forceUpdateKey ? 0 : 1
+    });
+  };
+
   getSpecialRules = () => {
     let specialRules = new Set();
     for (const unit of Object.values(this.state.units)) {
@@ -174,81 +209,109 @@ class App extends React.Component {
 
   render() {
     return (
-      <Container>
-        <AppBar
-          setUIOption={this.setUIOption}
-          setUIOptions={this.setUIOptions}
-          ui={this.state.ui}
-          armyCost={this.getTotalPoints()}
-          reload={this.reload}
-          saveList={this.saveList}
-          loadList={this.loadList}
-          removeList={this.removeList}
-          getSavedLists={this.getSavedLists}
-        />
-        <Box>
-          <FormControl>
-            <Typography
-              style={{ border: 0, marginBottom: 25 }}
-              variant="h4"
-              key={this.state.forceInputUpdate}
-              component="Input"
-              value={this.state.name}
-              onChange={e => this.setState({ name: e.target.value })}
-            />
-          </FormControl>
-          {!Object.keys(this.state.units).length && (
-            <Typography variant="h6" style={{ marginBottom: 25 }}>
-              Click the button to add your first unit!
-            </Typography>
-          )}
-          <Box display="flex" flexDirection="row" flexWrap="wrap">
-            {this.state.unitOrder.map(id => (
-              <Unit
-                id={id}
-                key={id}
-                unit={this.state.units[id]}
-                updateUnit={this.updateUnit}
-                removeUnit={this.removeUnit}
-                setUnit={this.setUnit}
-                data={this.state.data}
-                ui={this.state.ui}
-              />
-            ))}
-          </Box>
-          {!this.state.ui.viewMode && (
-            <Fab
-              color="secondary"
-              style={{ marginLeft: 25, marginBottom: 25 }}
-              onClick={this.addUnit}
-            >
-              <AddIcon />
-            </Fab>
-          )}
-          <RulesSummary
-            getSpecialRules={this.getSpecialRules}
-            rulesData={this.state.data.rulesData}
-            rulesSummaryExpanded={this.state.ui.rulesSummaryExpanded}
+      <Router>
+        <Container>
+          <AppBar
             setUIOption={this.setUIOption}
-          />
-          <SpellTable
-            getSpecialRules={this.getSpecialRules}
-            spellsExpanded={this.state.ui.spellsExpanded}
-            setUIOption={this.setUIOption}
-            spellData={this.state.data.spellData}
-          />
-          <Statistics
+            setUIOptions={this.setUIOptions}
+            ui={this.state.ui}
             armyCost={this.getTotalPoints()}
-            units={this.state.units}
-            unitData={this.state.data.unitData}
-            fantasticalRulesData={this.state.data.fantasticalRulesData}
-            statisticsExpanded={this.state.ui.statisticsExpanded}
-            setUIOption={this.setUIOption}
+            reload={this.reload}
+            saveList={this.saveList}
+            loadList={this.loadList}
+            removeList={this.removeList}
+            getSavedLists={this.getSavedLists}
+            getListAsString={this.getListAsString}
+            rosterName={this.state.name}
           />
-        </Box>
-      </Container>
+          <Box>
+            <FormControl>
+              <Typography
+                style={{ border: 0, marginBottom: 25 }}
+                variant="h4"
+                key={this.state.forceInputUpdate}
+                component="Input"
+                value={this.state.name}
+                onChange={e => this.setState({ name: e.target.value })}
+              />
+            </FormControl>
+            {!Object.keys(this.state.units).length && (
+              <Typography variant="h6" style={{ marginBottom: 25 }}>
+                Click the button to add your first unit!
+              </Typography>
+            )}
+            <Box display="flex" flexDirection="row" flexWrap="wrap">
+              {this.state.unitOrder.map(id => (
+                <Unit
+                  id={id}
+                  key={id}
+                  unit={this.state.units[id]}
+                  updateUnit={this.updateUnit}
+                  removeUnit={this.removeUnit}
+                  setUnit={this.setUnit}
+                  data={this.state.data}
+                  ui={this.state.ui}
+                />
+              ))}
+            </Box>
+            {!this.state.ui.viewMode && (
+              <Fab
+                color="secondary"
+                style={{ marginLeft: 25, marginBottom: 25 }}
+                onClick={this.addUnit}
+              >
+                <AddIcon />
+              </Fab>
+            )}
+            <RulesSummary
+              getSpecialRules={this.getSpecialRules}
+              rulesData={this.state.data.rulesData}
+              rulesSummaryExpanded={this.state.ui.rulesSummaryExpanded}
+              setUIOption={this.setUIOption}
+            />
+            <SpellTable
+              getSpecialRules={this.getSpecialRules}
+              spellsExpanded={this.state.ui.spellsExpanded}
+              setUIOption={this.setUIOption}
+              spellData={this.state.data.spellData}
+            />
+            <Statistics
+              armyCost={this.getTotalPoints()}
+              units={this.state.units}
+              unitData={this.state.data.unitData}
+              fantasticalRulesData={this.state.data.fantasticalRulesData}
+              statisticsExpanded={this.state.ui.statisticsExpanded}
+              setUIOption={this.setUIOption}
+            />
+          </Box>
+          <Route
+            path="/"
+            render={props => (
+              <ImportList
+                {...props}
+                importFromString={this.importFromString}
+                addUnit={this.addUnit}
+              />
+            )}
+          />
+        </Container>
+      </Router>
     );
   }
 }
+
+const ImportList = ({ importFromString, addUnit }) => {
+  let list = useLocation().search;
+  let history = useHistory();
+
+  useEffect(() => {
+    list = list.slice(1);
+    if (list) importFromString(list);
+    else addUnit();
+    history.push(`/`);
+  }, []);
+
+  return <div></div>;
+};
 
 export default App;
