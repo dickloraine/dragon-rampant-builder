@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/dragon-rampant-builder/static/js/main.455bf911.chunk.js",
-    "main.js.map": "/dragon-rampant-builder/static/js/main.455bf911.chunk.js.map",
+    "main.js": "/dragon-rampant-builder/static/js/main.5b4b08ed.chunk.js",
+    "main.js.map": "/dragon-rampant-builder/static/js/main.5b4b08ed.chunk.js.map",
     "runtime-main.js": "/dragon-rampant-builder/static/js/runtime-main.48752ebd.js",
     "runtime-main.js.map": "/dragon-rampant-builder/static/js/runtime-main.48752ebd.js.map",
-    "static/js/2.a89bbfb1.chunk.js": "/dragon-rampant-builder/static/js/2.a89bbfb1.chunk.js",
-    "static/js/2.a89bbfb1.chunk.js.map": "/dragon-rampant-builder/static/js/2.a89bbfb1.chunk.js.map",
+    "static/js/2.c9a618f2.chunk.js": "/dragon-rampant-builder/static/js/2.c9a618f2.chunk.js",
+    "static/js/2.c9a618f2.chunk.js.map": "/dragon-rampant-builder/static/js/2.c9a618f2.chunk.js.map",
     "index.html": "/dragon-rampant-builder/index.html",
-    "precache-manifest.57cc39307b5a48e23b3db4199de7c7c2.js": "/dragon-rampant-builder/precache-manifest.57cc39307b5a48e23b3db4199de7c7c2.js",
+    "precache-manifest.d16f6f1dad59e4308020b5754ba13250.js": "/dragon-rampant-builder/precache-manifest.d16f6f1dad59e4308020b5754ba13250.js",
     "service-worker.js": "/dragon-rampant-builder/service-worker.js",
-    "static/js/2.a89bbfb1.chunk.js.LICENSE.txt": "/dragon-rampant-builder/static/js/2.a89bbfb1.chunk.js.LICENSE.txt"
+    "static/js/2.c9a618f2.chunk.js.LICENSE.txt": "/dragon-rampant-builder/static/js/2.c9a618f2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.48752ebd.js",
-    "static/js/2.a89bbfb1.chunk.js",
-    "static/js/main.455bf911.chunk.js"
+    "static/js/2.c9a618f2.chunk.js",
+    "static/js/main.5b4b08ed.chunk.js"
   ]
 }
