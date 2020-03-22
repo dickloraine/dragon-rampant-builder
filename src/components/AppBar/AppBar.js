@@ -7,9 +7,8 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
 import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
-import Load from './Load';
-import Save from './Save';
-import Share from './Share';
+import LoadList from '../LoadList';
+import SaveList from '../SaveList';
 import SideMenu from './SideMenu';
 import { Error, Success } from '../Toast';
 
@@ -33,17 +32,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function AppBar({
+  roster,
   ui,
   setUIOption,
-  setUIOptions,
+  updateUI,
   armyCost,
-  reload,
-  saveList,
-  loadList,
-  removeList,
-  getSavedLists,
-  getListAsString,
-  rosterName
+  setRoster,
+  setForceInputUpdate,
+  reload
 }) {
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openError, setOpenError] = React.useState(false);
@@ -65,7 +61,7 @@ export default function AppBar({
     const notClicked = clicked === 'viewMode' ? 'editMode' : 'viewMode';
     let newStates = { [clicked]: newState };
     if (newState) newStates = { ...newStates, [notClicked]: false };
-    setUIOptions(newStates);
+    updateUI(newStates);
   };
 
   const ToggleUIButton = ({ option, Icon, title, onClick = setUIOption }) => {
@@ -89,14 +85,11 @@ export default function AppBar({
         <Toolbar>
           <div className={classes.flexing}>
             <SideMenu
-              loadList={loadList}
-              saveList={saveList}
-              removeList={removeList}
-              getSavedLists={getSavedLists}
+              roster={roster}
+              setRoster={setRoster}
+              setForceInputUpdate={setForceInputUpdate}
               showError={showError}
               showSuccess={showSuccess}
-              getListAsString={getListAsString}
-              rosterName={rosterName}
             />
             <Hidden smDown>
               <Typography variant="h5">
@@ -109,11 +102,8 @@ export default function AppBar({
             <IconButton color="inherit" onClick={reload}>
               <ReplayIcon />
             </IconButton>
-            <Save onClick={saveList} showError={showError} showSuccess={showSuccess} />
-            <Load onClick={loadList} getSavedLists={getSavedLists} />
-            <Hidden xsDown>
-              <Share getListAsString={getListAsString} rosterName={rosterName} />
-            </Hidden>
+            <SaveList roster={roster} showError={showError} showSuccess={showSuccess} />
+            <LoadList setRoster={setRoster} setForceInputUpdate={setForceInputUpdate} />
           </div>
           <div className={classes.flexingend}>
             <ToggleUIButton

@@ -1,317 +1,133 @@
-import React, { useState, useEffect } from 'react';
-import AddIcon from '@material-ui/icons/Add';
-import { Fab, Box, Typography, Container } from '@material-ui/core';
-import Unit from 'components/Unit';
+import React, { useState, useEffect, useReducer } from 'react';
+import store from 'store';
+import { Box, Typography, Container, FormControl } from '@material-ui/core';
 import unitData from 'assets/dragonRampantData/units.json';
 import fantasticalRulesData from 'assets/dragonRampantData/fantasticalRules.json';
 import rulesData from 'assets/dragonRampantData/rules.json';
 import spellData from 'assets/dragonRampantData/spells.json';
 import AppBar from '../AppBar';
-import RulesSummary from './RulesSummary';
-import SpellTable from './SpellTable';
-import Statistics from './Statistics';
-import FormControl from '@material-ui/core/FormControl';
-import {
-  BrowserRouter as Router,
-  Route,
-  useLocation,
-  useHistory
-} from 'react-router-dom';
-import store from 'store';
-import * as jsonpack from 'jsonpack/main';
-import pako from 'pako';
+import Units from '../Units';
+import RulesSummary from '../RulesSummary';
+import SpellTable from '../SpellTable';
+import Statistics from '../Statistics';
 import { objReduce } from '../../helpers/utils';
 
-const DEFAULT_UI_OPTIONS = {
-  viewMode: false,
-  editMode: false,
-  rulesSummaryExpanded: true,
-  spellsExpanded: false,
-  statisticsExpanded: true
-};
+const App = () => {
+  const [data] = useState({
+    unitData: unitData,
+    unitNames: Object.keys(unitData).slice(1),
+    fantasticalRulesData: fantasticalRulesData,
+    rulesData: rulesData,
+    spellData: spellData
+  });
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: 'New List',
-      nextID: 0,
-      units: {},
-      unitOrder: [],
-      data: {
-        unitData: unitData,
-        unitNames: Object.keys(unitData).slice(1),
-        fantasticalRulesData: fantasticalRulesData,
-        rulesData: rulesData,
-        spellData: spellData
-      },
-      ui: { ...DEFAULT_UI_OPTIONS },
-      forceInputUpdate: 0
-    };
-  }
-
-  componentDidMount = () => {
-    const uiInfos = {
-      ...DEFAULT_UI_OPTIONS,
-      ...store.get('uiOptions')
-    };
-    // this.addUnit();
-    this.setState({ ui: uiInfos });
+  const initialRoster = {
+    name: 'New List',
+    nextID: 1,
+    units: {
+      0: { ...data.unitData.Unit, options: [], fantasticalRules: [] }
+    },
+    unitOrder: [0]
   };
 
-  reload = () => {
-    this.setState({
-      name: 'New List',
-      forceInputUpdate: this.state.forceUpdateKey ? 0 : 1,
-      armyCost: 0,
-      nextID: 1,
-      units: {
-        0: { ...this.state.data.unitData.Unit, options: [], fantasticalRules: [] }
-      },
-      unitOrder: [0]
-    });
+  const [roster, setRoster] = useState({ ...initialRoster });
+
+  const [ui, setUI] = useState({
+    viewMode: false,
+    editMode: false,
+    rulesSummaryExpanded: true,
+    spellsExpanded: false,
+    statisticsExpanded: true
+  });
+
+  const [forceInputUpdate, setForceInputUpdate] = useReducer(
+    state => (state ? 0 : 1),
+    0
+  );
+
+  useEffect(ui => {
+    setUI({ ...ui, ...store.get('uiOptions') });
+  }, []);
+
+  const updateUI = newAttributes => {
+    setUI({ ...ui, ...newAttributes });
+    store.set('uiOptions', { ...ui, ...newAttributes });
   };
 
-  addUnit = () => {
-    const id = this.state.nextID;
-    this.setState({
-      nextID: id + 1,
-      units: {
-        ...this.state.units,
-        [id]: { ...this.state.data.unitData.Unit, options: [], fantasticalRules: [] }
-      },
-      unitOrder: [...this.state.unitOrder, id]
-    });
-    console.log(this.getListAsString());
+  const setUIOption = (option, value) => {
+    setUI({ ...ui, [option]: value });
+    store.set('uiOptions', { ...ui, [option]: value });
   };
 
-  setUnit = (id, name) => {
-    this.setState({
-      units: {
-        ...this.state.units,
-        [id]: { ...this.state.data.unitData[name], options: [], fantasticalRules: [] }
-      }
-    });
+  const updateRoster = newAttributes => setRoster({ ...roster, ...newAttributes });
+
+  const reload = () => {
+    setRoster({ ...initialRoster });
+    setForceInputUpdate();
   };
 
-  removeUnit = id => {
-    const units = { ...this.state.units };
-    delete units[id];
-    this.setState({
-      units: { ...units },
-      unitOrder: this.state.unitOrder.filter(val => val !== id)
-    });
-  };
-
-  updateUnit = (id, newAttributes) => {
-    this.setState({
-      units: {
-        ...this.state.units,
-        [id]: { ...this.state.units[id], ...newAttributes }
-      }
-    });
-  };
-
-  setUIOption = (option, value) => {
-    this.setState({
-      ui: { ...this.state.ui, [option]: value }
-    });
-    store.set('uiOptions', { ...this.state.ui, [option]: value });
-  };
-
-  setUIOptions = newAttributes => {
-    this.setState({
-      ui: { ...this.state.ui, ...newAttributes }
-    });
-    store.set('uiOptions', { ...this.state.ui, ...newAttributes });
-  };
-
-  saveList = () => {
-    if (this.state.name === 'New List') return false;
-    let savedLists = store.get('savedRosters') || [];
-    savedLists = {
-      ...savedLists,
-      [this.state.name]: {
-        name: this.state.name,
-        nextID: this.state.nextID,
-        units: this.state.units,
-        unitOrder: this.state.unitOrder
-      }
-    };
-    store.set('savedRosters', savedLists);
-    return true;
-  };
-
-  loadList = name => {
-    this.setState({
-      ...store.get('savedRosters')[name],
-      forceInputUpdate: this.state.forceUpdateKey ? 0 : 1
-    });
-  };
-
-  getSavedLists = () => {
-    const savedLists = [];
-    for (const list in store.get('savedRosters')) savedLists.push(list);
-    return savedLists;
-  };
-
-  removeList = name => {
-    if (name === 'Delete all') store.set('savedRosters', []);
-    else {
-      let savedLists = store.get('savedRosters');
-      savedLists = Object.keys(savedLists).filter(val => val !== name);
-      store.set('savedRosters', savedLists);
-    }
-  };
-
-  getListAsString = () => {
-    let list = {
-      name: this.state.name,
-      nextID: this.state.nextID,
-      units: this.state.units,
-      unitOrder: this.state.unitOrder
-    };
-    list = jsonpack.pack(list);
-    list = pako.deflate(list, { to: 'string' });
-    list = btoa(list);
-    return list;
-  };
-
-  getStringListAsJson = list => {
-    list = atob(list);
-    list = pako.inflate(list, { to: 'string' });
-    list = jsonpack.unpack(list);
-    return list;
-  };
-
-  importFromString = list => {
-    list = this.getStringListAsJson(list);
-    this.setState({
-      ...list,
-      forceInputUpdate: this.state.forceUpdateKey ? 0 : 1
-    });
-  };
-
-  getSpecialRules = () => {
+  const getSpecialRules = () => {
     let specialRules = new Set();
-    for (const unit of Object.values(this.state.units)) {
+    for (const unit of Object.values(roster.units)) {
       for (const rule of unit.rules) {
-        this.state.data.rulesData[this.state.data.rulesData[rule]]
-          ? specialRules.add(this.state.data.rulesData[rule])
+        data.rulesData[data.rulesData[rule]]
+          ? specialRules.add(data.rulesData[rule])
           : specialRules.add(rule);
       }
     }
     return [...specialRules].sort();
   };
 
-  getTotalPoints = () =>
-    objReduce(Object.values(this.state.units), (acc, unit) => acc + unit.points, 0);
+  const getTotalPoints = () =>
+    objReduce(Object.values(roster.units), (acc, unit) => acc + unit.points, 0);
 
-  render() {
-    return (
-      <Router>
-        <Container>
-          <AppBar
-            setUIOption={this.setUIOption}
-            setUIOptions={this.setUIOptions}
-            ui={this.state.ui}
-            armyCost={this.getTotalPoints()}
-            reload={this.reload}
-            saveList={this.saveList}
-            loadList={this.loadList}
-            removeList={this.removeList}
-            getSavedLists={this.getSavedLists}
-            getListAsString={this.getListAsString}
-            rosterName={this.state.name}
+  return (
+    <Container>
+      <AppBar
+        setUIOption={setUIOption}
+        updateUI={updateUI}
+        ui={ui}
+        roster={roster}
+        setRoster={setRoster}
+        armyCost={getTotalPoints()}
+        reload={reload}
+        setForceInputUpdate={setForceInputUpdate}
+      />
+      <Box>
+        <FormControl>
+          <Typography
+            style={{ border: 0, marginBottom: 25 }}
+            variant="h4"
+            key={forceInputUpdate}
+            component="Input"
+            value={roster.name}
+            onChange={e => updateRoster({ name: e.target.value })}
           />
-          <Box>
-            <FormControl>
-              <Typography
-                style={{ border: 0, marginBottom: 25 }}
-                variant="h4"
-                key={this.state.forceInputUpdate}
-                component="Input"
-                value={this.state.name}
-                onChange={e => this.setState({ name: e.target.value })}
-              />
-            </FormControl>
-            {!Object.keys(this.state.units).length && (
-              <Typography variant="h6" style={{ marginBottom: 25 }}>
-                Click the button to add your first unit!
-              </Typography>
-            )}
-            <Box display="flex" flexDirection="row" flexWrap="wrap">
-              {this.state.unitOrder.map(id => (
-                <Unit
-                  id={id}
-                  key={id}
-                  unit={this.state.units[id]}
-                  updateUnit={this.updateUnit}
-                  removeUnit={this.removeUnit}
-                  setUnit={this.setUnit}
-                  data={this.state.data}
-                  ui={this.state.ui}
-                />
-              ))}
-            </Box>
-            {!this.state.ui.viewMode && (
-              <Fab
-                color="secondary"
-                style={{ marginLeft: 25, marginBottom: 25 }}
-                onClick={this.addUnit}
-              >
-                <AddIcon />
-              </Fab>
-            )}
-            <RulesSummary
-              getSpecialRules={this.getSpecialRules}
-              rulesData={this.state.data.rulesData}
-              rulesSummaryExpanded={this.state.ui.rulesSummaryExpanded}
-              setUIOption={this.setUIOption}
-            />
-            <SpellTable
-              getSpecialRules={this.getSpecialRules}
-              spellsExpanded={this.state.ui.spellsExpanded}
-              setUIOption={this.setUIOption}
-              spellData={this.state.data.spellData}
-            />
-            <Statistics
-              armyCost={this.getTotalPoints()}
-              units={this.state.units}
-              unitData={this.state.data.unitData}
-              fantasticalRulesData={this.state.data.fantasticalRulesData}
-              statisticsExpanded={this.state.ui.statisticsExpanded}
-              setUIOption={this.setUIOption}
-            />
-          </Box>
-          <Route
-            path="/"
-            render={props => (
-              <ImportList
-                {...props}
-                importFromString={this.importFromString}
-                addUnit={this.addUnit}
-              />
-            )}
-          />
-        </Container>
-      </Router>
-    );
-  }
-}
-
-const ImportList = ({ importFromString, addUnit }) => {
-  let list = useLocation().search;
-  let history = useHistory();
-
-  useEffect(() => {
-    list = list.slice(1);
-    if (list) importFromString(list);
-    else addUnit();
-    history.push(`/`);
-  }, []);
-
-  return <div></div>;
+        </FormControl>
+        <Units roster={roster} updateRoster={updateRoster} ui={ui} data={data} />
+        <RulesSummary
+          getSpecialRules={getSpecialRules}
+          rulesData={data.rulesData}
+          rulesSummaryExpanded={ui.rulesSummaryExpanded}
+          setUIOption={setUIOption}
+        />
+        <SpellTable
+          getSpecialRules={getSpecialRules}
+          spellsExpanded={ui.spellsExpanded}
+          setUIOption={setUIOption}
+          spellData={data.spellData}
+        />
+        <Statistics
+          armyCost={getTotalPoints()}
+          units={roster.units}
+          unitData={data.unitData}
+          fantasticalRulesData={data.fantasticalRulesData}
+          statisticsExpanded={ui.statisticsExpanded}
+          setUIOption={setUIOption}
+        />
+      </Box>
+    </Container>
+  );
 };
 
 export default App;

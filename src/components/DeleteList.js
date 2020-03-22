@@ -1,28 +1,35 @@
 import React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
-import SimpleDialog from '../SimpleDialog';
+import store from 'store';
+import SimpleDialog from './SimpleDialog';
 
-export default function Delete({
-  onClick,
-  getSavedLists,
-  showSuccess,
-  showText = false
-}) {
+export default function DeleteList({ showSuccess, onClose = null, showText = false }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => setOpen(true);
 
   const handleClose = value => {
     setOpen(false);
-    onClick(value);
+    removeList(value);
     if (value) showSuccess('Deleted!');
+    if (onClose) onClose();
   };
 
-  const getSaved = () => {
-    const saved = getSavedLists();
-    saved.push('Delete all');
-    return saved;
+  const removeList = name => {
+    if (name === 'Delete all') store.set('savedRosters', []);
+    else {
+      let savedLists = store.get('savedRosters');
+      delete savedLists[name];
+      store.set('savedRosters', savedLists);
+    }
+  };
+
+  const getSavedLists = () => {
+    const savedLists = [];
+    for (const list in store.get('savedRosters')) savedLists.push(list);
+    savedLists.push('Delete all');
+    return savedLists;
   };
 
   return (
@@ -36,7 +43,7 @@ export default function Delete({
       <SimpleDialog
         open={open}
         onClose={handleClose}
-        options={getSaved()}
+        options={getSavedLists()}
         title="Choose List to delete"
       />
     </>
