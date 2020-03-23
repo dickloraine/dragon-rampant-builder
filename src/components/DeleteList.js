@@ -39,7 +39,7 @@ export default function DeleteList({ showSuccess, onClose = null, showText = fal
           <DeleteIcon />
         </IconButton>
       </Tooltip>
-      {showText && <Typography onClick={handleClickOpen}>Delete</Typography>}
+      {showText && <Typography onClick={handleClickOpen}>Delete List</Typography>}
       <SimpleDialog
         open={open}
         onClose={handleClose}

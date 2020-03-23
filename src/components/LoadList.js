@@ -33,12 +33,12 @@ export default function LoadList({
 
   return (
     <>
-      <Tooltip title="Load">
+      <Tooltip title="Load List">
         <IconButton color="inherit" onClick={handleClickOpen}>
           <SaveOutlinedIcon />
         </IconButton>
       </Tooltip>
-      {showText && <Typography onClick={handleClickOpen}>Load</Typography>}
+      {showText && <Typography onClick={handleClickOpen}>Load List</Typography>}
       <SimpleDialog
         open={open}
         onClose={handleClose}

@@ -29,12 +29,12 @@ export default function SaveList({
 
   return (
     <>
-      <Tooltip title="Save">
+      <Tooltip title="Save List">
         <IconButton color="inherit" onClick={saveRoster}>
           <SaveIcon />
         </IconButton>
       </Tooltip>
-      {showText && <Typography onClick={saveRoster}>Save</Typography>}
+      {showText && <Typography onClick={saveRoster}>Save List</Typography>}
     </>
   );
 }
