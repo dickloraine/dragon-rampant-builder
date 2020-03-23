@@ -11,13 +11,11 @@ import {
 } from '@material-ui/core';
 
 export default function RulesSummary({
-  getSpecialRules,
+  specialRules,
   setUIOption,
   rulesData,
   rulesSummaryExpanded
 }) {
-  const specialRules = getSpecialRules();
-
   return (
     <ExpansionPanel
       expanded={rulesSummaryExpanded}

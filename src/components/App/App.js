@@ -77,9 +77,13 @@ const App = () => {
     }
     return [...specialRules].sort();
   };
+  const specialRules = getSpecialRules();
 
-  const getTotalPoints = () =>
-    objReduce(Object.values(roster.units), (acc, unit) => acc + unit.points, 0);
+  const totalPoints = objReduce(
+    Object.values(roster.units),
+    (acc, unit) => acc + unit.points,
+    0
+  );
 
   return (
     <Container>
@@ -89,7 +93,7 @@ const App = () => {
         ui={ui}
         roster={roster}
         setRoster={setRoster}
-        armyCost={getTotalPoints()}
+        armyCost={totalPoints}
         reload={reload}
         setForceInputUpdate={setForceInputUpdate}
       />
@@ -106,19 +110,19 @@ const App = () => {
         </FormControl>
         <Units roster={roster} updateRoster={updateRoster} ui={ui} data={data} />
         <RulesSummary
-          getSpecialRules={getSpecialRules}
+          specialRules={specialRules}
           rulesData={data.rulesData}
           rulesSummaryExpanded={ui.rulesSummaryExpanded}
           setUIOption={setUIOption}
         />
         <SpellTable
-          getSpecialRules={getSpecialRules}
+          specialRules={specialRules}
           spellsExpanded={ui.spellsExpanded}
           setUIOption={setUIOption}
           spellData={data.spellData}
         />
         <Statistics
-          armyCost={getTotalPoints()}
+          armyCost={totalPoints}
           units={roster.units}
           unitData={data.unitData}
           fantasticalRulesData={data.fantasticalRulesData}

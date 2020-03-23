@@ -16,12 +16,10 @@ import {
 
 export default function SpellTable({
   setUIOption,
-  getSpecialRules,
+  specialRules,
   spellsExpanded,
   spellData
 }) {
-  const specialRules = getSpecialRules();
-
   const spellcasterInRoster = () => {
     for (const rule of specialRules) {
       if (rule === 'Spellcaster' || rule === 'Wizardlings') return true;
