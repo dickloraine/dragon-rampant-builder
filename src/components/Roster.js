@@ -3,7 +3,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { Fab, Box, Typography } from '@material-ui/core';
 import Unit from './Unit';
 
-const Units = ({ roster, updateRoster, ui, data }) => {
+const Roster = ({ roster, updateRoster, ui, data }) => {
   const updateUnit = (id, newAttributes) => {
     updateRoster({
       units: {
@@ -78,4 +78,4 @@ const Units = ({ roster, updateRoster, ui, data }) => {
   );
 };
 
-export default Units;
+export default Roster;

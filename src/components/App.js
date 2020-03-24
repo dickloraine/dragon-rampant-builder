@@ -5,13 +5,13 @@ import unitData from 'assets/dragonRampantData/units.json';
 import fantasticalRulesData from 'assets/dragonRampantData/fantasticalRules.json';
 import rulesData from 'assets/dragonRampantData/rules.json';
 import spellData from 'assets/dragonRampantData/spells.json';
-import ShowFeedback from '../ShowFeedback';
+import ShowFeedback from './ShowFeedback';
 import AppBar from './AppBar';
-import Units from '../Units';
-import RulesSummary from '../RulesSummary';
-import SpellTable from '../SpellTable';
-import Statistics from '../Statistics';
-import { objReduce } from '../../helpers/utils';
+import Roster from './Roster';
+import RulesSummary from './RulesSummary';
+import SpellTable from './SpellTable';
+import Statistics from './Statistics/Statistics';
+import { objReduce } from 'helpers/utils';
 
 const App = () => {
   const [data] = useState({
@@ -119,7 +119,7 @@ const App = () => {
             onChange={e => updateRoster({ name: e.target.value })}
           />
         </FormControl>
-        <Units roster={roster} updateRoster={updateRoster} ui={ui} data={data} />
+        <Roster roster={roster} updateRoster={updateRoster} ui={ui} data={data} />
         <RulesSummary
           specialRules={specialRules}
           rulesData={data.rulesData}
