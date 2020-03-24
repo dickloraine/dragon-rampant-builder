@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { AppBar as AppBarMaterial, Box } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -10,26 +9,6 @@ import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
 import LoadList from './LoadList';
 import SaveList from './SaveList';
 import SideMenu from './SideMenu';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    marginBottom: 25
-  },
-
-  flexing: {
-    display: 'flex',
-    flexGrow: 1,
-    alignItems: 'center'
-  },
-
-  flexingend: {
-    display: 'flex',
-    flexGrow: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  }
-}));
 
 export default function AppBar({
   roster,
@@ -42,8 +21,6 @@ export default function AppBar({
   showFeedback,
   reload
 }) {
-  const classes = useStyles();
-
   const changeViewMode = (clicked, newState) => {
     const notClicked = clicked === 'viewMode' ? 'editMode' : 'viewMode';
     let newStates = { [clicked]: newState };
@@ -67,10 +44,10 @@ export default function AppBar({
   };
 
   return (
-    <div className={classes.root}>
+    <Box display="flex">
       <AppBarMaterial position="fixed">
         <Toolbar>
-          <div className={classes.flexing}>
+          <Box display="flex" alignItems="center">
             <SideMenu
               roster={roster}
               setRoster={setRoster}
@@ -94,9 +71,9 @@ export default function AppBar({
               showFeedback={showFeedback}
               setForceInputUpdate={setForceInputUpdate}
             />
-          </div>
-          <div className={classes.flexing}></div>
-          <Box display="flex">
+          </Box>
+          <Box flexGrow={1}></Box>
+          <Box display="flex" alignItems="center">
             <ToggleUIButton
               option="viewMode"
               Icon={VisibilityIcon}
@@ -129,6 +106,6 @@ export default function AppBar({
         </Toolbar>
       </AppBarMaterial>
       <Toolbar />
-    </div>
+    </Box>
   );
 }
