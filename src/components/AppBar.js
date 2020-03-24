@@ -17,10 +17,6 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 25
   },
 
-  grow: {
-    flexGrow: 1
-  },
-
   flexing: {
     display: 'flex',
     flexGrow: 1,
