@@ -1,11 +1,11 @@
 import React from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
 import { List, ListItem, Drawer, Divider } from '@material-ui/core';
-import LoadList from '../LoadList';
-import SaveList from '../SaveList';
-import DeleteList from '../DeleteList';
-import ExportList from '../ExportList';
-import ImportList from '../ImportList';
+import LoadList from './LoadList';
+import SaveList from './SaveList';
+import DeleteList from './DeleteList';
+import ExportList from './ExportList';
+import ImportList from './ImportList';
 
 export default function SideMenu({
   roster,

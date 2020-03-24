@@ -9,7 +9,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
 import LoadList from '../LoadList';
 import SaveList from '../SaveList';
-import SideMenu from './SideMenu';
+import SideMenu from '../SideMenu';
 
 const useStyles = makeStyles(theme => ({
   root: {

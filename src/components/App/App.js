@@ -6,7 +6,7 @@ import fantasticalRulesData from 'assets/dragonRampantData/fantasticalRules.json
 import rulesData from 'assets/dragonRampantData/rules.json';
 import spellData from 'assets/dragonRampantData/spells.json';
 import ShowFeedback from '../ShowFeedback';
-import AppBar from '../AppBar';
+import AppBar from './AppBar';
 import Units from '../Units';
 import RulesSummary from '../RulesSummary';
 import SpellTable from '../SpellTable';
