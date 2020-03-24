@@ -111,7 +111,7 @@ const App = () => {
       <Box>
         <FormControl>
           <Typography
-            style={{ border: 0, marginBottom: 25 }}
+            style={{ border: 0, marginBottom: 25, width: '100%' }}
             variant="h4"
             key={forceInputUpdate}
             component="Input"

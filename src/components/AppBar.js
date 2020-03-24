@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar as AppBarMaterial } from '@material-ui/core';
+import { AppBar as AppBarMaterial, Box } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import ReplayIcon from '@material-ui/icons/Replay';
@@ -13,7 +13,12 @@ import SideMenu from './SideMenu';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    flexGrow: 1,
     marginBottom: 25
+  },
+
+  grow: {
+    flexGrow: 1
   },
 
   flexing: {
@@ -81,7 +86,7 @@ export default function AppBar({
                 &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
               </Typography>
             </Hidden>
-            <Hidden mdUp>
+            <Hidden xsDown mdUp>
               <Typography variant="h5">&nbsp;&nbsp;DRAB&nbsp;&nbsp;</Typography>
             </Hidden>
             <IconButton color="inherit" onClick={reload}>
@@ -94,7 +99,8 @@ export default function AppBar({
               setForceInputUpdate={setForceInputUpdate}
             />
           </div>
-          <div className={classes.flexingend}>
+          <div className={classes.flexing}></div>
+          <Box display="flex">
             <ToggleUIButton
               option="viewMode"
               Icon={VisibilityIcon}
@@ -123,7 +129,7 @@ export default function AppBar({
                 </Fab>
               </Typography>
             </Hidden>
-          </div>
+          </Box>
         </Toolbar>
       </AppBarMaterial>
       <Toolbar />

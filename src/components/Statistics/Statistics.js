@@ -5,8 +5,10 @@ import {
   Chip,
   ExpansionPanel,
   ExpansionPanelSummary,
-  ExpansionPanelDetails
+  ExpansionPanelDetails,
+  useMediaQuery
 } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import { objFilter, objReduce } from '../../helpers/utils';
 import UnitDistributionChart from './UnitDistributionChart';
 import PointDistributionChart from './PointDistributionChart';
@@ -19,6 +21,9 @@ export default function Statistics({
   statisticsExpanded,
   setUIOption
 }) {
+  const theme = useTheme();
+  const chipSize = useMediaQuery(theme.breakpoints.down('sm')) ? 'small' : 'medium';
+
   const optionPoints = objReduce(
     units,
     (accumulator, unit) =>
@@ -75,7 +80,7 @@ export default function Statistics({
     <ExpansionPanel
       expanded={statisticsExpanded}
       onChange={() => setUIOption('statisticsExpanded', !statisticsExpanded)}
-      style={{ minWidth: 400, maxWidth: 1210 }}
+      style={{ maxWidth: 1210 }}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="h5">Statistics</Typography>
@@ -85,12 +90,14 @@ export default function Statistics({
           <Chip
             label={totalPoints + ' Points'}
             color="primary"
-            style={{ marginRight: 25, marginBottom: 25 }}
+            size={chipSize}
+            style={{ marginRight: 10, marginBottom: 25 }}
           />
           <Chip
             label={unitCount + ' Units'}
             color="primary"
-            style={{ marginRight: 25, marginBottom: 25 }}
+            size={chipSize}
+            style={{ marginRight: 10, marginBottom: 25 }}
           />
           <Chip
             label={
@@ -98,7 +105,8 @@ export default function Statistics({
               ' Points per unit'
             }
             color="primary"
-            style={{ marginRight: 25, marginBottom: 25 }}
+            size={chipSize}
+            style={{ marginRight: 10, marginBottom: 25 }}
           />
           {unitsCost > 0 && (
             <>

@@ -33,7 +33,7 @@ export default function SpellTable({
         <ExpansionPanel
           expanded={spellsExpanded}
           onChange={() => setUIOption('spellsExpanded', !spellsExpanded)}
-          style={{ minWidth: 400, maxWidth: 1210 }}
+          style={{ maxWidth: 1210 }}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h5">Spell Table</Typography>

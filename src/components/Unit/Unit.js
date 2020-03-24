@@ -54,7 +54,7 @@ function Unit({ id, unit, updateUnit, data, setUnit, removeUnit, ui }) {
   };
 
   return (
-    <Card variant="outlined" style={{ marginBottom: 25, minWidth: 400 }}>
+    <Card variant="outlined" style={{ marginBottom: 25, maxWidth: 400, width: '100%' }}>
       <CardHeader
         title={
           <UnitSelector
