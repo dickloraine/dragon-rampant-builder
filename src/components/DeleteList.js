@@ -4,7 +4,7 @@ import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import store from 'store';
 import SimpleDialog from './SimpleDialog';
 
-export default function DeleteList({ showSuccess, onClose = null, showText = false }) {
+export default function DeleteList({ showFeedback, onClose = null, showText = false }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => setOpen(true);
@@ -12,7 +12,7 @@ export default function DeleteList({ showSuccess, onClose = null, showText = fal
   const handleClose = value => {
     setOpen(false);
     removeList(value);
-    if (value) showSuccess('Deleted!');
+    if (value) showFeedback('Deleted!', 'success');
     if (onClose) onClose();
   };
 

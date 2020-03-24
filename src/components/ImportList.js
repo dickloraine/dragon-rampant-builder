@@ -16,8 +16,7 @@ import * as jsonpack from 'jsonpack/main';
 const ImportList = ({
   setRoster,
   setForceInputUpdate,
-  showError,
-  showSuccess,
+  showFeedback,
   onClose = null,
   showText = false
 }) => {
@@ -35,9 +34,9 @@ const ImportList = ({
       const list = jsonpack.unpack(listString);
       setRoster({ ...list });
       setForceInputUpdate();
-      showSuccess('List imported!');
+      showFeedback('List imported!', 'success');
     } catch (err) {
-      showError('Could not import the list!');
+      showFeedback('Could not import the list!', 'error');
     }
     handleClose();
   };

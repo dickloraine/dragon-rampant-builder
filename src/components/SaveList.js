@@ -5,8 +5,7 @@ import store from 'store';
 
 export default function SaveList({
   roster,
-  showError,
-  showSuccess,
+  showFeedback,
   onClose = null,
   showText = false
 }) {
@@ -22,8 +21,8 @@ export default function SaveList({
   };
 
   const saveRoster = () => {
-    if (saveList()) showSuccess('Saved!');
-    else showError('You have to give the list a name!');
+    if (saveList()) showFeedback('Saved!', 'success');
+    else showFeedback('You have to give the list a name!', 'error');
     if (onClose) onClose();
   };
 

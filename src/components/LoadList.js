@@ -7,6 +7,7 @@ import store from 'store';
 export default function LoadList({
   setRoster,
   setForceInputUpdate,
+  showFeedback,
   onClose = null,
   showText = false
 }) {
@@ -23,6 +24,7 @@ export default function LoadList({
   const loadList = name => {
     setRoster({ ...store.get('savedRosters')[name] });
     setForceInputUpdate();
+    showFeedback(`${name} loaded!`, 'success');
   };
 
   const getSavedLists = () => {

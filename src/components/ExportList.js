@@ -5,20 +5,14 @@ import * as jsonpack from 'jsonpack/main';
 
 const copyToClipboard = text => navigator.clipboard.writeText(text);
 
-const ExportList = ({
-  roster,
-  showError,
-  showSuccess,
-  onClose = null,
-  showText = false
-}) => {
+const ExportList = ({ roster, showFeedback, onClose = null, showText = false }) => {
   const handleClick = () => {
     const list = jsonpack.pack(roster);
     try {
       copyToClipboard(list);
-      showSuccess('List copied to clipboard!');
+      showFeedback('List copied to clipboard!', 'success');
     } catch (err) {
-      showError('Could not export the list!');
+      showFeedback('Could not export the list!', 'error');
     }
     if (onClose) onClose();
   };

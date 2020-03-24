@@ -5,6 +5,7 @@ import unitData from 'assets/dragonRampantData/units.json';
 import fantasticalRulesData from 'assets/dragonRampantData/fantasticalRules.json';
 import rulesData from 'assets/dragonRampantData/rules.json';
 import spellData from 'assets/dragonRampantData/spells.json';
+import ShowFeedback from '../ShowFeedback';
 import AppBar from '../AppBar';
 import Units from '../Units';
 import RulesSummary from '../RulesSummary';
@@ -45,6 +46,12 @@ const App = () => {
     0
   );
 
+  const [feedback, setFeedback] = useState({
+    open: false,
+    message: '',
+    severity: ''
+  });
+
   useEffect(ui => {
     setUI({ ...ui, ...store.get('uiOptions') });
   }, []);
@@ -60,6 +67,9 @@ const App = () => {
   };
 
   const updateRoster = newAttributes => setRoster({ ...roster, ...newAttributes });
+
+  const showFeedback = (message, severity) =>
+    setFeedback({ open: true, message: message, severity: severity });
 
   const reload = () => {
     setRoster({ ...initialRoster });
@@ -94,6 +104,7 @@ const App = () => {
         roster={roster}
         setRoster={setRoster}
         armyCost={totalPoints}
+        showFeedback={showFeedback}
         reload={reload}
         setForceInputUpdate={setForceInputUpdate}
       />
@@ -130,6 +141,7 @@ const App = () => {
           setUIOption={setUIOption}
         />
       </Box>
+      <ShowFeedback feedback={feedback} setFeetback={setFeedback} />
     </Container>
   );
 };

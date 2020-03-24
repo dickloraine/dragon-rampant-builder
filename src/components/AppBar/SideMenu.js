@@ -11,8 +11,7 @@ export default function SideMenu({
   roster,
   setRoster,
   setForceInputUpdate,
-  showError,
-  showSuccess
+  showFeedback
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -33,8 +32,7 @@ export default function SideMenu({
           <ListItem button key={'Save'}>
             <SaveList
               roster={roster}
-              showError={showError}
-              showSuccess={showSuccess}
+              showFeedback={showFeedback}
               onClose={handleClose}
               showText={true}
             />
@@ -43,13 +41,14 @@ export default function SideMenu({
             <LoadList
               setRoster={setRoster}
               setForceInputUpdate={setForceInputUpdate}
+              showFeedback={showFeedback}
               onClose={handleClose}
               showText={true}
             />
           </ListItem>
           <ListItem button key={'Delete'}>
             <DeleteList
-              showSuccess={showSuccess}
+              showFeedback={showFeedback}
               onClose={handleClose}
               showText={true}
             />
@@ -58,8 +57,7 @@ export default function SideMenu({
           <ListItem button key={'Export'}>
             <ExportList
               roster={roster}
-              showError={showError}
-              showSuccess={showSuccess}
+              showFeedback={showFeedback}
               onClose={handleClose}
               showText={true}
             />
@@ -68,8 +66,7 @@ export default function SideMenu({
             <ImportList
               setRoster={setRoster}
               setForceInputUpdate={setForceInputUpdate}
-              showError={showError}
-              showSuccess={showSuccess}
+              showFeedback={showFeedback}
               onClose={handleClose}
               showText={true}
             />

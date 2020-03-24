@@ -10,7 +10,6 @@ import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
 import LoadList from '../LoadList';
 import SaveList from '../SaveList';
 import SideMenu from './SideMenu';
-import { Error, Success } from '../Toast';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,23 +38,10 @@ export default function AppBar({
   armyCost,
   setRoster,
   setForceInputUpdate,
+  showFeedback,
   reload
 }) {
-  const [openSuccess, setOpenSuccess] = React.useState(false);
-  const [openError, setOpenError] = React.useState(false);
-  const [successMessage, setSuccessMessage] = React.useState('');
-  const [errorMessage, setErrorMessage] = React.useState('');
   const classes = useStyles();
-
-  const showError = message => {
-    setErrorMessage(message);
-    setOpenError(true);
-  };
-
-  const showSuccess = message => {
-    setSuccessMessage(message);
-    setOpenSuccess(true);
-  };
 
   const changeViewMode = (clicked, newState) => {
     const notClicked = clicked === 'viewMode' ? 'editMode' : 'viewMode';
@@ -88,8 +74,7 @@ export default function AppBar({
               roster={roster}
               setRoster={setRoster}
               setForceInputUpdate={setForceInputUpdate}
-              showError={showError}
-              showSuccess={showSuccess}
+              showFeedback={showFeedback}
             />
             <Hidden smDown>
               <Typography variant="h5">
@@ -102,8 +87,12 @@ export default function AppBar({
             <IconButton color="inherit" onClick={reload}>
               <ReplayIcon />
             </IconButton>
-            <SaveList roster={roster} showError={showError} showSuccess={showSuccess} />
-            <LoadList setRoster={setRoster} setForceInputUpdate={setForceInputUpdate} />
+            <SaveList roster={roster} showFeedback={showFeedback} />
+            <LoadList
+              setRoster={setRoster}
+              showFeedback={showFeedback}
+              setForceInputUpdate={setForceInputUpdate}
+            />
           </div>
           <div className={classes.flexingend}>
             <ToggleUIButton
@@ -138,16 +127,6 @@ export default function AppBar({
         </Toolbar>
       </AppBarMaterial>
       <Toolbar />
-      <Success
-        message={successMessage}
-        open={openSuccess}
-        setOpen={val => setOpenSuccess(val)}
-      />
-      <Error
-        message={errorMessage}
-        open={openError}
-        setOpen={val => setOpenError(val)}
-      />
     </div>
   );
 }
