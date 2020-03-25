@@ -105,13 +105,7 @@ function Unit({ id, unit, roster, updateRoster, data, setUnit, removeUnit, ui })
               fantasticalRulesData={data.fantasticalRulesData}
               unit={unit}
             />
-            <Actions
-              id={id}
-              unit={unit}
-              updateUnit={updateUnit}
-              roster={roster}
-              updateRoster={updateRoster}
-            />
+            <Actions id={id} unit={unit} roster={roster} updateRoster={updateRoster} />
           </>
         )}
       </CardContent>

@@ -4,7 +4,7 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { IconButton, CardActions } from '@material-ui/core';
 
-const Actions = ({ id, unit, updateUnit, roster, updateRoster }) => {
+const Actions = ({ id, unit, roster, updateRoster }) => {
   const moveUnit = dir => {
     const unitOrder = [...roster.unitOrder];
     const index = roster.unitOrder.indexOf(id);
