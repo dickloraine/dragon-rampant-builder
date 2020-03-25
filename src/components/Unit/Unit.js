@@ -9,47 +9,52 @@ import FantasticalRules from './FantasticalRules';
 import StatBlock from './StatBlock';
 import SpecialRules from './SpecialRules';
 
+const buildUnit = (name, options, fantasticalRules, data) => {
+  const unitData = data.unitData[name];
+  let unit = {
+    ...unitData,
+    options: [...options],
+    fantasticalRules: [...fantasticalRules]
+  };
+
+  let points = unitData.points;
+  for (let option of unit.options) {
+    option = unitData.options[option];
+    points += option.points;
+
+    if (option.setStats) {
+      for (const [key, val] of Object.entries(option.setStats)) {
+        unit = { ...unit, stats: { ...unit.stats, [key]: val } };
+      }
+    }
+
+    if (option.add) {
+      for (const rule of option.add) {
+        unit.rules = [...unit.rules, rule];
+      }
+    }
+
+    if (option.remove) {
+      for (const rule of option.remove) {
+        unit.rules = unit.rules.filter(val => val !== rule);
+      }
+    }
+  }
+  for (let fant of unit.fantasticalRules) {
+    fant = data.fantasticalRulesData[fant];
+    points += fant.points;
+    unit.rules = [...unit.rules, fant.name];
+  }
+
+  unit = { ...unit, points: points };
+  return unit;
+};
+
 function Unit({ id, unit, updateUnit, data, setUnit, removeUnit, ui }) {
   const changeUnit = unitName => setUnit(id, unitName);
 
   const handleChange = unit => {
-    const unitData = data.unitData[unit.name];
-    unit = {
-      ...unitData,
-      options: [...unit.options],
-      fantasticalRules: [...unit.fantasticalRules]
-    };
-
-    let points = unitData.points;
-    for (let option of unit.options) {
-      option = unitData.options[option];
-      points += option.points;
-
-      if (option.setStats) {
-        for (const [key, val] of Object.entries(option.setStats)) {
-          unit = { ...unit, stats: { ...unit.stats, [key]: val } };
-        }
-      }
-
-      if (option.add) {
-        for (const rule of option.add) {
-          unit.rules = [...unit.rules, rule];
-        }
-      }
-
-      if (option.remove) {
-        for (const rule of option.remove) {
-          unit.rules = unit.rules.filter(val => val !== rule);
-        }
-      }
-    }
-    for (let fant of unit.fantasticalRules) {
-      fant = data.fantasticalRulesData[fant];
-      points += fant.points;
-      unit.rules = [...unit.rules, fant.name];
-    }
-
-    unit = { ...unit, points: points };
+    unit = buildUnit(unit.name, unit.options, unit.fantasticalRules, data);
     updateUnit(id, { ...unit });
   };
 
@@ -100,3 +105,4 @@ function Unit({ id, unit, updateUnit, data, setUnit, removeUnit, ui }) {
 }
 
 export default Unit;
+export { buildUnit };
