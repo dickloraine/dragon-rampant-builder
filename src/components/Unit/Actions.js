@@ -1,8 +1,8 @@
 import React from 'react';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import PlusOneIcon from '@material-ui/icons/PlusOne';
-import { IconButton, CardActions } from '@material-ui/core';
+import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { IconButton, Box, Tooltip } from '@material-ui/core';
 
 const Actions = ({ id, unit, roster, updateRoster }) => {
   const moveUnit = dir => {
@@ -31,17 +31,30 @@ const Actions = ({ id, unit, roster, updateRoster }) => {
   };
 
   return (
-    <CardActions>
-      <IconButton onClick={moveLeft}>
-        <ArrowLeftIcon />
-      </IconButton>
-      <IconButton onClick={moveRight}>
-        <ArrowRightIcon />
-      </IconButton>
-      <IconButton onClick={cloneUnit}>
-        <PlusOneIcon />
-      </IconButton>
-    </CardActions>
+    <Box>
+      <Box display="flex" width="97%" style={{ height: 25, marginTop: 10 }}>
+        <Box display="flex" alignItems="center">
+          <Tooltip title="Move back">
+            <IconButton onClick={moveLeft}>
+              <NavigateBeforeIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Move forward">
+            <IconButton onClick={moveRight}>
+              <NavigateNextIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+        <Box flexGrow={1}></Box>
+        <Box display="flex" alignItems="center">
+          <Tooltip title="Clone unit">
+            <IconButton onClick={cloneUnit}>
+              <PersonAddOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

@@ -29,6 +29,8 @@
 
     "Invisibility": "Invisible units may not be targeted by ranged attacks except for spells, and do not block line of sight. Invisible units become visible during Attacks and may be targeted by enemy Attacks. Invisible units may achieve objectives and use the unit proximity rule in the same way as other units; they cannot be passed through by other units, as everyone senses their presence even if they can't see them clearly.",
 
+    "Leader": "The leader of the army.",
+
     "Mystical Armour": "If a unit is equipped with mystical armour, for every Strength Point lost, roll one  die. On a roll of a 6, that point will be ignored.",
 
     "No Feelings": "Undead. Courage value of 0+. This means that your unit will never become Battered, but will still rout on a negative final score (their magical reanimation being broken). They also ignore the effect of Fear. Such units are, however, fragile due to a lack of armour or calcium deficiency, meaning that any hits inflicted during Attacks are rounded up (as opposed to down) when working out how many Strength Points are lost",

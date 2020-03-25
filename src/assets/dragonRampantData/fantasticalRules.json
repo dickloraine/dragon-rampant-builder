@@ -1,4 +1,8 @@
 {
+    "Leader": {
+        "name": "Leader",
+        "points": 0
+    },
     "Cleric": {
         "name": "Cleric",
         "points": 4
