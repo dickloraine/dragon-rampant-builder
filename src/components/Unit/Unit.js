@@ -89,14 +89,12 @@ function Unit({ id, unit, updateUnit, data, setUnit, removeUnit, ui }) {
               optionsData={data.unitData[unit.name].options}
               unit={unit}
             />
-            <Box>
-              <FantasticalRules
-                onChange={handleChange}
-                unitData={data.unitData[unit.name]}
-                fantasticalRulesData={data.fantasticalRulesData}
-                unit={unit}
-              />
-            </Box>
+            <FantasticalRules
+              onChange={handleChange}
+              unitData={data.unitData[unit.name]}
+              fantasticalRulesData={data.fantasticalRulesData}
+              unit={unit}
+            />
           </>
         )}
       </CardContent>
