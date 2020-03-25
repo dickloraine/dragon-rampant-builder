@@ -38,8 +38,8 @@ const Actions = ({ id, unit, roster, updateRoster }) => {
       <IconButton onClick={moveRight}>
         <ArrowRightIcon />
       </IconButton>
-      <IconButton>
-        <PlusOneIcon onClick={cloneUnit} />
+      <IconButton onClick={cloneUnit}>
+        <PlusOneIcon />
       </IconButton>
     </CardActions>
   );
