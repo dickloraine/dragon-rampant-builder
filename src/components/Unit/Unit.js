@@ -2,12 +2,13 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CloseIcon from '@material-ui/icons/Close';
-import { Box, Button, CardHeader } from '@material-ui/core';
+import { Button, CardHeader } from '@material-ui/core';
 import UnitSelector from './UnitSelector';
 import Options from './Options';
 import FantasticalRules from './FantasticalRules';
 import StatBlock from './StatBlock';
 import SpecialRules from './SpecialRules';
+import Actions from './Actions';
 
 const buildUnit = (name, options, fantasticalRules, data) => {
   const unitData = data.unitData[name];
@@ -50,12 +51,21 @@ const buildUnit = (name, options, fantasticalRules, data) => {
   return unit;
 };
 
-function Unit({ id, unit, updateUnit, data, setUnit, removeUnit, ui }) {
+function Unit({ id, unit, roster, updateRoster, data, setUnit, removeUnit, ui }) {
   const changeUnit = unitName => setUnit(id, unitName);
+
+  const updateUnit = newAttributes => {
+    updateRoster({
+      units: {
+        ...roster.units,
+        [id]: { ...roster.units[id], ...newAttributes }
+      }
+    });
+  };
 
   const handleChange = unit => {
     unit = buildUnit(unit.name, unit.options, unit.fantasticalRules, data);
-    updateUnit(id, { ...unit });
+    updateUnit({ ...unit });
   };
 
   return (
@@ -94,6 +104,13 @@ function Unit({ id, unit, updateUnit, data, setUnit, removeUnit, ui }) {
               unitData={data.unitData[unit.name]}
               fantasticalRulesData={data.fantasticalRulesData}
               unit={unit}
+            />
+            <Actions
+              id={id}
+              unit={unit}
+              updateUnit={updateUnit}
+              roster={roster}
+              updateRoster={updateRoster}
             />
           </>
         )}

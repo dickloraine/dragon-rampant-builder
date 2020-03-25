@@ -4,15 +4,6 @@ import { Fab, Box, Typography } from '@material-ui/core';
 import Unit from './Unit';
 
 const Roster = ({ roster, updateRoster, ui, data }) => {
-  const updateUnit = (id, newAttributes) => {
-    updateRoster({
-      units: {
-        ...roster.units,
-        [id]: { ...roster.units[id], ...newAttributes }
-      }
-    });
-  };
-
   const addUnit = () => {
     const id = roster.nextID;
 
@@ -52,11 +43,13 @@ const Roster = ({ roster, updateRoster, ui, data }) => {
             id={id}
             key={id}
             unit={roster.units[id]}
-            updateUnit={updateUnit}
+            roster={roster}
+            updateRoster={updateRoster}
             removeUnit={removeUnit}
             setUnit={setUnit}
             data={data}
             ui={ui}
+            unitOrder={roster.unitOrder}
           />
         ))}
       </Box>
