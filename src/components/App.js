@@ -107,6 +107,7 @@ const App = () => {
         showFeedback={showFeedback}
         reload={reload}
         setForceInputUpdate={setForceInputUpdate}
+        data={data}
       />
       <Box>
         <FormControl>

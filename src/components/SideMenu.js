@@ -10,6 +10,7 @@ import ImportList from './ImportList';
 export default function SideMenu({
   roster,
   setRoster,
+  data,
   setForceInputUpdate,
   showFeedback
 }) {
@@ -42,6 +43,7 @@ export default function SideMenu({
               setRoster={setRoster}
               setForceInputUpdate={setForceInputUpdate}
               showFeedback={showFeedback}
+              data={data}
               onClose={handleClose}
               showText={true}
             />
@@ -65,6 +67,7 @@ export default function SideMenu({
           <ListItem button key={'Import'}>
             <ImportList
               setRoster={setRoster}
+              data={data}
               setForceInputUpdate={setForceInputUpdate}
               showFeedback={showFeedback}
               onClose={handleClose}

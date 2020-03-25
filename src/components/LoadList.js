@@ -3,13 +3,15 @@ import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import SimpleDialog from './SimpleDialog';
 import store from 'store';
+import { unpackRoster } from './Roster';
 
 export default function LoadList({
   setRoster,
   setForceInputUpdate,
   showFeedback,
   onClose = null,
-  showText = false
+  showText = false,
+  data
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -22,7 +24,8 @@ export default function LoadList({
   };
 
   const loadList = name => {
-    setRoster({ ...store.get('savedRosters')[name] });
+    const roster = unpackRoster(store.get('savedRosters')[name], data);
+    setRoster({ ...roster });
     setForceInputUpdate();
     showFeedback(`${name} loaded!`, 'success');
   };

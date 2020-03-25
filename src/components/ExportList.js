@@ -1,13 +1,13 @@
 import React from 'react';
 import ShareIcon from '@material-ui/icons/Share';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
-import * as jsonpack from 'jsonpack/main';
+import { packRoster } from './Roster';
 
 const copyToClipboard = text => navigator.clipboard.writeText(text);
 
 const ExportList = ({ roster, showFeedback, onClose = null, showText = false }) => {
   const handleClick = () => {
-    const list = jsonpack.pack(roster);
+    const list = JSON.stringify(packRoster(roster));
     try {
       copyToClipboard(list);
       showFeedback('List copied to clipboard!', 'success');

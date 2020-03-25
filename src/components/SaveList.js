@@ -2,6 +2,7 @@ import React from 'react';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import store from 'store';
+import { packRoster } from './Roster';
 
 export default function SaveList({
   roster,
@@ -14,7 +15,7 @@ export default function SaveList({
     let savedLists = store.get('savedRosters') || [];
     savedLists = {
       ...savedLists,
-      [roster.name]: { ...roster }
+      [roster.name]: { ...packRoster(roster) }
     };
     store.set('savedRosters', savedLists);
     return true;

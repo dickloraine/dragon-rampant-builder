@@ -11,12 +11,13 @@ import {
   TextField,
   Button
 } from '@material-ui/core';
-import * as jsonpack from 'jsonpack/main';
+import { unpackRoster } from './Roster';
 
 const ImportList = ({
   setRoster,
   setForceInputUpdate,
   showFeedback,
+  data,
   onClose = null,
   showText = false
 }) => {
@@ -31,7 +32,7 @@ const ImportList = ({
   const handleImport = () => {
     if (!listString) return;
     try {
-      const list = jsonpack.unpack(listString);
+      const list = unpackRoster(JSON.parse(listString), data);
       setRoster({ ...list });
       setForceInputUpdate();
       showFeedback('List imported!', 'success');

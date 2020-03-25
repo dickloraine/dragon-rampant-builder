@@ -1,7 +1,25 @@
 import React from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import { Fab, Box, Typography } from '@material-ui/core';
-import Unit from './Unit';
+import Unit, { buildUnit } from './Unit';
+import { objMap } from 'helpers/utils';
+
+const packRoster = roster => {
+  let units = { ...roster.units };
+  units = objMap(units, unit => ({
+    name: unit.name,
+    options: unit.options,
+    fantasticalRules: unit.fantasticalRules
+  }));
+  return { ...roster, units: units };
+};
+
+const unpackRoster = (compactRoster, data) => {
+  const units = objMap(compactRoster.units, unit =>
+    buildUnit(unit.name, unit.options, unit.fantasticalRules, data)
+  );
+  return { ...compactRoster, units: units };
+};
 
 const Roster = ({ roster, updateRoster, ui, data }) => {
   const addUnit = () => {
@@ -72,3 +90,4 @@ const Roster = ({ roster, updateRoster, ui, data }) => {
 };
 
 export default Roster;
+export { packRoster, unpackRoster };
