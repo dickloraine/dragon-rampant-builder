@@ -25,7 +25,7 @@ export default function UnitSelector({ unit, options, onClose }) {
       </Typography>
       {unit.customName && (
         <Typography style={{ marginLeft: 45, marginBottom: -25 }}>
-          Elite Riders
+          {unit.name}
         </Typography>
       )}
       <SimpleDialog
