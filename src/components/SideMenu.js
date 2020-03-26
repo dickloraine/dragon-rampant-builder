@@ -11,6 +11,7 @@ export default function SideMenu({
   roster,
   setRoster,
   data,
+  armyCost,
   setForceInputUpdate,
   showFeedback
 }) {
@@ -59,6 +60,7 @@ export default function SideMenu({
           <ListItem button key={'Export'}>
             <ExportList
               roster={roster}
+              armyCost={armyCost}
               showFeedback={showFeedback}
               onClose={handleClose}
               showText={true}

@@ -53,6 +53,7 @@ export default function AppBar({
               roster={roster}
               setRoster={setRoster}
               data={data}
+              armyCost={armyCost}
               setForceInputUpdate={setForceInputUpdate}
               showFeedback={showFeedback}
             />
