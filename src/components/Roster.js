@@ -8,6 +8,7 @@ const packRoster = roster => {
   let units = { ...roster.units };
   units = objMap(units, unit => ({
     name: unit.name,
+    customName: unit.customName || '',
     options: unit.options,
     fantasticalRules: unit.fantasticalRules
   }));
@@ -16,7 +17,7 @@ const packRoster = roster => {
 
 const unpackRoster = (compactRoster, data) => {
   const units = objMap(compactRoster.units, unit =>
-    buildUnit(unit.name, unit.options, unit.fantasticalRules, data)
+    buildUnit(unit.name, unit.customName, unit.options, unit.fantasticalRules, data)
   );
   return { ...compactRoster, units: units };
 };

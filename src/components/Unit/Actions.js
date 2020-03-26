@@ -2,9 +2,25 @@ import React from 'react';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { IconButton, Box, Tooltip } from '@material-ui/core';
+import TextFieldsIcon from '@material-ui/icons/TextFields';
+import {
+  IconButton,
+  Box,
+  Tooltip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Button
+} from '@material-ui/core';
 
-const Actions = ({ id, unit, roster, updateRoster }) => {
+const Actions = ({ id, unit, roster, updateRoster, updateUnit }) => {
+  const [open, setOpen] = React.useState(false);
+  const [renameString, setRenameString] = React.useState();
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const moveUnit = dir => {
     const unitOrder = [...roster.unitOrder];
     const index = roster.unitOrder.indexOf(id);
@@ -16,6 +32,18 @@ const Actions = ({ id, unit, roster, updateRoster }) => {
   };
   const moveLeft = () => moveUnit(1);
   const moveRight = () => moveUnit(0);
+
+  const renameUnit = () => {
+    updateUnit({ customName: renameString });
+    setOpen(false);
+  };
+
+  const handleKeyPressed = (value, key) => {
+    if (key === 'Enter') {
+      setRenameString(value);
+      renameUnit();
+    } else if (key === 'ESC') handleClose();
+  };
 
   const cloneUnit = () => {
     const nextId = roster.nextID;
@@ -47,6 +75,34 @@ const Actions = ({ id, unit, roster, updateRoster }) => {
         </Box>
         <Box flexGrow={1}></Box>
         <Box display="flex" alignItems="center">
+          <Tooltip title=" Rename unit">
+            <IconButton onClick={handleOpen}>
+              <TextFieldsIcon />
+            </IconButton>
+          </Tooltip>
+          <Dialog onClose={handleClose} open={open}>
+            <DialogTitle>Enter the name for the unit</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="importstring"
+                label="Unit name"
+                type="text"
+                fullWidth
+                onChange={e => setRenameString(e.target.value)}
+                onKeyPress={e => handleKeyPressed(e.target.value, e.key)}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={renameUnit} color="primary">
+                Rename
+              </Button>
+            </DialogActions>
+          </Dialog>
           <Tooltip title="Clone unit">
             <IconButton onClick={cloneUnit}>
               <PersonAddOutlinedIcon />

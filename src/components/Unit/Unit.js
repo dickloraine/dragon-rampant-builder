@@ -10,10 +10,11 @@ import StatBlock from './StatBlock';
 import SpecialRules from './SpecialRules';
 import Actions from './Actions';
 
-const buildUnit = (name, options, fantasticalRules, data) => {
+const buildUnit = (name, customName, options, fantasticalRules, data) => {
   const unitData = data.unitData[name];
   let unit = {
     ...unitData,
+    customName: customName || '',
     options: [...options],
     fantasticalRules: [...fantasticalRules]
   };
@@ -64,7 +65,13 @@ function Unit({ id, unit, roster, updateRoster, data, setUnit, removeUnit, ui })
   };
 
   const handleChange = unit => {
-    unit = buildUnit(unit.name, unit.options, unit.fantasticalRules, data);
+    unit = buildUnit(
+      unit.name,
+      unit.customName,
+      unit.options,
+      unit.fantasticalRules,
+      data
+    );
     updateUnit({ ...unit });
   };
 
@@ -72,12 +79,7 @@ function Unit({ id, unit, roster, updateRoster, data, setUnit, removeUnit, ui })
     <Card variant="outlined" style={{ marginBottom: 25, maxWidth: 400, width: '100%' }}>
       <CardHeader
         title={
-          <UnitSelector
-            name={unit.name}
-            onClose={changeUnit}
-            options={data.unitNames}
-            points={unit.points}
-          />
+          <UnitSelector unit={unit} onClose={changeUnit} options={data.unitNames} />
         }
         action={
           <Button onClick={() => removeUnit(id)}>
@@ -105,7 +107,13 @@ function Unit({ id, unit, roster, updateRoster, data, setUnit, removeUnit, ui })
               fantasticalRulesData={data.fantasticalRulesData}
               unit={unit}
             />
-            <Actions id={id} unit={unit} roster={roster} updateRoster={updateRoster} />
+            <Actions
+              id={id}
+              unit={unit}
+              roster={roster}
+              updateRoster={updateRoster}
+              updateUnit={updateUnit}
+            />
           </>
         )}
       </CardContent>
