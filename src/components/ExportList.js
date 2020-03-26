@@ -98,19 +98,19 @@ const ExportList = ({
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle>Chose how to export</DialogTitle>
         <List>
-          <ListItem button onClick={() => exportList(getImportableString)}>
+          <ListItem key={'str'} button onClick={() => exportList(getImportableString)}>
             <ListItemIcon>
               <ArrowDownwardIcon />
             </ListItemIcon>
             As an importable String
           </ListItem>
-          <ListItem button onClick={() => exportList(getListAsText)}>
+          <ListItem key={'text'} button onClick={() => exportList(getListAsText)}>
             <ListItemIcon>
               <FormatAlignLeftIcon />
             </ListItemIcon>
             As text
           </ListItem>
-          <ListItem button onClick={() => exportList(getListAsMarkdown)}>
+          <ListItem key={'md'} button onClick={() => exportList(getListAsMarkdown)}>
             <ListItemIcon>
               <FormatAlignJustifyIcon />
             </ListItemIcon>
