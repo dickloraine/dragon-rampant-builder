@@ -90,7 +90,7 @@ const Actions = ({ id, unit, roster, updateRoster, updateUnit }) => {
                 label="Unit name"
                 type="text"
                 fullWidth
-                value={unit.customName}
+                defaultValue={unit.customName}
                 onChange={e => setRenameString(e.target.value)}
                 onKeyPress={e => handleKeyPressed(e.target.value, e.key)}
               />
