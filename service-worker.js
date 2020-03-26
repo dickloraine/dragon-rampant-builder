@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/dragon-rampant-builder/precache-manifest.447727497ae371841cf31277bfc969c9.js"
+  "/dragon-rampant-builder/precache-manifest.aea2dc1ec9ac77c10e5cc774252dec5a.js"
 );
 
 self.addEventListener('message', (event) => {
