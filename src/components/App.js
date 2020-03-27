@@ -115,7 +115,7 @@ const App = () => {
             style={{ border: 0, marginBottom: 25, width: '100%' }}
             variant="h4"
             key={forceInputUpdate}
-            component="Input"
+            component="input"
             value={roster.name}
             onChange={e => updateRoster({ name: e.target.value })}
           />

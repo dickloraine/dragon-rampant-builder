@@ -6,6 +6,8 @@ import SaveList from './SaveList';
 import DeleteList from './DeleteList';
 import ExportList from './ExportList';
 import ImportList from './ImportList';
+import Backup from './Backup';
+import Restore from './Restore';
 
 export default function SideMenu({
   roster,
@@ -74,6 +76,18 @@ export default function SideMenu({
               showFeedback={showFeedback}
               onClose={handleClose}
               showText={true}
+            />
+          </ListItem>
+          <Divider />
+          <ListItem button key={'Backup'}>
+            <Backup onClose={handleClose} showText={true} showFeedback={showFeedback} />
+          </ListItem>
+          <ListItem button key={'Restore'}>
+            <Restore
+              onClose={handleClose}
+              setForceInputUpdate={setForceInputUpdate}
+              showText={true}
+              showFeedback={showFeedback}
             />
           </ListItem>
         </List>

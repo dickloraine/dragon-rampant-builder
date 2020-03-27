@@ -62,6 +62,7 @@ const Actions = ({ id, unit, roster, updateRoster, updateUnit }) => {
             action={renameUnit}
             title="Enter the name for the unit"
             label="Unit name"
+            defaultValue={unit.customName}
             okayText="Rename"
           />
           <Tooltip title="Clone unit">
