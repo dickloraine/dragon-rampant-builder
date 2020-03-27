@@ -5,12 +5,6 @@ import store from 'store';
 import ListDialog from './ListDialog';
 
 export default function DeleteList({ showFeedback, onClose = null, showText = false }) {
-  const handleClose = value => {
-    removeList(value);
-    if (value) showFeedback('Deleted!', 'success');
-    if (onClose) onClose();
-  };
-
   const removeList = name => {
     if (name === 'Delete all') store.set('savedRosters', []);
     else {
@@ -18,6 +12,7 @@ export default function DeleteList({ showFeedback, onClose = null, showText = fa
       delete savedLists[name];
       store.set('savedRosters', savedLists);
     }
+    showFeedback('Deleted!', 'success');
   };
 
   const getSavedLists = () => {
@@ -29,7 +24,7 @@ export default function DeleteList({ showFeedback, onClose = null, showText = fa
 
   return (
     <ListDialog
-      action={handleClose}
+      action={removeList}
       anchor={openFunc => (
         <>
           <Tooltip title="Delete List">

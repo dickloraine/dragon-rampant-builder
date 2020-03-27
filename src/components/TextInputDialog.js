@@ -39,6 +39,7 @@ const TextInputDialog = ({
   };
   const handleAction = () => {
     action(value);
+    if (onClose) onClose();
     handleClose();
   };
 

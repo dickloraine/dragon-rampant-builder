@@ -16,17 +16,6 @@ const ExportList = ({
   onClose = null,
   showText = false
 }) => {
-  const exportList = exportFunc => {
-    try {
-      const list = exportFunc(roster);
-      copyToClipboard(list);
-      showFeedback('List copied to clipboard!', 'success');
-    } catch (err) {
-      showFeedback('Could not export the list!', 'error');
-    }
-    if (onClose) onClose();
-  };
-
   const getImportableString = () => JSON.stringify(packRoster(roster));
 
   const getListAsText = () => {
@@ -78,17 +67,24 @@ const ExportList = ({
     ['As markdown text', <FormatAlignJustifyIcon />, getListAsMarkdown]
   ];
 
-  const handleOnClick = text => {
+  const exportList = text => {
     let exportFunc = options.reduce(
       (acc, opt) => (opt[0] === text ? opt[2] : acc),
       null
     );
-    exportList(exportFunc);
+
+    try {
+      const list = exportFunc(roster);
+      copyToClipboard(list);
+      showFeedback('List copied to clipboard!', 'success');
+    } catch (err) {
+      showFeedback('Could not export the list!', 'error');
+    }
   };
 
   return (
     <ListDialog
-      action={handleOnClick}
+      action={exportList}
       anchor={openFunc => (
         <>
           <Tooltip title="Export">

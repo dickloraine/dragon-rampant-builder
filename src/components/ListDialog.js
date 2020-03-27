@@ -21,6 +21,7 @@ const ListDialog = ({
   };
   const handleOnClick = text => {
     action(text);
+    if (onClose) onClose();
     handleClose();
   };
 

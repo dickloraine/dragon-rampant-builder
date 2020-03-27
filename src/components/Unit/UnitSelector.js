@@ -6,13 +6,13 @@ import ListDialog from '../ListDialog';
 const UnitSelector = ({ unit, options, onClose }) => {
   const name = unit.customName ? unit.customName : unit.name;
 
-  const handleClose = value => {
+  const setSelectedUnit = value => {
     if (value !== unit.name) onClose(value);
   };
 
   return (
     <ListDialog
-      action={handleClose}
+      action={setSelectedUnit}
       anchor={openFunc => (
         <>
           <Typography variant="h5" onClick={openFunc}>

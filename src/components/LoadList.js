@@ -13,16 +13,15 @@ export default function LoadList({
   showText = false,
   data
 }) {
-  const handleClose = value => {
-    if (value) loadList(value);
-    if (onClose) onClose();
-  };
-
   const loadList = name => {
-    const roster = unpackRoster(store.get('savedRosters')[name], data);
-    setRoster({ ...roster });
-    setForceInputUpdate();
-    showFeedback(`${name} loaded!`, 'success');
+    try {
+      const roster = unpackRoster(store.get('savedRosters')[name], data);
+      setRoster({ ...roster });
+      setForceInputUpdate();
+      showFeedback(`${name} loaded!`, 'success');
+    } catch (err) {
+      showFeedback(`Could not load ${name}!`, 'error');
+    }
   };
 
   const getSavedLists = () => {
@@ -33,7 +32,7 @@ export default function LoadList({
 
   return (
     <ListDialog
-      action={handleClose}
+      action={loadList}
       anchor={openFunc => (
         <>
           <Tooltip title="Load List">

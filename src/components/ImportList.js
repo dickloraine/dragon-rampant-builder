@@ -22,7 +22,6 @@ const ImportList = ({
     } catch (err) {
       showFeedback('Could not import the list!', 'error');
     }
-    if (onClose) onClose();
   };
 
   return (
