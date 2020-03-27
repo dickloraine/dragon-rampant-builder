@@ -2,15 +2,10 @@ import React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import store from 'store';
-import SimpleDialog from './SimpleDialog';
+import ListDialog from './ListDialog';
 
 export default function DeleteList({ showFeedback, onClose = null, showText = false }) {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => setOpen(true);
-
   const handleClose = value => {
-    setOpen(false);
     removeList(value);
     if (value) showFeedback('Deleted!', 'success');
     if (onClose) onClose();
@@ -33,19 +28,21 @@ export default function DeleteList({ showFeedback, onClose = null, showText = fa
   };
 
   return (
-    <>
-      <Tooltip title="Delete List">
-        <IconButton color="inherit" onClick={handleClickOpen}>
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
-      {showText && <Typography onClick={handleClickOpen}>Delete List</Typography>}
-      <SimpleDialog
-        open={open}
-        onClose={handleClose}
-        options={getSavedLists()}
-        title="Choose List to delete"
-      />
-    </>
+    <ListDialog
+      action={handleClose}
+      anchor={openFunc => (
+        <>
+          <Tooltip title="Delete List">
+            <IconButton color="inherit" onClick={openFunc}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+          {showText && <Typography onClick={openFunc}>Delete List</Typography>}
+        </>
+      )}
+      options={getSavedLists()}
+      title="Choose List to delete"
+      onClose={onClose}
+    />
   );
 }

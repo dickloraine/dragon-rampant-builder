@@ -3,17 +3,9 @@ import ShareIcon from '@material-ui/icons/Share';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
 import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
-import {
-  Tooltip,
-  IconButton,
-  Typography,
-  Dialog,
-  DialogTitle,
-  List,
-  ListItem,
-  ListItemIcon
-} from '@material-ui/core';
+import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import { packRoster } from './Roster';
+import ListDialog from './ListDialog';
 
 const copyToClipboard = text => navigator.clipboard.writeText(text);
 
@@ -24,13 +16,6 @@ const ExportList = ({
   onClose = null,
   showText = false
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    onClose();
-  };
-
   const exportList = exportFunc => {
     try {
       const list = exportFunc(roster);
@@ -87,38 +72,37 @@ const ExportList = ({
     return text.join('\n');
   };
 
+  const options = [
+    ['As an importable String', <ArrowDownwardIcon />, getImportableString],
+    ['As text', <FormatAlignLeftIcon />, getListAsText],
+    ['As markdown text', <FormatAlignJustifyIcon />, getListAsMarkdown]
+  ];
+
+  const handleOnClick = text => {
+    let exportFunc = options.reduce(
+      (acc, opt) => (opt[0] === text ? opt[2] : acc),
+      null
+    );
+    exportList(exportFunc);
+  };
+
   return (
-    <>
-      <Tooltip title="Export">
-        <IconButton color="inherit" onClick={handleOpen}>
-          <ShareIcon />
-        </IconButton>
-      </Tooltip>
-      {showText && <Typography onClick={handleOpen}>Export List</Typography>}
-      <Dialog onClose={handleClose} open={open}>
-        <DialogTitle>Chose how to export</DialogTitle>
-        <List>
-          <ListItem key={'str'} button onClick={() => exportList(getImportableString)}>
-            <ListItemIcon>
-              <ArrowDownwardIcon />
-            </ListItemIcon>
-            As an importable String
-          </ListItem>
-          <ListItem key={'text'} button onClick={() => exportList(getListAsText)}>
-            <ListItemIcon>
-              <FormatAlignLeftIcon />
-            </ListItemIcon>
-            As text
-          </ListItem>
-          <ListItem key={'md'} button onClick={() => exportList(getListAsMarkdown)}>
-            <ListItemIcon>
-              <FormatAlignJustifyIcon />
-            </ListItemIcon>
-            As markdown text
-          </ListItem>
-        </List>
-      </Dialog>
-    </>
+    <ListDialog
+      action={handleOnClick}
+      anchor={openFunc => (
+        <>
+          <Tooltip title="Export">
+            <IconButton color="inherit" onClick={openFunc}>
+              <ShareIcon />
+            </IconButton>
+          </Tooltip>
+          {showText && <Typography onClick={openFunc}>Export List</Typography>}
+        </>
+      )}
+      options={options}
+      title="Chose how to export"
+      onClose={onClose}
+    />
   );
 };
 

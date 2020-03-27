@@ -1,17 +1,8 @@
 import React from 'react';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import {
-  Tooltip,
-  IconButton,
-  Typography,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  Button
-} from '@material-ui/core';
+import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import { unpackRoster } from './Roster';
+import TextInputDialog from './TextInputDialog';
 
 const ImportList = ({
   setRoster,
@@ -21,58 +12,37 @@ const ImportList = ({
   onClose = null,
   showText = false
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const [listString, setListString] = React.useState();
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    if (onClose) onClose();
-    setOpen(false);
-  };
-
-  const handleImport = () => {
-    if (!listString) return;
+  const handleImport = value => {
+    if (!value) return;
     try {
-      const list = unpackRoster(JSON.parse(listString), data);
+      const list = unpackRoster(JSON.parse(value), data);
       setRoster({ ...list });
       setForceInputUpdate();
       showFeedback('List imported!', 'success');
     } catch (err) {
       showFeedback('Could not import the list!', 'error');
     }
-    handleClose();
+    if (onClose) onClose();
   };
 
   return (
-    <>
-      <Tooltip title="Import list">
-        <IconButton color="inherit" onClick={handleOpen}>
-          <GetAppIcon />
-        </IconButton>
-      </Tooltip>
-      {showText && <Typography onClick={handleOpen}>Import list</Typography>}
-      <Dialog onClose={handleClose} open={open}>
-        <DialogTitle>Enter the import string</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="importstring"
-            label="Exported String"
-            type="text"
-            fullWidth
-            onChange={e => setListString(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleImport} color="primary">
-            Import
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+    <TextInputDialog
+      anchor={openFunc => (
+        <>
+          <Tooltip title="Import list">
+            <IconButton color="inherit" onClick={openFunc}>
+              <GetAppIcon />
+            </IconButton>
+          </Tooltip>
+          {showText && <Typography onClick={openFunc}>Import list</Typography>}
+        </>
+      )}
+      action={handleImport}
+      title="Enter the import string"
+      label="Exported String"
+      okayText="Import"
+      onClose={onClose}
+    />
   );
 };
 

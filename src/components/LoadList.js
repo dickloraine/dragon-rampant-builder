@@ -1,9 +1,9 @@
 import React from 'react';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
-import SimpleDialog from './SimpleDialog';
 import store from 'store';
 import { unpackRoster } from './Roster';
+import ListDialog from './ListDialog';
 
 export default function LoadList({
   setRoster,
@@ -13,12 +13,7 @@ export default function LoadList({
   showText = false,
   data
 }) {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => setOpen(true);
-
   const handleClose = value => {
-    setOpen(false);
     if (value) loadList(value);
     if (onClose) onClose();
   };
@@ -37,19 +32,21 @@ export default function LoadList({
   };
 
   return (
-    <>
-      <Tooltip title="Load List">
-        <IconButton color="inherit" onClick={handleClickOpen}>
-          <SaveOutlinedIcon />
-        </IconButton>
-      </Tooltip>
-      {showText && <Typography onClick={handleClickOpen}>Load List</Typography>}
-      <SimpleDialog
-        open={open}
-        onClose={handleClose}
-        options={getSavedLists()}
-        title="Choose List to load"
-      />
-    </>
+    <ListDialog
+      action={handleClose}
+      anchor={openFunc => (
+        <>
+          <Tooltip title="Load List">
+            <IconButton color="inherit" onClick={openFunc}>
+              <SaveOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+          {showText && <Typography onClick={openFunc}>Load List</Typography>}
+        </>
+      )}
+      options={getSavedLists()}
+      title="Choose List to load"
+      onClose={onClose}
+    />
   );
 }
