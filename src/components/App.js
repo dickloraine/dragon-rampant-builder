@@ -29,11 +29,9 @@ const App = () => {
 
   const initialRoster = {
     name: 'New List',
-    nextID: 1,
-    units: {
-      0: { ...data.unitData.Unit, options: [], fantasticalRules: [] }
-    },
-    unitOrder: [0]
+    nextID: 0,
+    units: {},
+    unitOrder: []
   };
 
   const [roster, setRoster] = useState({ ...initialRoster });
