@@ -12,15 +12,16 @@ import { useTheme } from '@material-ui/core/styles';
 import { objFilter, objReduce } from '../../helpers/utils';
 import UnitDistributionChart from './UnitDistributionChart';
 import PointDistributionChart from './PointDistributionChart';
+import { useData } from '../App';
 
 export default function Statistics({
   armyCost,
   units,
-  unitData,
-  fantasticalRulesData,
   statisticsExpanded,
   setUIOption
 }) {
+  const unitData = useData('unitData');
+  const fantasticalRulesData = useData('fantasticalRulesData');
   const theme = useTheme();
   const chipSize = useMediaQuery(theme.breakpoints.down('sm')) ? 'small' : 'medium';
 

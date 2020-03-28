@@ -4,15 +4,17 @@ import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import store from 'store';
 import { unpackRoster } from './Roster';
 import ListDialog from './ListDialog';
+import { useData } from './App';
 
 export default function LoadList({
   setRoster,
   setForceInputUpdate,
   showFeedback,
   onClose = null,
-  showText = false,
-  data
+  showText = false
 }) {
+  const data = useData();
+
   const loadList = name => {
     try {
       const roster = unpackRoster(store.get('savedRosters')[name], data);

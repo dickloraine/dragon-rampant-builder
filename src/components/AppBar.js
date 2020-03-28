@@ -19,8 +19,7 @@ export default function AppBar({
   setRoster,
   setForceInputUpdate,
   showFeedback,
-  reload,
-  data
+  reload
 }) {
   const changeViewMode = (clicked, newState) => {
     const notClicked = clicked === 'viewMode' ? 'editMode' : 'viewMode';
@@ -52,7 +51,6 @@ export default function AppBar({
             <SideMenu
               roster={roster}
               setRoster={setRoster}
-              data={data}
               armyCost={armyCost}
               setForceInputUpdate={setForceInputUpdate}
               showFeedback={showFeedback}
@@ -73,7 +71,6 @@ export default function AppBar({
               setRoster={setRoster}
               showFeedback={showFeedback}
               setForceInputUpdate={setForceInputUpdate}
-              data={data}
             />
           </Box>
           <Box flexGrow={1}></Box>

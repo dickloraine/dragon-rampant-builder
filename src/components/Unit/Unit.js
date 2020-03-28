@@ -9,6 +9,7 @@ import FantasticalRules from './FantasticalRules';
 import StatBlock from './StatBlock';
 import SpecialRules from './SpecialRules';
 import Actions from './Actions';
+import { useData } from '../App';
 
 const buildUnit = (name, customName, options, fantasticalRules, data) => {
   const unitData = data.unitData[name];
@@ -52,7 +53,8 @@ const buildUnit = (name, customName, options, fantasticalRules, data) => {
   return unit;
 };
 
-function Unit({ id, unit, roster, updateRoster, data, setUnit, removeUnit, ui }) {
+function Unit({ id, unit, roster, updateRoster, setUnit, removeUnit, ui }) {
+  const data = useData();
   const changeUnit = unitName => setUnit(id, unitName);
 
   const updateUnit = newAttributes => {
@@ -96,17 +98,8 @@ function Unit({ id, unit, roster, updateRoster, data, setUnit, removeUnit, ui })
         )}
         {!ui.viewMode && (
           <>
-            <Options
-              onChange={handleChange}
-              optionsData={data.unitData[unit.name].options}
-              unit={unit}
-            />
-            <FantasticalRules
-              onChange={handleChange}
-              unitData={data.unitData[unit.name]}
-              fantasticalRulesData={data.fantasticalRulesData}
-              unit={unit}
-            />
+            <Options onChange={handleChange} unit={unit} />
+            <FantasticalRules onChange={handleChange} unit={unit} />
             <Actions
               id={id}
               unit={unit}

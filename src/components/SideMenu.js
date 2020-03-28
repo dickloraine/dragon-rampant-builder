@@ -12,7 +12,6 @@ import Restore from './Restore';
 export default function SideMenu({
   roster,
   setRoster,
-  data,
   armyCost,
   setForceInputUpdate,
   showFeedback
@@ -46,7 +45,6 @@ export default function SideMenu({
               setRoster={setRoster}
               setForceInputUpdate={setForceInputUpdate}
               showFeedback={showFeedback}
-              data={data}
               onClose={handleClose}
               showText={true}
             />
@@ -71,7 +69,6 @@ export default function SideMenu({
           <ListItem button key={'Import'}>
             <ImportList
               setRoster={setRoster}
-              data={data}
               setForceInputUpdate={setForceInputUpdate}
               showFeedback={showFeedback}
               onClose={handleClose}
@@ -80,7 +77,7 @@ export default function SideMenu({
           </ListItem>
           <Divider />
           <ListItem button key={'Backup'}>
-            <Backup onClose={handleClose} showText={true} showFeedback={showFeedback} />
+            <Backup onClose={handleClose} showText={true} />
           </ListItem>
           <ListItem button key={'Restore'}>
             <Restore

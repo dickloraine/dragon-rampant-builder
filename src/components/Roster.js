@@ -3,6 +3,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { Fab, Box, Typography } from '@material-ui/core';
 import Unit, { buildUnit } from './Unit';
 import { objMap } from 'helpers/utils';
+import { useData } from './App';
 
 const packRoster = roster => {
   let units = { ...roster.units };
@@ -22,7 +23,9 @@ const unpackRoster = (compactRoster, data) => {
   return { ...compactRoster, units: units };
 };
 
-const Roster = ({ roster, updateRoster, ui, data }) => {
+const Roster = ({ roster, updateRoster, ui }) => {
+  const data = useData();
+
   const addUnit = () => {
     const id = roster.nextID;
 
@@ -66,7 +69,6 @@ const Roster = ({ roster, updateRoster, ui, data }) => {
             updateRoster={updateRoster}
             removeUnit={removeUnit}
             setUnit={setUnit}
-            data={data}
             ui={ui}
             unitOrder={roster.unitOrder}
           />

@@ -13,13 +13,11 @@ import {
   TableBody,
   Hidden
 } from '@material-ui/core';
+import { useData } from './App';
 
-export default function SpellTable({
-  setUIOption,
-  specialRules,
-  spellsExpanded,
-  spellData
-}) {
+export default function SpellTable({ setUIOption, specialRules, spellsExpanded }) {
+  const spellData = useData('spellData');
+
   const spellcasterInRoster = () => {
     for (const rule of specialRules) {
       if (rule === 'Spellcaster' || rule === 'Wizardlings') return true;

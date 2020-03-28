@@ -9,13 +9,14 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails
 } from '@material-ui/core';
+import { useData } from './App';
 
 export default function RulesSummary({
   specialRules,
   setUIOption,
-  rulesData,
   rulesSummaryExpanded
 }) {
+  const rulesData = useData('rulesData');
   return (
     <ExpansionPanel
       expanded={rulesSummaryExpanded}

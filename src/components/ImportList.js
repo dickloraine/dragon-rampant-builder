@@ -3,15 +3,17 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import { unpackRoster } from './Roster';
 import TextInputDialog from './TextInputDialog';
+import { useData } from './App';
 
 const ImportList = ({
   setRoster,
   setForceInputUpdate,
   showFeedback,
-  data,
   onClose = null,
   showText = false
 }) => {
+  const data = useData();
+
   const handleImport = value => {
     if (!value) return;
     try {

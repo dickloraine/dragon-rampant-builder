@@ -13,14 +13,19 @@ import SpellTable from './SpellTable';
 import Statistics from './Statistics/Statistics';
 import { objReduce } from 'helpers/utils';
 
-const App = () => {
-  const [data] = useState({
+const useData = (type = null) => {
+  const data = {
     unitData: unitData,
     unitNames: Object.keys(unitData).slice(1),
     fantasticalRulesData: fantasticalRulesData,
     rulesData: rulesData,
     spellData: spellData
-  });
+  };
+  return type ? data[type] : data;
+};
+
+const App = () => {
+  const data = useData();
 
   const initialRoster = {
     name: 'New List',
@@ -107,7 +112,6 @@ const App = () => {
         showFeedback={showFeedback}
         reload={reload}
         setForceInputUpdate={setForceInputUpdate}
-        data={data}
       />
       <Box>
         <FormControl>
@@ -123,7 +127,6 @@ const App = () => {
         <Roster roster={roster} updateRoster={updateRoster} ui={ui} data={data} />
         <RulesSummary
           specialRules={specialRules}
-          rulesData={data.rulesData}
           rulesSummaryExpanded={ui.rulesSummaryExpanded}
           setUIOption={setUIOption}
         />
@@ -131,7 +134,6 @@ const App = () => {
           specialRules={specialRules}
           spellsExpanded={ui.spellsExpanded}
           setUIOption={setUIOption}
-          spellData={data.spellData}
         />
         <Statistics
           armyCost={totalPoints}
@@ -148,3 +150,4 @@ const App = () => {
 };
 
 export default App;
+export { useData };
