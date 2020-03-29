@@ -79,24 +79,22 @@ const App = () => {
     setForceInputUpdate();
   };
 
-  const getSpecialRules = () => {
-    let specialRules = new Set();
-    for (const unit of Object.values(roster.units)) {
-      for (const rule of unit.rules) {
-        data.rulesData[data.rulesData[rule]]
-          ? specialRules.add(data.rulesData[rule])
-          : specialRules.add(rule);
-      }
-    }
-    return [...specialRules].sort();
-  };
-  const specialRules = getSpecialRules();
+  let specialRules = [
+    ...objReduce(
+      roster.units,
+      (acc, unit) =>
+        unit.rules.reduce(
+          (acc, rule) =>
+            data.rulesData[data.rulesData[rule]]
+              ? acc.add(data.rulesData[rule])
+              : acc.add(rule),
+          acc
+        ),
+      new Set()
+    )
+  ].sort();
 
-  const totalPoints = objReduce(
-    Object.values(roster.units),
-    (acc, unit) => acc + unit.points,
-    0
-  );
+  const totalPoints = objReduce(roster.units, (acc, unit) => acc + unit.points, 0);
 
   return (
     <Container>
