@@ -104,10 +104,13 @@ function Unit({ id, unit, roster, updateRoster, setUnit, removeUnit, ui }) {
                 &nbsp;&nbsp;
                 {unit.customName ? unit.customName : unit.name}
               </Typography>
-              {unit.customName && (
+              {unit.customName && expanded && (
                 <Typography style={{ marginLeft: 45, marginBottom: -25 }}>
                   {unit.name}
                 </Typography>
+              )}
+              {unit.customName && !expanded && (
+                <Typography style={{ marginLeft: 45 }}>{unit.name}</Typography>
               )}
             </>
           }
