@@ -83,7 +83,28 @@ function Unit({ id, unit, roster, updateRoster, setUnit, removeUnit, ui }) {
 
   return (
     <Card style={{ marginBottom: 25, maxWidth: 400, width: '100%' }}>
-      {!ui.viewMode && (
+      {ui.viewMode ? (
+        <CardHeader
+          title={
+            <>
+              <Typography variant="h5">
+                <Chip label={unit.points} color="primary" />
+                &nbsp;&nbsp;
+                {unit.customName ? unit.customName : unit.name}
+              </Typography>
+              {unit.customName &&
+                (expanded ? (
+                  <Typography style={{ marginLeft: 45, marginBottom: -25 }}>
+                    {unit.name}
+                  </Typography>
+                ) : (
+                  <Typography style={{ marginLeft: 45 }}>{unit.name}</Typography>
+                ))}
+            </>
+          }
+          action={<ExpandIcon expanded={expanded} onClick={handleExpandClick} />}
+        />
+      ) : (
         <CardHeader
           title={
             <UnitSelector unit={unit} onClose={changeUnit} options={data.unitNames} />
@@ -93,28 +114,6 @@ function Unit({ id, unit, roster, updateRoster, setUnit, removeUnit, ui }) {
               <CloseIcon />
             </Button>
           }
-        />
-      )}
-      {ui.viewMode && (
-        <CardHeader
-          title={
-            <>
-              <Typography variant="h5">
-                <Chip label={unit.points} color="primary" />
-                &nbsp;&nbsp;
-                {unit.customName ? unit.customName : unit.name}
-              </Typography>
-              {unit.customName && expanded && (
-                <Typography style={{ marginLeft: 45, marginBottom: -25 }}>
-                  {unit.name}
-                </Typography>
-              )}
-              {unit.customName && !expanded && (
-                <Typography style={{ marginLeft: 45 }}>{unit.name}</Typography>
-              )}
-            </>
-          }
-          action={<ExpandIcon expanded={expanded} onClick={handleExpandClick} />}
         />
       )}
       <Collapse in={!ui.viewMode || expanded} timeout="auto" unmountOnExit>
