@@ -6,12 +6,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Input from '@material-ui/core/Input';
 import { Typography, Box, Select, MenuItem } from '@material-ui/core';
-import { useData } from '../App';
+import getData from 'store/getData';
 
 function FantasticalRules({ unit, onChange }) {
   const [open, setOpen] = React.useState(false);
-  const unitData = useData('unitData')[unit.name];
-  const fantasticalRulesData = useData('fantasticalRulesData');
+  const unitData = getData('unitData')[unit.name];
+  const fantasticalRulesData = getData('fantasticalRulesData');
 
   let fantasticalRules = unitData.fantasticalRules;
   if (!fantasticalRules || !fantasticalRules.length) return <div></div>;

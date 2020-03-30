@@ -12,16 +12,18 @@ import { useTheme } from '@material-ui/core/styles';
 import { objFilter, objReduce } from '../../helpers/utils';
 import UnitDistributionChart from './UnitDistributionChart';
 import PointDistributionChart from './PointDistributionChart';
-import { useData } from '../App';
+import getData from 'store/getData';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUIOption } from 'store/ui/actions';
 
-export default function Statistics({
-  armyCost,
-  units,
-  statisticsExpanded,
-  setUIOption
-}) {
-  const unitData = useData('unitData');
-  const fantasticalRulesData = useData('fantasticalRulesData');
+const unitData = getData('unitData');
+const fantasticalRulesData = getData('fantasticalRulesData');
+
+export default function Statistics() {
+  const dispatch = useDispatch();
+  const statisticsExpanded = useSelector(state => state.ui.statisticsExpanded);
+  const units = useSelector(state => state.roster.units);
+  const armyCost = objReduce(units, (acc, unit) => acc + unit.points, 0);
   const theme = useTheme();
   const chipSize = useMediaQuery(theme.breakpoints.down('sm')) ? 'small' : 'medium';
 
@@ -80,7 +82,7 @@ export default function Statistics({
   return (
     <ExpansionPanel
       expanded={statisticsExpanded}
-      onChange={() => setUIOption('statisticsExpanded', !statisticsExpanded)}
+      onChange={() => dispatch(setUIOption('statisticsExpanded', !statisticsExpanded))}
       style={{ maxWidth: 1210 }}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

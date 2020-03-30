@@ -1,9 +1,11 @@
 import React from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import { Fab, Box, Typography } from '@material-ui/core';
-import Unit, { buildUnit } from './Unit';
+import Unit from './Unit';
+import buildUnit from './Unit/buildUnit';
 import { objMap } from 'helpers/utils';
-import { useData } from './App';
+import { useSelector, useDispatch } from 'react-redux';
+import { addUnit } from 'store/roster/actions';
 
 const packRoster = roster => {
   let units = { ...roster.units };
@@ -16,62 +18,21 @@ const packRoster = roster => {
   return { ...roster, units: units };
 };
 
-const unpackRoster = (compactRoster, data) => {
-  const units = objMap(compactRoster.units, unit =>
-    buildUnit(unit.name, unit.customName, unit.options, unit.fantasticalRules, data)
-  );
+const unpackRoster = compactRoster => {
+  const units = objMap(compactRoster.units, unit => buildUnit(unit));
   return { ...compactRoster, units: units };
 };
 
-const Roster = ({ roster, updateRoster, ui }) => {
-  const data = useData();
-
-  const addUnit = () => {
-    const id = roster.nextID;
-
-    updateRoster({
-      nextID: id + 1,
-      units: {
-        ...roster.units,
-        [id]: { ...data.unitData.Unit, options: [], fantasticalRules: [] }
-      },
-      unitOrder: [...roster.unitOrder, id]
-    });
-  };
-
-  const setUnit = (id, name) => {
-    updateRoster({
-      units: {
-        ...roster.units,
-        [id]: { ...data.unitData[name], options: [], fantasticalRules: [] }
-      }
-    });
-  };
-
-  const removeUnit = id => {
-    const units = { ...roster.units };
-    delete units[id];
-    updateRoster({
-      units: { ...units },
-      unitOrder: roster.unitOrder.filter(val => val !== id)
-    });
-  };
+const Roster = () => {
+  const dispatch = useDispatch();
+  const roster = useSelector(state => state.roster);
+  const ui = useSelector(state => state.ui);
 
   return (
     <>
       <Box display="flex" flexDirection="row" flexWrap="wrap">
         {roster.unitOrder.map(id => (
-          <Unit
-            id={id}
-            key={id}
-            unit={roster.units[id]}
-            roster={roster}
-            updateRoster={updateRoster}
-            removeUnit={removeUnit}
-            setUnit={setUnit}
-            ui={ui}
-            unitOrder={roster.unitOrder}
-          />
+          <Unit id={id} key={id} />
         ))}
       </Box>
       {!Object.keys(roster.units).length && !ui.viewMode && (
@@ -83,7 +44,7 @@ const Roster = ({ roster, updateRoster, ui }) => {
         <Fab
           color="secondary"
           style={{ marginLeft: 25, marginBottom: 25 }}
-          onClick={addUnit}
+          onClick={() => dispatch(addUnit())}
         >
           <AddIcon />
         </Fab>

@@ -13,10 +13,30 @@ import {
   TableBody,
   Hidden
 } from '@material-ui/core';
-import { useData } from './App';
+import getData from 'store/getData';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUIOption } from 'store/ui/actions';
+import { objReduce } from 'helpers/utils';
 
-export default function SpellTable({ setUIOption, specialRules, spellsExpanded }) {
-  const spellData = useData('spellData');
+const spellData = getData('spellData');
+const rulesData = getData('rulesData');
+
+export default function SpellTable() {
+  const dispatch = useDispatch();
+  const spellsExpanded = useSelector(state => state.ui.spellsExpanded);
+  const units = useSelector(state => state.roster.units);
+  let specialRules = [
+    ...objReduce(
+      units,
+      (acc, unit) =>
+        unit.rules.reduce(
+          (acc, rule) =>
+            rulesData[rulesData[rule]] ? acc.add(rulesData[rule]) : acc.add(rule),
+          acc
+        ),
+      new Set()
+    )
+  ].sort();
 
   const spellcasterInRoster = () => {
     for (const rule of specialRules) {
@@ -30,7 +50,7 @@ export default function SpellTable({ setUIOption, specialRules, spellsExpanded }
       {spellcasterInRoster() && (
         <ExpansionPanel
           expanded={spellsExpanded}
-          onChange={() => setUIOption('spellsExpanded', !spellsExpanded)}
+          onChange={() => dispatch(setUIOption('spellsExpanded', !spellsExpanded))}
           style={{ maxWidth: 1210 }}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

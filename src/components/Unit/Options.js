@@ -5,10 +5,10 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Typography } from '@material-ui/core';
-import { useData } from '../App';
+import getData from 'store/getData';
 
 export default function Options({ unit, onChange }) {
-  const optionsData = useData('unitData')[unit.name].options;
+  const optionsData = getData('unitData')[unit.name].options;
   if (!optionsData || !Object.keys(optionsData).length) return <div></div>;
 
   const handleChange = option => e => {

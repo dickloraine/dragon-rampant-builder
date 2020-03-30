@@ -9,13 +9,7 @@ import ImportList from './ImportList';
 import Backup from './Backup';
 import Restore from './Restore';
 
-export default function SideMenu({
-  roster,
-  setRoster,
-  armyCost,
-  setForceInputUpdate,
-  showFeedback
-}) {
+export default function SideMenu() {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = open => event => {
@@ -33,59 +27,27 @@ export default function SideMenu({
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <List>
           <ListItem button key={'Save'}>
-            <SaveList
-              roster={roster}
-              showFeedback={showFeedback}
-              onClose={handleClose}
-              showText={true}
-            />
+            <SaveList onClose={handleClose} showText={true} />
           </ListItem>
           <ListItem button key={'Load'}>
-            <LoadList
-              setRoster={setRoster}
-              setForceInputUpdate={setForceInputUpdate}
-              showFeedback={showFeedback}
-              onClose={handleClose}
-              showText={true}
-            />
+            <LoadList onClose={handleClose} showText={true} />
           </ListItem>
           <ListItem button key={'Delete'}>
-            <DeleteList
-              showFeedback={showFeedback}
-              onClose={handleClose}
-              showText={true}
-            />
+            <DeleteList onClose={handleClose} showText={true} />
           </ListItem>
           <Divider />
           <ListItem button key={'Export'}>
-            <ExportList
-              roster={roster}
-              armyCost={armyCost}
-              showFeedback={showFeedback}
-              onClose={handleClose}
-              showText={true}
-            />
+            <ExportList onClose={handleClose} showText={true} />
           </ListItem>
           <ListItem button key={'Import'}>
-            <ImportList
-              setRoster={setRoster}
-              setForceInputUpdate={setForceInputUpdate}
-              showFeedback={showFeedback}
-              onClose={handleClose}
-              showText={true}
-            />
+            <ImportList onClose={handleClose} showText={true} />
           </ListItem>
           <Divider />
           <ListItem button key={'Backup'}>
             <Backup onClose={handleClose} showText={true} />
           </ListItem>
           <ListItem button key={'Restore'}>
-            <Restore
-              onClose={handleClose}
-              setForceInputUpdate={setForceInputUpdate}
-              showText={true}
-              showFeedback={showFeedback}
-            />
+            <Restore onClose={handleClose} showText={true} />
           </ListItem>
         </List>
       </Drawer>

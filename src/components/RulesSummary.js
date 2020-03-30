@@ -9,18 +9,36 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails
 } from '@material-ui/core';
-import { useData } from './App';
+import getData from 'store/getData';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUIOption } from 'store/ui/actions';
+import { objReduce } from 'helpers/utils';
 
-export default function RulesSummary({
-  specialRules,
-  setUIOption,
-  rulesSummaryExpanded
-}) {
-  const rulesData = useData('rulesData');
+const rulesData = getData('rulesData');
+
+export default function RulesSummary() {
+  const dispatch = useDispatch();
+  const rulesSummaryExpanded = useSelector(state => state.ui.rulesSummaryExpanded);
+  const units = useSelector(state => state.roster.units);
+  let specialRules = [
+    ...objReduce(
+      units,
+      (acc, unit) =>
+        unit.rules.reduce(
+          (acc, rule) =>
+            rulesData[rulesData[rule]] ? acc.add(rulesData[rule]) : acc.add(rule),
+          acc
+        ),
+      new Set()
+    )
+  ].sort();
+
   return (
     <ExpansionPanel
       expanded={rulesSummaryExpanded}
-      onChange={() => setUIOption('rulesSummaryExpanded', !rulesSummaryExpanded)}
+      onChange={() =>
+        dispatch(setUIOption('rulesSummaryExpanded', !rulesSummaryExpanded))
+      }
       style={{ maxWidth: 1210 }}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

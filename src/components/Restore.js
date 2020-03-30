@@ -2,13 +2,12 @@ import React from 'react';
 import RestorePageIcon from '@material-ui/icons/RestorePage';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import store from 'store';
+import { useDispatch } from 'react-redux';
+import { showFeedback, toggleForceInputUpdate } from 'store/appState/actions';
 
-const Restore = ({
-  setForceInputUpdate,
-  showText = null,
-  showFeedback,
-  onClose = null
-}) => {
+const Restore = ({ showText = null, onClose = null }) => {
+  const dispatch = useDispatch();
+
   let fileReader;
   const fileDialog = React.useRef();
 
@@ -19,10 +18,10 @@ const Restore = ({
       content = JSON.parse(content);
       savedLists = { ...savedLists, ...content };
       store.set('savedRosters', savedLists);
-      setForceInputUpdate();
-      showFeedback(`Restored!`, 'success');
+      dispatch(toggleForceInputUpdate());
+      dispatch(showFeedback(`Restored!`, 'success'));
     } catch (err) {
-      showFeedback(`Could not restore!`, 'error');
+      dispatch(showFeedback(`Could not restore!`, 'error'));
     }
     if (onClose) onClose();
   };

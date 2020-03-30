@@ -6,17 +6,17 @@ import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import { packRoster } from './Roster';
 import ListDialog from './ListDialog';
+import { useSelector, useDispatch } from 'react-redux';
+import { showFeedback } from 'store/appState/actions';
+import { objReduce } from 'helpers/utils';
 
 const copyToClipboard = text => navigator.clipboard.writeText(text);
 
-const ExportList = ({
-  roster,
-  armyCost,
-  showFeedback,
-  onClose = null,
-  showText = false
-}) => {
+const ExportList = ({ onClose = null, showText = false }) => {
+  const dispatch = useDispatch();
+  const roster = useSelector(state => state.roster);
   const getImportableString = () => JSON.stringify(packRoster(roster));
+  const armyCost = objReduce(roster.units, (acc, unit) => acc + unit.points, 0);
 
   const getListAsText = () => {
     let text = [];
@@ -76,9 +76,9 @@ const ExportList = ({
     try {
       const list = exportFunc(roster);
       copyToClipboard(list);
-      showFeedback('List copied to clipboard!', 'success');
+      dispatch(showFeedback('List copied to clipboard!', 'success'));
     } catch (err) {
-      showFeedback('Could not export the list!', 'error');
+      dispatch(showFeedback('Could not export the list!', 'error'));
     }
   };
 

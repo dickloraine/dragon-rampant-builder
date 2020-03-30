@@ -4,25 +4,21 @@ import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import store from 'store';
 import { unpackRoster } from './Roster';
 import ListDialog from './ListDialog';
-import { useData } from './App';
+import { useDispatch } from 'react-redux';
+import { setRoster } from 'store/roster/actions';
+import { showFeedback, toggleForceInputUpdate } from 'store/appState/actions';
 
-export default function LoadList({
-  setRoster,
-  setForceInputUpdate,
-  showFeedback,
-  onClose = null,
-  showText = false
-}) {
-  const data = useData();
+export default function LoadList({ onClose = null, showText = false }) {
+  const dispatch = useDispatch();
 
   const loadList = name => {
     try {
-      const roster = unpackRoster(store.get('savedRosters')[name], data);
-      setRoster({ ...roster });
-      setForceInputUpdate();
-      showFeedback(`${name} loaded!`, 'success');
+      const roster = unpackRoster(store.get('savedRosters')[name]);
+      dispatch(setRoster({ ...roster }));
+      dispatch(toggleForceInputUpdate());
+      dispatch(showFeedback(`${name} loaded!`, 'success'));
     } catch (err) {
-      showFeedback(`Could not load ${name}!`, 'error');
+      dispatch(showFeedback(`Could not load ${name}!`, 'error'));
     }
   };
 

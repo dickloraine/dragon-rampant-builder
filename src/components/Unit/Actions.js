@@ -5,8 +5,13 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import { IconButton, Box, Tooltip } from '@material-ui/core';
 import TextInputDialog from '../TextInputDialog';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateRoster, updateUnit } from 'store/roster/actions';
 
-const Actions = ({ id, unit, roster, updateRoster, updateUnit }) => {
+const Actions = ({ id, unit }) => {
+  const dispatch = useDispatch();
+  const roster = useSelector(state => state.roster);
+
   const moveUnit = dir => {
     const unitOrder = [...roster.unitOrder];
     const index = roster.unitOrder.indexOf(id);
@@ -14,24 +19,26 @@ const Actions = ({ id, unit, roster, updateRoster, updateUnit }) => {
     if (nextIndex < 0 || nextIndex >= unitOrder.length) return;
     unitOrder[nextIndex] = roster.unitOrder[index];
     unitOrder[index] = roster.unitOrder[nextIndex];
-    updateRoster({ ...roster, unitOrder: unitOrder });
+    dispatch(updateRoster({ unitOrder: unitOrder }));
   };
   const moveLeft = () => moveUnit(1);
   const moveRight = () => moveUnit(0);
 
-  const renameUnit = value => updateUnit({ customName: value });
+  const renameUnit = value => updateUnit(id, { customName: value });
 
   const cloneUnit = () => {
     const nextId = roster.nextID;
 
-    updateRoster({
-      nextID: nextId + 1,
-      units: {
-        ...roster.units,
-        [nextId]: { ...unit }
-      },
-      unitOrder: [...roster.unitOrder, nextId]
-    });
+    dispatch(
+      updateRoster({
+        nextID: nextId + 1,
+        units: {
+          ...roster.units,
+          [nextId]: { ...unit }
+        },
+        unitOrder: [...roster.unitOrder, nextId]
+      })
+    );
   };
 
   return (

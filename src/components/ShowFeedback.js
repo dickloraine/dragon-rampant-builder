@@ -1,16 +1,21 @@
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFeedback } from 'store/appState/actions';
 
 const Alert = props => <MuiAlert elevation={6} variant="filled" {...props} />;
 
-const ShowFeedback = ({ feedback, setFeetback }) => {
+const ShowFeedback = () => {
+  const dispatch = useDispatch();
+  const feedback = useSelector(state => state.appState.feedback);
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    setFeetback({ ...feedback, open: false });
+    dispatch(setFeedback({ ...feedback, open: false }));
   };
 
   return (

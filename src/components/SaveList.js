@@ -3,13 +3,13 @@ import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import store from 'store';
 import { packRoster } from './Roster';
+import { useSelector, useDispatch } from 'react-redux';
+import { showFeedback } from 'store/appState/actions';
 
-export default function SaveList({
-  roster,
-  showFeedback,
-  onClose = null,
-  showText = false
-}) {
+export default function SaveList({ onClose = null, showText = false }) {
+  const dispatch = useDispatch();
+  const roster = useSelector(state => state.roster);
+
   const saveList = () => {
     if (roster.name === 'New List') return false;
     let savedLists = store.get('savedRosters') || [];
@@ -22,8 +22,8 @@ export default function SaveList({
   };
 
   const saveRoster = () => {
-    if (saveList()) showFeedback('Saved!', 'success');
-    else showFeedback('You have to give the list a name!', 'error');
+    if (saveList()) dispatch(showFeedback('Saved!', 'success'));
+    else dispatch(showFeedback('You have to give the list a name!', 'error'));
     if (onClose) onClose();
   };
 

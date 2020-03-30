@@ -1,149 +1,36 @@
-import React, { useState, useEffect, useReducer } from 'react';
-import store from 'store';
-import { Box, Typography, Container, FormControl } from '@material-ui/core';
-import unitData from 'assets/dragonRampantData/units.json';
-import fantasticalRulesData from 'assets/dragonRampantData/fantasticalRules.json';
-import rulesData from 'assets/dragonRampantData/rules.json';
-import spellData from 'assets/dragonRampantData/spells.json';
+import React, { useEffect } from 'react';
+import { Box, Container } from '@material-ui/core';
 import ShowFeedback from './ShowFeedback';
 import AppBar from './AppBar';
+import ListName from './ListName';
 import Roster from './Roster';
 import RulesSummary from './RulesSummary';
 import SpellTable from './SpellTable';
 import Statistics from './Statistics/Statistics';
-import { objReduce } from 'helpers/utils';
-
-const useData = (type = null) => {
-  const data = {
-    unitData: unitData,
-    unitNames: Object.keys(unitData).slice(1),
-    fantasticalRulesData: fantasticalRulesData,
-    rulesData: rulesData,
-    spellData: spellData
-  };
-  return type ? data[type] : data;
-};
+import store from 'store';
+import { useDispatch } from 'react-redux';
+import { updateUI } from 'store/ui/actions';
 
 const App = () => {
-  const data = useData();
+  const dispatch = useDispatch();
 
-  const initialRoster = {
-    name: 'New List',
-    nextID: 0,
-    units: {},
-    unitOrder: []
-  };
-
-  const [roster, setRoster] = useState({ ...initialRoster });
-
-  const [ui, setUI] = useState({
-    viewMode: false,
-    editMode: false,
-    rulesSummaryExpanded: true,
-    spellsExpanded: false,
-    statisticsExpanded: true
-  });
-
-  const [forceInputUpdate, setForceInputUpdate] = useReducer(
-    state => (state ? 0 : 1),
-    0
-  );
-
-  const [feedback, setFeedback] = useState({
-    open: false,
-    message: '',
-    severity: ''
-  });
-
-  useEffect(ui => {
-    setUI({ ...ui, ...store.get('uiOptions') });
+  useEffect(() => {
+    dispatch(updateUI({ ...store.get('uiOptions') }));
   }, []);
-
-  const updateUI = newAttributes => {
-    setUI({ ...ui, ...newAttributes });
-    store.set('uiOptions', { ...ui, ...newAttributes });
-  };
-
-  const setUIOption = (option, value) => {
-    setUI({ ...ui, [option]: value });
-    store.set('uiOptions', { ...ui, [option]: value });
-  };
-
-  const updateRoster = newAttributes => setRoster({ ...roster, ...newAttributes });
-
-  const showFeedback = (message, severity) =>
-    setFeedback({ open: true, message: message, severity: severity });
-
-  const reload = () => {
-    setRoster({ ...initialRoster });
-    setForceInputUpdate();
-  };
-
-  let specialRules = [
-    ...objReduce(
-      roster.units,
-      (acc, unit) =>
-        unit.rules.reduce(
-          (acc, rule) =>
-            data.rulesData[data.rulesData[rule]]
-              ? acc.add(data.rulesData[rule])
-              : acc.add(rule),
-          acc
-        ),
-      new Set()
-    )
-  ].sort();
-
-  const totalPoints = objReduce(roster.units, (acc, unit) => acc + unit.points, 0);
 
   return (
     <Container>
-      <AppBar
-        setUIOption={setUIOption}
-        updateUI={updateUI}
-        ui={ui}
-        roster={roster}
-        setRoster={setRoster}
-        armyCost={totalPoints}
-        showFeedback={showFeedback}
-        reload={reload}
-        setForceInputUpdate={setForceInputUpdate}
-      />
+      <AppBar />
       <Box>
-        <FormControl>
-          <Typography
-            style={{ border: 0, marginBottom: 25, width: '100%' }}
-            variant="h4"
-            key={forceInputUpdate}
-            component="input"
-            value={roster.name}
-            onChange={e => updateRoster({ name: e.target.value })}
-          />
-        </FormControl>
-        <Roster roster={roster} updateRoster={updateRoster} ui={ui} data={data} />
-        <RulesSummary
-          specialRules={specialRules}
-          rulesSummaryExpanded={ui.rulesSummaryExpanded}
-          setUIOption={setUIOption}
-        />
-        <SpellTable
-          specialRules={specialRules}
-          spellsExpanded={ui.spellsExpanded}
-          setUIOption={setUIOption}
-        />
-        <Statistics
-          armyCost={totalPoints}
-          units={roster.units}
-          unitData={data.unitData}
-          fantasticalRulesData={data.fantasticalRulesData}
-          statisticsExpanded={ui.statisticsExpanded}
-          setUIOption={setUIOption}
-        />
+        <ListName />
+        <Roster />
+        <RulesSummary />
+        <SpellTable />
+        <Statistics />
       </Box>
-      <ShowFeedback feedback={feedback} setFeetback={setFeedback} />
+      <ShowFeedback />
     </Container>
   );
 };
 
 export default App;
-export { useData };

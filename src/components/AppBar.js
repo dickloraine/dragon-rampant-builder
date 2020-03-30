@@ -9,23 +9,22 @@ import { IconButton, Fab, Tooltip, Hidden } from '@material-ui/core';
 import LoadList from './LoadList';
 import SaveList from './SaveList';
 import SideMenu from './SideMenu';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUIOption, updateUI } from 'store/ui/actions';
+import { newRoster } from 'store/roster/actions';
+import { objReduce } from 'helpers/utils';
 
-export default function AppBar({
-  roster,
-  ui,
-  setUIOption,
-  updateUI,
-  armyCost,
-  setRoster,
-  setForceInputUpdate,
-  showFeedback,
-  reload
-}) {
+export default function AppBar() {
+  const dispatch = useDispatch();
+  const ui = useSelector(state => state.ui);
+  const units = useSelector(state => state.roster.units);
+  const armyCost = objReduce(units, (acc, unit) => acc + unit.points, 0);
+
   const changeViewMode = (clicked, newState) => {
     const notClicked = clicked === 'viewMode' ? 'editMode' : 'viewMode';
     let newStates = { [clicked]: newState };
     if (newState) newStates = { ...newStates, [notClicked]: false };
-    updateUI(newStates);
+    dispatch(updateUI(newStates));
   };
 
   const ToggleUIButton = ({ option, Icon, title, onClick = setUIOption }) => {
@@ -48,13 +47,7 @@ export default function AppBar({
       <AppBarMaterial position="fixed">
         <Toolbar>
           <Box display="flex" alignItems="center">
-            <SideMenu
-              roster={roster}
-              setRoster={setRoster}
-              armyCost={armyCost}
-              setForceInputUpdate={setForceInputUpdate}
-              showFeedback={showFeedback}
-            />
+            <SideMenu />
             <Hidden smDown>
               <Typography variant="h5">
                 &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
@@ -63,15 +56,11 @@ export default function AppBar({
             <Hidden xsDown mdUp>
               <Typography variant="h5">&nbsp;&nbsp;DRAB&nbsp;&nbsp;</Typography>
             </Hidden>
-            <IconButton color="inherit" onClick={reload}>
+            <IconButton color="inherit" onClick={() => dispatch(newRoster())}>
               <ReplayIcon />
             </IconButton>
-            <SaveList roster={roster} showFeedback={showFeedback} />
-            <LoadList
-              setRoster={setRoster}
-              showFeedback={showFeedback}
-              setForceInputUpdate={setForceInputUpdate}
-            />
+            <SaveList />
+            <LoadList />
           </Box>
           <Box flexGrow={1}></Box>
           <Box display="flex" alignItems="center">

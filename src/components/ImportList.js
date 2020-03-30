@@ -3,26 +3,24 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import { unpackRoster } from './Roster';
 import TextInputDialog from './TextInputDialog';
-import { useData } from './App';
+import getData from 'store/getData';
+import { useDispatch } from 'react-redux';
+import { setRoster } from 'store/roster/actions';
+import { showFeedback, toggleForceInputUpdate } from 'store/appState/actions';
 
-const ImportList = ({
-  setRoster,
-  setForceInputUpdate,
-  showFeedback,
-  onClose = null,
-  showText = false
-}) => {
-  const data = useData();
+const ImportList = ({ onClose = null, showText = false }) => {
+  const data = getData();
+  const dispatch = useDispatch();
 
   const handleImport = value => {
     if (!value) return;
     try {
       const list = unpackRoster(JSON.parse(value), data);
-      setRoster({ ...list });
-      setForceInputUpdate();
-      showFeedback('List imported!', 'success');
+      dispatch(setRoster({ ...list }));
+      dispatch(toggleForceInputUpdate());
+      dispatch(showFeedback('List imported!', 'success'));
     } catch (err) {
-      showFeedback('Could not import the list!', 'error');
+      dispatch(showFeedback('Could not import the list!', 'error'));
     }
   };
 

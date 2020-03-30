@@ -3,8 +3,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import store from 'store';
 import ListDialog from './ListDialog';
+import { useDispatch } from 'react-redux';
+import { showFeedback } from 'store/appState/actions';
 
-export default function DeleteList({ showFeedback, onClose = null, showText = false }) {
+export default function DeleteList({ onClose = null, showText = false }) {
+  const dispatch = useDispatch();
+
   const removeList = name => {
     if (name === 'Delete all') store.set('savedRosters', []);
     else {
@@ -12,7 +16,7 @@ export default function DeleteList({ showFeedback, onClose = null, showText = fa
       delete savedLists[name];
       store.set('savedRosters', savedLists);
     }
-    showFeedback('Deleted!', 'success');
+    dispatch(showFeedback('Deleted!', 'success'));
   };
 
   const getSavedLists = () => {

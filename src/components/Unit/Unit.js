@@ -10,75 +10,25 @@ import StatBlock from './StatBlock';
 import SpecialRules from './SpecialRules';
 import Actions from './Actions';
 import ExpandIcon from '../ExpandIcon';
-import { useData } from '../App';
+import getData from 'store/getData';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUnit, updateUnit, removeUnit } from 'store/roster/actions';
+import buildUnit from './buildUnit';
 
-const buildUnit = (name, customName, options, fantasticalRules, data) => {
-  const unitData = data.unitData[name];
-  let unit = {
-    ...unitData,
-    customName: customName || '',
-    options: [...options],
-    fantasticalRules: [...fantasticalRules]
-  };
+function Unit({ id }) {
+  const data = getData();
+  const dispatch = useDispatch();
+  const unit = useSelector(state => state.roster.units[id]);
+  const ui = useSelector(state => state.ui);
 
-  let points = unitData.points;
-  for (let option of unit.options) {
-    option = unitData.options[option];
-    points += option.points;
-
-    if (option.setStats) {
-      for (const [key, val] of Object.entries(option.setStats)) {
-        unit = { ...unit, stats: { ...unit.stats, [key]: val } };
-      }
-    }
-
-    if (option.add) {
-      for (const rule of option.add) {
-        unit.rules = [...unit.rules, rule];
-      }
-    }
-
-    if (option.remove) {
-      for (const rule of option.remove) {
-        unit.rules = unit.rules.filter(val => val !== rule);
-      }
-    }
-  }
-  for (let fant of unit.fantasticalRules) {
-    fant = data.fantasticalRulesData[fant];
-    points += fant.points;
-    unit.rules = [...unit.rules, fant.name];
-  }
-
-  unit = { ...unit, points: points };
-  return unit;
-};
-
-function Unit({ id, unit, roster, updateRoster, setUnit, removeUnit, ui }) {
-  const data = useData();
   const [expanded, setExpanded] = React.useState(true);
   const handleExpandClick = () => setExpanded(!expanded);
 
-  const changeUnit = unitName => setUnit(id, unitName);
-
-  const updateUnit = newAttributes => {
-    updateRoster({
-      units: {
-        ...roster.units,
-        [id]: { ...roster.units[id], ...newAttributes }
-      }
-    });
-  };
+  const changeUnit = unitName => dispatch(setUnit(id, unitName));
 
   const handleChange = unit => {
-    unit = buildUnit(
-      unit.name,
-      unit.customName,
-      unit.options,
-      unit.fantasticalRules,
-      data
-    );
-    updateUnit({ ...unit });
+    unit = buildUnit(unit);
+    dispatch(updateUnit(id, { ...unit }));
   };
 
   return (
@@ -110,7 +60,7 @@ function Unit({ id, unit, roster, updateRoster, setUnit, removeUnit, ui }) {
             <UnitSelector unit={unit} onClose={changeUnit} options={data.unitNames} />
           }
           action={
-            <Button onClick={() => removeUnit(id)}>
+            <Button onClick={() => dispatch(removeUnit(id))}>
               <CloseIcon />
             </Button>
           }
@@ -128,13 +78,7 @@ function Unit({ id, unit, roster, updateRoster, setUnit, removeUnit, ui }) {
             <>
               <Options onChange={handleChange} unit={unit} />
               <FantasticalRules onChange={handleChange} unit={unit} />
-              <Actions
-                id={id}
-                unit={unit}
-                roster={roster}
-                updateRoster={updateRoster}
-                updateUnit={updateUnit}
-              />
+              <Actions id={id} unit={unit} />
             </>
           )}
         </CardContent>
@@ -144,4 +88,3 @@ function Unit({ id, unit, roster, updateRoster, setUnit, removeUnit, ui }) {
 }
 
 export default Unit;
-export { buildUnit };
