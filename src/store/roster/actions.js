@@ -5,7 +5,9 @@ export const RosterActionTypes = {
   ADD_UNIT: 'ADD_UNIT',
   SET_UNIT: 'SET_UNIT',
   UPDATE_UNIT: 'UPDATE_UNIT',
-  REMOVE_UNIT: 'REMOVE_UNIT'
+  REMOVE_UNIT: 'REMOVE_UNIT',
+  RENAME_UNIT: 'RENAME_UNIT',
+  MOVE_UNIT: 'MOVE_UNIT'
 };
 
 export const newRoster = () => ({
@@ -22,8 +24,9 @@ export const updateRoster = newAttributes => ({
   payload: newAttributes
 });
 
-export const addUnit = () => ({
-  type: RosterActionTypes.ADD_UNIT
+export const addUnit = (unit = null, index = null) => ({
+  type: RosterActionTypes.ADD_UNIT,
+  payload: [unit, index]
 });
 
 export const setUnit = (id, name) => ({
@@ -39,4 +42,14 @@ export const updateUnit = (id, newAttributes) => ({
 export const removeUnit = id => ({
   type: RosterActionTypes.REMOVE_UNIT,
   payload: id
+});
+
+export const renameUnit = (id, name) => ({
+  type: RosterActionTypes.RENAME_UNIT,
+  payload: [id, name]
+});
+
+export const moveUnit = (id, direction) => ({
+  type: RosterActionTypes.MOVE_UNIT,
+  payload: [id, direction]
 });

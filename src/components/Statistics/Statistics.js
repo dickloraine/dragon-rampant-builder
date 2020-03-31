@@ -44,7 +44,7 @@ export default function Statistics() {
   );
 
   const COLORS = ['#8884d8', '#82ca9d', '#FF8042'];
-  const totalPoints = Object.values(units).reduce((acc, unit) => acc + unit.points, 0);
+  const totalPoints = useSelector(state => state.roster.totalPoints);
   const unitCount = Object.keys(units).length;
   const mounted = Object.values(units).filter(u => u.type === 'mounted');
   const foot = Object.values(units).filter(u => u.type === 'foot');

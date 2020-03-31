@@ -15,10 +15,7 @@ const ExportList = ({ onClose = null, showText = false }) => {
   const dispatch = useDispatch();
   const roster = useSelector(state => state.roster);
   const getImportableString = () => JSON.stringify(packRoster(roster));
-  const armyCost = Object.values(roster.units).reduce(
-    (acc, unit) => acc + unit.points,
-    0
-  );
+  const armyCost = roster.totalPoints;
 
   const getListAsText = () => {
     let text = [];

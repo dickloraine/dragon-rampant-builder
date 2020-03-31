@@ -6,46 +6,16 @@ import TextFieldsIcon from '@material-ui/icons/TextFields';
 import { IconButton, Box, Tooltip } from '@material-ui/core';
 import TextInputDialog from '../TextInputDialog';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateRoster, updateUnit } from 'store/roster/actions';
+import { addUnit, moveUnit, renameUnit } from 'store/roster/actions';
 
 const Actions = ({ id, unit }) => {
   const dispatch = useDispatch();
   const roster = useSelector(state => state.roster);
 
-  const moveUnit = dir => {
-    const unitOrder = [...roster.unitOrder];
-    const index = roster.unitOrder.indexOf(id);
-    const nextIndex = dir ? index - 1 : index + 1;
-    if (nextIndex < 0 || nextIndex >= unitOrder.length) return;
-    unitOrder[nextIndex] = roster.unitOrder[index];
-    unitOrder[index] = roster.unitOrder[nextIndex];
-    dispatch(updateRoster({ unitOrder: unitOrder }));
-  };
-  const moveLeft = () => moveUnit(1);
-  const moveRight = () => moveUnit(0);
-
-  const renameUnit = value => updateUnit(id, { customName: value });
-
-  const cloneUnit = () => {
-    const nextId = roster.nextID;
-    const index = roster.unitOrder.indexOf(id);
-    const unitOrder = [
-      ...roster.unitOrder.slice(0, index + 1),
-      nextId,
-      ...roster.unitOrder.slice(index + 1)
-    ];
-
-    dispatch(
-      updateRoster({
-        nextID: nextId + 1,
-        units: {
-          ...roster.units,
-          [nextId]: { ...unit }
-        },
-        unitOrder: unitOrder
-      })
-    );
-  };
+  const moveLeft = () => dispatch(moveUnit(id, 'left'));
+  const moveRight = () => dispatch(moveUnit(id, 'right'));
+  const cloneUnit = () => dispatch(addUnit(unit, roster.unitOrder.indexOf(id)));
+  const rename = value => dispatch(renameUnit(id, value));
 
   return (
     <Box>
@@ -72,7 +42,7 @@ const Actions = ({ id, unit }) => {
                 </IconButton>
               </Tooltip>
             )}
-            action={renameUnit}
+            action={rename}
             title="Enter the name for the unit"
             label="Unit name"
             defaultValue={unit.customName}

@@ -16,8 +16,7 @@ import { newRoster } from 'store/roster/actions';
 export default function AppBar() {
   const dispatch = useDispatch();
   const ui = useSelector(state => state.ui);
-  const units = useSelector(state => state.roster.units);
-  const armyCost = Object.values(units).reduce((acc, unit) => acc + unit.points, 0);
+  const armyCost = useSelector(state => state.roster.totalPoints);
 
   const changeViewMode = (clicked, newState) => {
     const notClicked = clicked === 'viewMode' ? 'editMode' : 'viewMode';
