@@ -28,6 +28,12 @@ const Actions = ({ id, unit }) => {
 
   const cloneUnit = () => {
     const nextId = roster.nextID;
+    const index = roster.unitOrder.indexOf(id);
+    const unitOrder = [
+      ...roster.unitOrder.slice(0, index + 1),
+      nextId,
+      ...roster.unitOrder.slice(index + 1)
+    ];
 
     dispatch(
       updateRoster({
@@ -36,7 +42,7 @@ const Actions = ({ id, unit }) => {
           ...roster.units,
           [nextId]: { ...unit }
         },
-        unitOrder: [...roster.unitOrder, nextId]
+        unitOrder: unitOrder
       })
     );
   };
