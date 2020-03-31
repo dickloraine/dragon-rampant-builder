@@ -3,13 +3,12 @@ import AddIcon from '@material-ui/icons/Add';
 import { Fab, Box, Typography } from '@material-ui/core';
 import Unit from './Unit';
 import buildUnit from './Unit/buildUnit';
-import { objMap } from 'helpers/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUnit } from 'store/roster/actions';
 
 const packRoster = roster => {
   let units = { ...roster.units };
-  units = objMap(units, unit => ({
+  units = Object.values(units).map(unit => ({
     name: unit.name,
     customName: unit.customName || '',
     options: unit.options,
@@ -19,7 +18,7 @@ const packRoster = roster => {
 };
 
 const unpackRoster = compactRoster => {
-  const units = objMap(compactRoster.units, unit => buildUnit(unit));
+  const units = Object.values(compactRoster.units).map(unit => buildUnit(unit));
   return { ...compactRoster, units: units };
 };
 

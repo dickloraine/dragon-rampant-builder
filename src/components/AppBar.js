@@ -10,15 +10,14 @@ import LoadList from './LoadList';
 import SaveList from './SaveList';
 import SideMenu from './SideMenu';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUIOption, updateUI } from 'store/ui/actions';
+import { updateUI } from 'store/ui/actions';
 import { newRoster } from 'store/roster/actions';
-import { objReduce } from 'helpers/utils';
 
 export default function AppBar() {
   const dispatch = useDispatch();
   const ui = useSelector(state => state.ui);
   const units = useSelector(state => state.roster.units);
-  const armyCost = objReduce(units, (acc, unit) => acc + unit.points, 0);
+  const armyCost = Object.values(units).reduce((acc, unit) => acc + unit.points, 0);
 
   const changeViewMode = (clicked, newState) => {
     const notClicked = clicked === 'viewMode' ? 'editMode' : 'viewMode';
@@ -27,20 +26,18 @@ export default function AppBar() {
     dispatch(updateUI(newStates));
   };
 
-  const ToggleUIButton = ({ option, Icon, title, onClick = setUIOption }) => {
-    return (
-      <Tooltip title={title}>
-        <IconButton
-          color="inherit"
-          onClick={() => {
-            onClick(option, !ui[option]);
-          }}
-        >
-          <Icon fontSize="small" color={ui[option] ? 'inherit' : 'disabled'} />
-        </IconButton>
-      </Tooltip>
-    );
-  };
+  const ToggleUIButton = ({ option, Icon, title, onClick }) => (
+    <Tooltip title={title}>
+      <IconButton
+        color="inherit"
+        onClick={() => {
+          onClick(option, !ui[option]);
+        }}
+      >
+        <Icon fontSize="small" color={ui[option] ? 'inherit' : 'disabled'} />
+      </IconButton>
+    </Tooltip>
+  );
 
   return (
     <Box display="flex">

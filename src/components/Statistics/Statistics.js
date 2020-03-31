@@ -9,7 +9,6 @@ import {
   useMediaQuery
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
-import { objFilter, objReduce } from '../../helpers/utils';
 import UnitDistributionChart from './UnitDistributionChart';
 import PointDistributionChart from './PointDistributionChart';
 import getData from 'store/getData';
@@ -23,12 +22,10 @@ export default function Statistics() {
   const dispatch = useDispatch();
   const statisticsExpanded = useSelector(state => state.ui.statisticsExpanded);
   const units = useSelector(state => state.roster.units);
-  const armyCost = objReduce(units, (acc, unit) => acc + unit.points, 0);
   const theme = useTheme();
   const chipSize = useMediaQuery(theme.breakpoints.down('sm')) ? 'small' : 'medium';
 
-  const optionPoints = objReduce(
-    units,
+  const optionPoints = Object.values(units).reduce(
     (accumulator, unit) =>
       unit.options.reduce(
         (acc, option) => acc + unitData[unit.name].options[option].points,
@@ -37,8 +34,7 @@ export default function Statistics() {
     0
   );
 
-  const fantasticalPoints = objReduce(
-    units,
+  const fantasticalPoints = Object.values(units).reduce(
     (accumulator, unit) =>
       unit.fantasticalRules.reduce(
         (acc, option) => acc + fantasticalRulesData[option].points,
@@ -48,28 +44,31 @@ export default function Statistics() {
   );
 
   const COLORS = ['#8884d8', '#82ca9d', '#FF8042'];
-  const totalPoints = armyCost;
+  const totalPoints = Object.values(units).reduce((acc, unit) => acc + unit.points, 0);
   const unitCount = Object.keys(units).length;
-  const mounted = objFilter(units, u => u.type === 'mounted');
-  const foot = objFilter(units, u => u.type === 'foot');
-  const ranged = objFilter(units, u => u.stats.shoot > 0);
-  const unitsCost = objReduce(units, (acc, u) => acc + unitData[u.name].points, 0);
+  const mounted = Object.values(units).filter(u => u.type === 'mounted');
+  const foot = Object.values(units).filter(u => u.type === 'foot');
+  const ranged = Object.values(units).filter(u => u.stats.shoot > 0);
+  const unitsCost = Object.values(units).reduce(
+    (acc, u) => acc + unitData[u.name].points,
+    0
+  );
 
   const dataUnitTypes = [
     {
       name: 'Mounted',
       Units: Object.keys(mounted).length,
-      Points: objReduce(mounted, (acc, u) => acc + u.points, 0)
+      Points: Object.values(mounted).reduce((acc, u) => acc + u.points, 0)
     },
     {
       name: 'Foot',
       Units: Object.keys(foot).length,
-      Points: objReduce(foot, (acc, u) => acc + u.points, 0)
+      Points: Object.values(foot).reduce((acc, u) => acc + u.points, 0)
     },
     {
       name: 'Ranged',
       Units: Object.keys(ranged).length,
-      Points: objReduce(ranged, (acc, u) => acc + u.points, 0)
+      Points: Object.values(ranged).reduce((acc, u) => acc + u.points, 0)
     }
   ];
 

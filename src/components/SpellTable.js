@@ -16,7 +16,6 @@ import {
 import getData from 'store/getData';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUIOption } from 'store/ui/actions';
-import { objReduce } from 'helpers/utils';
 
 const spellData = getData('spellData');
 const rulesData = getData('rulesData');
@@ -26,8 +25,7 @@ export default function SpellTable() {
   const spellsExpanded = useSelector(state => state.ui.spellsExpanded);
   const units = useSelector(state => state.roster.units);
   let specialRules = [
-    ...objReduce(
-      units,
+    ...Object.values(units).reduce(
       (acc, unit) =>
         unit.rules.reduce(
           (acc, rule) =>
