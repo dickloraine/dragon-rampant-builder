@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Container } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import ShowFeedback from './ShowFeedback';
 import AppBar from './AppBar';
 import ListName from './ListName';
@@ -21,13 +21,11 @@ const App = () => {
   return (
     <Container>
       <AppBar />
-      <Box>
-        <ListName />
-        <Roster />
-        <RulesSummary />
-        <SpellTable />
-        <Statistics />
-      </Box>
+      <ListName />
+      <Roster />
+      <RulesSummary />
+      <SpellTable />
+      <Statistics />
       <ShowFeedback />
     </Container>
   );
