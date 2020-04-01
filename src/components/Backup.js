@@ -24,7 +24,7 @@ const Backup = ({ showText = null, onClose = null }) => {
   return (
     <>
       <Tooltip title="Backup">
-        <IconButton color="inherit" onClick={BackupIcon}>
+        <IconButton color="inherit" onClick={backup}>
           <BackupIcon />
         </IconButton>
       </Tooltip>

@@ -8,6 +8,7 @@ import ExportList from './ExportList';
 import ImportList from './ImportList';
 import Backup from './Backup';
 import Restore from './Restore';
+import About from './About';
 
 export default function SideMenu() {
   const [open, setOpen] = React.useState(false);
@@ -48,6 +49,10 @@ export default function SideMenu() {
           </ListItem>
           <ListItem button key={'Restore'}>
             <Restore onClose={handleClose} showText={true} />
+          </ListItem>
+          <Divider />
+          <ListItem button key={'About'}>
+            <About onClose={handleClose} />
           </ListItem>
         </List>
       </Drawer>
