@@ -12,7 +12,7 @@ import Actions from './Actions';
 import ExpandIcon from '../ExpandIcon';
 import getData from 'store/getData';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUnit, updateUnit, removeUnit } from 'store/roster/actions';
+import { setUnit, updateUnit, removeUnit } from 'store/rosterSlice';
 import buildUnit from './buildUnit';
 
 function Unit({ id }) {
@@ -24,7 +24,7 @@ function Unit({ id }) {
   const [expanded, setExpanded] = React.useState(true);
   const handleExpandClick = () => setExpanded(!expanded);
 
-  const changeUnit = unitName => dispatch(setUnit(id, unitName));
+  const changeUnit = name => dispatch(setUnit(id, name));
 
   const handleChange = unit => {
     unit = buildUnit(unit);

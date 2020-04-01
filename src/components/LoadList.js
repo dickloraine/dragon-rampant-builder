@@ -5,8 +5,8 @@ import store from 'store';
 import { unpackRoster } from './Roster';
 import ListDialog from './ListDialog';
 import { useDispatch } from 'react-redux';
-import { setRoster } from 'store/roster/actions';
-import { showFeedback, toggleForceInputUpdate } from 'store/appState/actions';
+import { setRoster } from 'store/rosterSlice';
+import { showFeedback, toggleForceInputUpdate } from 'store/appStateSlice';
 
 export default function LoadList({ onClose = null, showText = false }) {
   const dispatch = useDispatch();

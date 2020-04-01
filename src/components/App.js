@@ -9,7 +9,7 @@ import SpellTable from './SpellTable';
 import Statistics from './Statistics/Statistics';
 import store from 'store';
 import { useDispatch } from 'react-redux';
-import { updateUI } from 'store/ui/actions';
+import { updateUI } from 'store/uiSlice';
 
 const App = () => {
   const dispatch = useDispatch();

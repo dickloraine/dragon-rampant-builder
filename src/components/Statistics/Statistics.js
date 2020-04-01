@@ -13,7 +13,7 @@ import UnitDistributionChart from './UnitDistributionChart';
 import PointDistributionChart from './PointDistributionChart';
 import getData from 'store/getData';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUIOption } from 'store/ui/actions';
+import { setUIOption } from 'store/uiSlice';
 
 const unitData = getData('unitData');
 const fantasticalRulesData = getData('fantasticalRulesData');

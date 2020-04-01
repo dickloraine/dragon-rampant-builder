@@ -6,7 +6,7 @@ import TextFieldsIcon from '@material-ui/icons/TextFields';
 import { IconButton, Box, Tooltip } from '@material-ui/core';
 import TextInputDialog from '../TextInputDialog';
 import { useSelector, useDispatch } from 'react-redux';
-import { addUnit, moveUnit, renameUnit } from 'store/roster/actions';
+import { addUnit, moveUnit, renameUnit } from 'store/rosterSlice';
 
 const Actions = ({ id, unit }) => {
   const dispatch = useDispatch();

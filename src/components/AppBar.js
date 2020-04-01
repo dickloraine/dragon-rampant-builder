@@ -10,8 +10,8 @@ import LoadList from './LoadList';
 import SaveList from './SaveList';
 import SideMenu from './SideMenu';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUI } from 'store/ui/actions';
-import { newRoster } from 'store/roster/actions';
+import { updateUI } from 'store/uiSlice';
+import { newRoster } from 'store/rosterSlice';
 
 export default function AppBar() {
   const dispatch = useDispatch();

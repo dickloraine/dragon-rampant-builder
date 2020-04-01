@@ -4,7 +4,7 @@ import { Fab, Box, Typography } from '@material-ui/core';
 import Unit from './Unit';
 import buildUnit from './Unit/buildUnit';
 import { useSelector, useDispatch } from 'react-redux';
-import { addUnit } from 'store/roster/actions';
+import { addUnit } from 'store/rosterSlice';
 
 const packRoster = roster => {
   let units = { ...roster.units };

@@ -4,7 +4,7 @@ import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import store from 'store';
 import ListDialog from './ListDialog';
 import { useDispatch } from 'react-redux';
-import { showFeedback } from 'store/appState/actions';
+import { showFeedback } from 'store/appStateSlice';
 
 export default function DeleteList({ onClose = null, showText = false }) {
   const dispatch = useDispatch();

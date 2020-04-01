@@ -3,7 +3,7 @@ import RestorePageIcon from '@material-ui/icons/RestorePage';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import store from 'store';
 import { useDispatch } from 'react-redux';
-import { showFeedback, toggleForceInputUpdate } from 'store/appState/actions';
+import { showFeedback, toggleForceInputUpdate } from 'store/appStateSlice';
 
 const Restore = ({ showText = null, onClose = null }) => {
   const dispatch = useDispatch();

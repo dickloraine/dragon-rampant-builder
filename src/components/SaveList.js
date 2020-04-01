@@ -4,7 +4,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import store from 'store';
 import { packRoster } from './Roster';
 import { useSelector, useDispatch } from 'react-redux';
-import { showFeedback } from 'store/appState/actions';
+import { showFeedback } from 'store/appStateSlice';
 
 export default function SaveList({ onClose = null, showText = false }) {
   const dispatch = useDispatch();

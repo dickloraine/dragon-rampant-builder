@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import getData from 'store/getData';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUIOption } from 'store/ui/actions';
+import { setUIOption } from 'store/uiSlice';
 
 const rulesData = getData('rulesData');
 

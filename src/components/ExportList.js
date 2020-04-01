@@ -7,7 +7,7 @@ import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import { packRoster } from './Roster';
 import ListDialog from './ListDialog';
 import { useSelector, useDispatch } from 'react-redux';
-import { showFeedback } from 'store/appState/actions';
+import { showFeedback } from 'store/appStateSlice';
 
 const copyToClipboard = text => navigator.clipboard.writeText(text);
 

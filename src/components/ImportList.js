@@ -5,8 +5,8 @@ import { unpackRoster } from './Roster';
 import TextInputDialog from './TextInputDialog';
 import getData from 'store/getData';
 import { useDispatch } from 'react-redux';
-import { setRoster } from 'store/roster/actions';
-import { showFeedback, toggleForceInputUpdate } from 'store/appState/actions';
+import { setRoster } from 'store/rosterSlice';
+import { showFeedback, toggleForceInputUpdate } from 'store/appStateSlice';
 
 const ImportList = ({ onClose = null, showText = false }) => {
   const data = getData();

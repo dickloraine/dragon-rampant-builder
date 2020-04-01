@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, FormControl } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateRoster } from 'store/roster/actions';
+import { updateRoster } from 'store/rosterSlice';
 
 const ListName = () => {
   const dispatch = useDispatch();
