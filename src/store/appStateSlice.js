@@ -9,7 +9,8 @@ const appStateSlice = createSlice({
       message: '',
       severity: ''
     },
-    inputUpdate: 0
+    inputUpdate: 0,
+    autoDarkMode: 0
   },
   reducers: {
     toggleForceInputUpdate: state => {
@@ -21,13 +22,17 @@ const appStateSlice = createSlice({
     showFeedback: multipleArgsReducer((state, action) => {
       const [message, severity] = action.payload;
       state.feedback = { open: true, message: message, severity: severity };
-    })
+    }),
+    setAutoDarkMode: (state, action) => {
+      state.autoDarkMode = action.payload;
+    }
   }
 });
 
 export const {
   toggleForceInputUpdate,
   closeFeedback,
-  showFeedback
+  showFeedback,
+  setAutoDarkMode
 } = appStateSlice.actions;
 export default appStateSlice.reducer;

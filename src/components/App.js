@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { ThemeProvider } from '@material-ui/core/styles';
 import { Container, CssBaseline } from '@material-ui/core';
 import ShowFeedback from './ShowFeedback';
 import AppBar from './AppBar';
@@ -12,6 +11,7 @@ import Statistics from './Statistics/Statistics';
 import store from 'store';
 import { useDispatch } from 'react-redux';
 import { updateUI } from 'store/uiSlice';
+import useUserTheme from 'hooks/useUserTheme';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -20,17 +20,7 @@ const App = () => {
     dispatch(updateUI({ ...store.get('uiOptions') }));
   }, [dispatch]);
 
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
-  const theme = React.useMemo(
-    () =>
-      createMuiTheme({
-        palette: {
-          type: prefersDarkMode ? 'dark' : 'light'
-        }
-      }),
-    [prefersDarkMode]
-  );
+  const theme = useUserTheme();
 
   return (
     <ThemeProvider theme={theme}>

@@ -7,6 +7,7 @@ const uiSlice = createSlice({
   initialState: {
     viewMode: false,
     editMode: false,
+    darkMode: null,
     rulesSummaryExpanded: true,
     spellsExpanded: false,
     statisticsExpanded: true

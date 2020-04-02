@@ -8,6 +8,7 @@ import ExportList from './ExportList';
 import ImportList from './ImportList';
 import Backup from './Backup';
 import Restore from './Restore';
+import DarkMode from './DarkMode';
 import About from './About';
 
 export default function SideMenu() {
@@ -51,6 +52,9 @@ export default function SideMenu() {
             <Restore onClose={handleClose} showText={true} />
           </ListItem>
           <Divider />
+          <ListItem button key={'DarkMode'}>
+            <DarkMode />
+          </ListItem>
           <ListItem button key={'About'}>
             <About onClose={handleClose} />
           </ListItem>
