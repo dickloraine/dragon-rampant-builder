@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import { Container } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Container, CssBaseline } from '@material-ui/core';
 import ShowFeedback from './ShowFeedback';
 import AppBar from './AppBar';
 import ListName from './ListName';
@@ -18,16 +20,31 @@ const App = () => {
     dispatch(updateUI({ ...store.get('uiOptions') }));
   }, [dispatch]);
 
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  const theme = React.useMemo(
+    () =>
+      createMuiTheme({
+        palette: {
+          type: prefersDarkMode ? 'dark' : 'light'
+        }
+      }),
+    [prefersDarkMode]
+  );
+
   return (
-    <Container>
-      <AppBar />
-      <ListName />
-      <Roster />
-      <RulesSummary />
-      <SpellTable />
-      <Statistics />
-      <ShowFeedback />
-    </Container>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container>
+        <AppBar />
+        <ListName />
+        <Roster />
+        <RulesSummary />
+        <SpellTable />
+        <Statistics />
+        <ShowFeedback />
+      </Container>
+    </ThemeProvider>
   );
 };
 

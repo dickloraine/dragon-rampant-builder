@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '@material-ui/core/styles';
 import {
   BarChart,
   Bar,
@@ -9,6 +10,29 @@ import {
   LabelList,
   ResponsiveContainer
 } from 'recharts';
+
+const CustomLabel = ({ x, y, width, value }) => {
+  const theme = useTheme();
+  return (
+    <text
+      x={x + width / 2}
+      y={y - 5}
+      fill={theme.palette.text.primary}
+      textAnchor="middle"
+    >
+      {value}
+    </text>
+  );
+};
+
+const CustomXAxis = ({ x, y, payload }) => {
+  const theme = useTheme();
+  return (
+    <text x={x} y={y + 10} fill={theme.palette.text.primary} textAnchor="middle">
+      {payload.value}
+    </text>
+  );
+};
 
 export default function UnitDistributionChart({ data, height, colors }) {
   return (
@@ -23,14 +47,14 @@ export default function UnitDistributionChart({ data, height, colors }) {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="name" tick={<CustomXAxis />} />
         <YAxis />
-        <Legend />
+        <Legend wrapperStyle={{ bottom: 0, left: 50 }} />
         <Bar dataKey="Units" fill={colors[0]} minPointSize={3}>
-          <LabelList dataKey="Units" position="top" />
+          <LabelList dataKey="Units" position="top" content={<CustomLabel />} />
         </Bar>
         <Bar dataKey="Points" fill={colors[1]} minPointSize={3}>
-          <LabelList dataKey="Points" position="top" />
+          <LabelList dataKey="Points" position="top" content={<CustomLabel />} />
         </Bar>
       </BarChart>
     </ResponsiveContainer>
