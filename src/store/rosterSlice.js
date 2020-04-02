@@ -15,7 +15,7 @@ const data = getData();
 const getTotalPoints = state =>
   Object.values(state.units).reduce((acc, unit) => acc + unit.points, 0);
 
-const setState = state => ({
+const withPoints = state => ({
   ...state,
   totalPoints: getTotalPoints(state)
 });
@@ -25,8 +25,8 @@ const rosterSlice = createSlice({
   initialState: rosterInitialState,
   reducers: {
     newRoster: () => ({ ...rosterInitialState }),
-    setRoster: (state, action) => setState({ ...action.payload }),
-    updateRoster: (state, action) => setState({ ...state, ...action.payload }),
+    setRoster: (state, action) => withPoints({ ...action.payload }),
+    updateRoster: (state, action) => withPoints({ ...state, ...action.payload }),
     addUnit: multipleArgsReducer((state, action) => {
       let [unit, index] = action.payload;
       unit = unit ? unit : { ...data.unitData.Unit, options: [], fantasticalRules: [] };
