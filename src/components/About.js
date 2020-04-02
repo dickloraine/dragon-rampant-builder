@@ -9,8 +9,6 @@ import {
   DialogContent,
   Typography,
   Box,
-  ListItem,
-  ListItemIcon,
   Chip
 } from '@material-ui/core';
 import { useState } from 'react';

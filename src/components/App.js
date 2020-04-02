@@ -16,7 +16,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(updateUI({ ...store.get('uiOptions') }));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container>
