@@ -10,10 +10,8 @@ export default function DeleteList({ onClose = null, showText = false }) {
   const dispatch = useDispatch();
   const [savedRosters, setSavedRosters] = useState([]);
 
-  const handleOpen = openFunc => {
+  const handleOpen = () =>
     setSavedRosters([...Object.keys(store.get('savedRosters'))] || []);
-    openFunc();
-  };
 
   const removeList = name => {
     if (name === 'Delete all') store.set('savedRosters', []);
@@ -28,16 +26,15 @@ export default function DeleteList({ onClose = null, showText = false }) {
   return (
     <ListDialog
       action={removeList}
+      onOpen={handleOpen}
       anchor={openFunc => (
         <>
           <Tooltip title="Delete List">
-            <IconButton color="inherit" onClick={() => handleOpen(openFunc)}>
+            <IconButton color="inherit" onClick={openFunc}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
-          {showText && (
-            <Typography onClick={() => handleOpen(openFunc)}>Delete List</Typography>
-          )}
+          {showText && <Typography onClick={openFunc}>Delete List</Typography>}
         </>
       )}
       options={savedRosters}

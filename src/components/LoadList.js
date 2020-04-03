@@ -12,10 +12,8 @@ export default function LoadList({ onClose = null, showText = false }) {
   const dispatch = useDispatch();
   const [savedRosters, setSavedRosters] = useState([]);
 
-  const handleOpen = openFunc => {
+  const handleOpen = () =>
     setSavedRosters([...Object.keys(store.get('savedRosters'))] || []);
-    openFunc();
-  };
 
   const loadList = name => {
     try {
@@ -31,16 +29,15 @@ export default function LoadList({ onClose = null, showText = false }) {
   return (
     <ListDialog
       action={loadList}
+      onOpen={handleOpen}
       anchor={openFunc => (
         <>
           <Tooltip title="Load List">
-            <IconButton color="inherit" onClick={() => handleOpen(openFunc)}>
+            <IconButton color="inherit" onClick={openFunc}>
               <SaveOutlinedIcon />
             </IconButton>
           </Tooltip>
-          {showText && (
-            <Typography onClick={() => handleOpen(openFunc)}>Load List</Typography>
-          )}
+          {showText && <Typography onClick={openFunc}>Load List</Typography>}
         </>
       )}
       options={savedRosters}
