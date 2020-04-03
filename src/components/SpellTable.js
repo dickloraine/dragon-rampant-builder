@@ -68,7 +68,7 @@ export default function SpellTable() {
             <Typography variant="h5">Spell Table</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails style={{ maxWidth: 800 }}>
-            <Hidden mdDown>
+            <Hidden smDown>
               <TableContainer>
                 <Table size="small" style={{ minWidth: 650 }}>
                   <TableHead>
@@ -101,7 +101,7 @@ export default function SpellTable() {
                 </Table>
               </TableContainer>
             </Hidden>
-            <Hidden smUp>
+            <Hidden mdUp>
               <List>
                 {Object.values(spellData).map((spell, index) => (
                   <Box key={index}>
@@ -111,6 +111,7 @@ export default function SpellTable() {
                       onClick={() => handleSpellClick(index)}
                     >
                       <ListItemText primary={spell.name} />
+                      <Box width={25}></Box>
                       {open[index] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                     </ListItem>
                     <Collapse in={open[index]} timeout="auto" unmountOnExit>
