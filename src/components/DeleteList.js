@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import store from 'store';
@@ -8,6 +8,12 @@ import { showFeedback } from 'store/appStateSlice';
 
 export default function DeleteList({ onClose = null, showText = false }) {
   const dispatch = useDispatch();
+  const [savedRosters, setSavedRosters] = useState([]);
+
+  const handleOpen = openFunc => {
+    setSavedRosters([...Object.keys(store.get('savedRosters'))] || []);
+    openFunc();
+  };
 
   const removeList = name => {
     if (name === 'Delete all') store.set('savedRosters', []);
@@ -19,27 +25,22 @@ export default function DeleteList({ onClose = null, showText = false }) {
     dispatch(showFeedback('Deleted!', 'success'));
   };
 
-  const getSavedLists = () => {
-    const savedLists = [];
-    for (const list in store.get('savedRosters')) savedLists.push(list);
-    savedLists.push('Delete all');
-    return savedLists;
-  };
-
   return (
     <ListDialog
       action={removeList}
       anchor={openFunc => (
         <>
           <Tooltip title="Delete List">
-            <IconButton color="inherit" onClick={openFunc}>
+            <IconButton color="inherit" onClick={() => handleOpen(openFunc)}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
-          {showText && <Typography onClick={openFunc}>Delete List</Typography>}
+          {showText && (
+            <Typography onClick={() => handleOpen(openFunc)}>Delete List</Typography>
+          )}
         </>
       )}
-      options={getSavedLists()}
+      options={savedRosters}
       title="Choose List to delete"
       onClose={onClose}
     />

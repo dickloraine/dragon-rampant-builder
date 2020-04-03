@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import { Tooltip, IconButton, Typography } from '@material-ui/core';
 import store from 'store';
@@ -10,6 +10,12 @@ import { showFeedback, toggleForceInputUpdate } from 'store/appStateSlice';
 
 export default function LoadList({ onClose = null, showText = false }) {
   const dispatch = useDispatch();
+  const [savedRosters, setSavedRosters] = useState([]);
+
+  const handleOpen = openFunc => {
+    setSavedRosters([...Object.keys(store.get('savedRosters'))] || []);
+    openFunc();
+  };
 
   const loadList = name => {
     try {
@@ -22,26 +28,22 @@ export default function LoadList({ onClose = null, showText = false }) {
     }
   };
 
-  const getSavedLists = () => {
-    const savedLists = [];
-    for (const list in store.get('savedRosters')) savedLists.push(list);
-    return savedLists;
-  };
-
   return (
     <ListDialog
       action={loadList}
       anchor={openFunc => (
         <>
           <Tooltip title="Load List">
-            <IconButton color="inherit" onClick={openFunc}>
+            <IconButton color="inherit" onClick={() => handleOpen(openFunc)}>
               <SaveOutlinedIcon />
             </IconButton>
           </Tooltip>
-          {showText && <Typography onClick={openFunc}>Load List</Typography>}
+          {showText && (
+            <Typography onClick={() => handleOpen(openFunc)}>Load List</Typography>
+          )}
         </>
       )}
-      options={getSavedLists()}
+      options={savedRosters}
       title="Choose List to load"
       onClose={onClose}
     />
