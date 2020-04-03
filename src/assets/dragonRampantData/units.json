@@ -43,6 +43,7 @@
     "options": {
       "Mounted missiles": {
         "points": 2,
+        "summary": "Wild Charge and Counter-charge are removed and replaced with Shoot 6+/Range 12\" hitting on 5+.",
         "remove": [
           "Wild Charge",
           "Counter-charge"
@@ -55,6 +56,7 @@
       },
       "Level Headed": {
         "points": 2,
+        "summary": "Remove Wild Charge and change Move to 5+.",
         "remove": [
           "Wild Charge"
         ],
@@ -88,6 +90,7 @@
     "options": {
       "Mounted missiles": {
         "points": 1,
+        "summary": "Add Shoot 6+/Range 12\" hitting on 5+.",
         "setStats": {
           "shoot": 6,
           "shootValue": 5,
@@ -96,6 +99,7 @@
       },
       "Chariots": {
         "points": 2,
+        "summary": "May not enter rough terrain. Armour is increased to 4.",
         "add": [
           "May not enter rough terrain"
         ],
@@ -130,6 +134,7 @@
     "options": {
       "Short range missiles": {
         "points": -1,
+        "summary": "Range reduced to 6\".",
         "setStats": {
           "shootRange": 6
         }
@@ -161,6 +166,7 @@
     "options": {
       "Flame or Spore Attack": {
         "points": 2,
+        "summary": "Wild Charge is removed and replaced with Shoot 6+/Range 12\" hitting on 5+.",
         "setStats": {
           "shoot": 6,
           "shootValue": 5,
@@ -172,12 +178,14 @@
       },
       "Ponderous": {
         "points": 1,
+        "summary": "Remove Wild Charge.",
         "remove": [
           "Wild Charge"
         ]
       },
       "Cunning": {
         "points": 2,
+        "summary": "Defence Value becomes 5+.",
         "setStats": {
           "defenceValue": 5
         }
@@ -210,6 +218,7 @@
     "options": {
       "Flame or Spore Attack": {
         "points": 2,
+        "summary": "Wild Charge is removed and replaced with Shoot 6+/Range 12\" hitting on 5+.",
         "setStats": {
           "shoot": 6,
           "shootValue": 5,
@@ -221,6 +230,7 @@
       },
       "Cunning": {
         "points": 2,
+        "summary": "Defence Value becomes 5+.",
         "setStats": {
           "defenceValue": 5
         }
@@ -251,6 +261,7 @@
     "options": {
       "Missiles": {
         "points": 2,
+        "summary": "Add Shoot 6+/Range 18\" hitting on 5+.",
         "setStats": {
           "shoot": 6,
           "shootValue": 5,
@@ -283,6 +294,7 @@
     "options": {
       "Offensive": {
         "points": 2,
+        "summary": "Attack Value becomes 4+. The unit may no longer form a Wall of Spears.",
         "setStats": {
           "attackValue": 4
         },
@@ -316,6 +328,7 @@
     "options": {
       "Offensive": {
         "points": 2,
+        "summary": "Attack Value becomes 4+. The unit may no longer form a Wall of Spears.",
         "setStats": {
           "attackValue": 4
         },
@@ -325,6 +338,7 @@
       },
       "Short range missiles": {
         "points": 1,
+        "summary": "Shoot 6+/Range 6\" hitting on 5+.",
         "setStats": {
           "shoot": 6,
           "shootValue": 5,
@@ -333,6 +347,7 @@
       },
       "Mixed Weapons": {
         "points": 2,
+        "summary": "Shoot 6+, Range 12\" hitting on 5+. Remove Wall of Spears.",
         "setStats": {
           "shoot": 6,
           "shootValue": 5,
@@ -371,6 +386,7 @@
     "options": {
       "Terrifically Shiny Armour": {
         "points": 2,
+        "summary": "Armour becomes 3.",
         "setStats": {
           "armour": 3
         }
@@ -399,6 +415,7 @@
     "options": {
       "Weighty Projectiles": {
         "points": -1,
+        "summary": "Range reduced to 12\".",
         "setStats": {
           "shootRange": 12
         }
@@ -427,6 +444,7 @@
     "options": {
       "Sharpshooter": {
         "points": 2,
+        "summary": "Shoot Value becomes 4+.",
         "setStats": {
           "shootValue": 4
         }

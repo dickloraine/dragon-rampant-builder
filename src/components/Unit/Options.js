@@ -4,7 +4,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Typography } from '@material-ui/core';
+import { Typography, Tooltip } from '@material-ui/core';
 import getData from 'store/getData';
 
 export default function Options({ unit, onChange }) {
@@ -36,12 +36,14 @@ export default function Options({ unit, onChange }) {
               />
             }
             label={
-              <Typography>
-                {option}{' '}
-                <Typography color="secondary" component="span">
-                  @{optionsData[option].points}
+              <Tooltip title={optionsData[option].summary}>
+                <Typography>
+                  {option}{' '}
+                  <Typography color="secondary" component="span">
+                    @{optionsData[option].points}
+                  </Typography>
                 </Typography>
-              </Typography>
+              </Tooltip>
             }
             key={option}
           />
