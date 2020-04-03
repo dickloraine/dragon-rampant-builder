@@ -8,6 +8,7 @@ const uiSlice = createSlice({
     viewMode: false,
     editMode: false,
     darkMode: null,
+    validationExpanded: true,
     rulesSummaryExpanded: true,
     spellsExpanded: false,
     statisticsExpanded: true

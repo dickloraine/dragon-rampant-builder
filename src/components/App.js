@@ -5,6 +5,7 @@ import ShowFeedback from './ShowFeedback';
 import AppBar from './AppBar';
 import ListName from './ListName';
 import Roster from './Roster';
+import Validation from './Validation';
 import RulesSummary from './RulesSummary';
 import SpellTable from './SpellTable';
 import Statistics from './Statistics/Statistics';
@@ -29,6 +30,7 @@ const App = () => {
         <AppBar />
         <ListName />
         <Roster />
+        <Validation />
         <RulesSummary />
         <SpellTable />
         <Statistics />
