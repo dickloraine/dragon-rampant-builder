@@ -9,28 +9,28 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
-  ListItemIcon
+  ListItemIcon,
 } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUIOption } from 'store/uiSlice';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
     backgroundColor: theme.palette.error.main,
-    color: theme.palette.error.contrastText
+    color: theme.palette.error.contrastText,
   },
   details: {
     backgroundColor: theme.palette.error.light,
-    color: theme.palette.error.contrastText
-  }
+    color: theme.palette.error.contrastText,
+  },
 }));
 
 const Validation = () => {
   const dispatch = useDispatch();
-  const validationExpanded = useSelector(state => state.ui.validationExpanded);
+  const validationExpanded = useSelector((state) => state.ui.validationExpanded);
   const classes = useStyles();
-  const units = Object.values(useSelector(state => state.roster.units));
+  const units = Object.values(useSelector((state) => state.roster.units));
 
   const warnings = [];
   for (const unit of units) {
@@ -44,7 +44,7 @@ const Validation = () => {
     )
       warnings.push([
         unit.name,
-        'Short range missiles and Mixed Weapons may not be used together!'
+        'Short range missiles and Mixed Weapons may not be used together!',
       ]);
   }
 
@@ -66,8 +66,8 @@ const Validation = () => {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.details}>
             <List>
-              {warnings.map(([name, text]) => (
-                <ListItem>
+              {warnings.map(([name, text], index) => (
+                <ListItem key={index}>
                   <ListItemIcon className={classes.details}>
                     <ErrorIcon />
                   </ListItemIcon>
