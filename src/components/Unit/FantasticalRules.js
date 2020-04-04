@@ -21,7 +21,7 @@ function FantasticalRules({ unit, onChange }) {
     const toCheck = fantasticalRules.slice(1);
     fantasticalRules = Object.keys(fantasticalRulesData);
     for (const excluded of toCheck) {
-      fantasticalRules = fantasticalRules.filter(val => val !== excluded);
+      fantasticalRules = fantasticalRules.filter((val) => val !== excluded);
     }
   }
 
@@ -35,7 +35,7 @@ function FantasticalRules({ unit, onChange }) {
       </FormLabel>
       {unit.fantasticalRules &&
         unit.fantasticalRules.length > 0 &&
-        unit.fantasticalRules.map(name => (
+        unit.fantasticalRules.map((name) => (
           <div key={name}>
             <FormControlLabel
               control={
@@ -45,8 +45,8 @@ function FantasticalRules({ unit, onChange }) {
                     onChange({
                       ...unit,
                       fantasticalRules: [
-                        ...unit.fantasticalRules.filter(v => v !== name)
-                      ]
+                        ...unit.fantasticalRules.filter((v) => v !== name),
+                      ],
                     })
                   }
                 />
@@ -55,7 +55,7 @@ function FantasticalRules({ unit, onChange }) {
                 <Typography>
                   {name}{' '}
                   <Typography color="secondary" component="span">
-                    @{fantasticalRulesData[name].points}}
+                    @{fantasticalRulesData[name].points}
                   </Typography>
                 </Typography>
               }
@@ -71,11 +71,11 @@ function FantasticalRules({ unit, onChange }) {
           IconComponent={() => <Box />}
           multiple
           value={unit.fantasticalRules}
-          onChange={e => onChange({ ...unit, fantasticalRules: [...e.target.value] })}
+          onChange={(e) => onChange({ ...unit, fantasticalRules: [...e.target.value] })}
           input={<Input />}
           renderValue={() => ' '}
         >
-          {fantasticalRules.map(name => (
+          {fantasticalRules.map((name) => (
             <MenuItem key={name} value={name}>
               {unit.fantasticalRules.indexOf(name) < 0 && (
                 <Typography>
