@@ -1,6 +1,7 @@
 {
   "Unit": {
     "name": "Unit",
+    "type": "foot",
     "points": 0,
     "stats": {
       "attack": 0,

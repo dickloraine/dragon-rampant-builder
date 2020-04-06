@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cell, Tooltip, Legend, PieChart, Pie, ResponsiveContainer } from 'recharts';
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 export default function PointDistributionChart({ data, height, colors }) {
   return (
@@ -30,7 +30,7 @@ const renderCustomizedLabel = ({
   midAngle,
   innerRadius,
   outerRadius,
-  percent
+  percent,
 }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);

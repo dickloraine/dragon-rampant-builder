@@ -1,14 +1,14 @@
-import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
+import React from 'react';
 import {
-  BarChart,
   Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  Legend,
+  ResponsiveContainer,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Legend,
-  LabelList,
-  ResponsiveContainer
 } from 'recharts';
 
 const CustomLabel = ({ x, y, width, value }) => {
@@ -43,7 +43,7 @@ export default function UnitDistributionChart({ data, height, colors }) {
           top: 20,
           right: 30,
           left: 20,
-          bottom: 5
+          bottom: 5,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />

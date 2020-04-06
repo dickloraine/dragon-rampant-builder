@@ -1,0 +1,86 @@
+import {
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import ErrorIcon from '@material-ui/icons/Error';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from 'store/store';
+import { toggleUIOption } from 'store/uiSlice';
+
+const useStyles = makeStyles((theme) => ({
+  title: {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText,
+  },
+  details: {
+    backgroundColor: theme.palette.error.light,
+    color: theme.palette.error.contrastText,
+  },
+}));
+
+const Validation = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const validationExpanded = useSelector(
+    (state: RootState) => state.ui.validationExpanded
+  );
+  const classes = useStyles();
+  const units = Object.values(useSelector((state: RootState) => state.roster.units));
+
+  const warnings = [];
+  for (const unit of units) {
+    if (unit.points > 10)
+      warnings.push([unit.name, 'No Unit may cost more than 10 points!']);
+    if (unit.name !== 'Unit' && unit.points <= 0)
+      warnings.push([unit.name, 'No Unit may cost 0 or less points!']);
+    if (
+      unit.options.includes('Short range missiles') &&
+      unit.options.includes('Mixed Weapons')
+    )
+      warnings.push([
+        unit.name,
+        'Short range missiles and Mixed Weapons may not be used together!',
+      ]);
+  }
+
+  return (
+    <>
+      {warnings.length !== 0 && (
+        <ExpansionPanel
+          expanded={validationExpanded}
+          onChange={() => dispatch(toggleUIOption('validationExpanded'))}
+          style={{ maxWidth: 1210 }}
+        >
+          <ExpansionPanelSummary
+            className={classes.title}
+            expandIcon={<ExpandMoreIcon className={classes.title} />}
+          >
+            <Typography variant="h5">Warnings</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails className={classes.details}>
+            <List>
+              {warnings.map(([name, text], index) => (
+                <ListItem key={index}>
+                  <ListItemIcon className={classes.details}>
+                    <ErrorIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={name} secondary={text} />
+                </ListItem>
+              ))}
+            </List>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      )}
+    </>
+  );
+};
+
+export default Validation;
