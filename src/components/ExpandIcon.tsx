@@ -35,4 +35,4 @@ const ExpandIcon: React.FC<{
   );
 };
 
-export default ExpandIcon;
+export default React.memo(ExpandIcon);

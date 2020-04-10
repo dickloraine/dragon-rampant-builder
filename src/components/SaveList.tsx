@@ -43,4 +43,4 @@ const SaveList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   );
 };
 
-export default SaveList;
+export default React.memo(SaveList);

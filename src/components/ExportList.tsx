@@ -107,4 +107,4 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   );
 };
 
-export default ExportList;
+export default React.memo(ExportList);

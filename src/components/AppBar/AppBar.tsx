@@ -1,7 +1,6 @@
 import {
   AppBar as AppBarMaterial,
   Box,
-  Fab,
   Hidden,
   IconButton,
   IconProps,
@@ -14,18 +13,17 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTotalPoints, newRoster } from 'store/rosterSlice';
+import { newRoster } from 'store/rosterSlice';
 import { AppDispatch, RootState } from 'store/store';
 import { UIState, updateUI } from 'store/uiSlice';
-import LoadList from './LoadList';
-import SaveList from './SaveList';
-import SideMenu from './SideMenu';
+import LoadList from '../LoadList';
+import SaveList from '../SaveList';
+import SideMenu from '../SideMenu';
+import TotalPoints from './TotalPoints';
 
 export default function AppBar() {
   const dispatch: AppDispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
-  const units = useSelector((state: RootState) => state.roster.units);
-  const armyCost = getTotalPoints(units);
 
   const changeViewMode = (clicked: keyof UIState, newState: boolean) => {
     const notClicked = clicked === 'viewMode' ? 'editMode' : 'viewMode';
@@ -86,22 +84,7 @@ export default function AppBar() {
               title="Edit mode"
               onClick={changeViewMode}
             />
-            <Hidden smDown>
-              <Typography variant="h6">
-                &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
-                <Fab color="secondary" size="small">
-                  <Typography variant="h6">{armyCost}</Typography>
-                </Fab>
-              </Typography>
-            </Hidden>
-            <Hidden mdUp>
-              <Typography variant="h6">
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Fab color="secondary" size="small">
-                  <Typography variant="h6">{armyCost}</Typography>
-                </Fab>
-              </Typography>
-            </Hidden>
+            <TotalPoints />
           </Box>
         </Toolbar>
       </AppBarMaterial>

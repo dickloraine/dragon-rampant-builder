@@ -25,7 +25,8 @@ import UnitSelector from './UnitSelector';
 const Unit: React.FC<{ id: number }> = ({ id }) => {
   const dispatch: AppDispatch = useDispatch();
   const unit = useSelector((state: RootState) => state.roster.units[id]);
-  const ui = useSelector((state: RootState) => state.ui);
+  const viewMode = useSelector((state: RootState) => state.ui.viewMode);
+  const editMode = useSelector((state: RootState) => state.ui.editMode);
 
   const [expanded, setExpanded] = React.useState(true);
   const handleExpandClick = () => setExpanded(!expanded);
@@ -41,7 +42,7 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
 
   return (
     <Card style={{ marginBottom: 25, maxWidth: 400, width: '100%' }}>
-      {ui.viewMode ? (
+      {viewMode ? (
         <CardHeader
           title={
             <>
@@ -74,15 +75,15 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
           }
         />
       )}
-      <Collapse in={!ui.viewMode || expanded} timeout="auto" unmountOnExit>
+      <Collapse in={!viewMode || expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          {!ui.editMode && (
+          {!editMode && (
             <>
               <StatBlock stats={unit.stats} />
               <SpecialRules rules={unit.rules} />
             </>
           )}
-          {!ui.viewMode && (
+          {!viewMode && (
             <>
               <Options onChange={handleChange} unit={unit} />
               <FantasticalRules onChange={handleChange} unit={unit} />
@@ -95,4 +96,4 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
   );
 };
 
-export default Unit;
+export default React.memo(Unit);

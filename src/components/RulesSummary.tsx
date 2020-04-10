@@ -47,4 +47,4 @@ const RulesSummary = () => {
   );
 };
 
-export default RulesSummary;
+export default React.memo(RulesSummary);

@@ -27,7 +27,7 @@ import { toggleUIOption } from 'store/uiSlice';
 
 const spellData = data.spellData;
 
-export default function SpellTable() {
+const SpellTable = () => {
   const dispatch: AppDispatch = useDispatch();
   const spellsExpanded = useSelector((state: RootState) => state.ui.spellsExpanded);
   const units = useSelector((state: RootState) => state.roster.units);
@@ -136,4 +136,6 @@ export default function SpellTable() {
       )}
     </>
   );
-}
+};
+
+export default React.memo(SpellTable);

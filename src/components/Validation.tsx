@@ -83,4 +83,4 @@ const Validation = () => {
   );
 };
 
-export default Validation;
+export default React.memo(Validation);

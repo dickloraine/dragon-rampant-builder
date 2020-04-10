@@ -1,6 +1,6 @@
 import { Divider, Drawer, List, ListItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import React from 'react';
+import React, { useCallback } from 'react';
 import About from './About';
 import Backup from './Backup';
 import DarkMode from './DarkMode';
@@ -11,7 +11,7 @@ import LoadList from './LoadList';
 import Restore from './Restore';
 import SaveList from './SaveList';
 
-export default function SideMenu() {
+const SideMenu = () => {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (open: boolean) => (event: any) => {
@@ -21,7 +21,7 @@ export default function SideMenu() {
     setOpen(open);
   };
 
-  const handleClose = () => setOpen(false);
+  const handleClose = useCallback(() => setOpen(false), []);
 
   return (
     <>
@@ -62,4 +62,6 @@ export default function SideMenu() {
       </Drawer>
     </>
   );
-}
+};
+
+export default React.memo(SideMenu);

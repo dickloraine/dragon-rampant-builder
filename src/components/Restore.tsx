@@ -59,4 +59,4 @@ const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   );
 };
 
-export default Restore;
+export default React.memo(Restore);

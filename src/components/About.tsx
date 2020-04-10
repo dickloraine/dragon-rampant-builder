@@ -51,4 +51,4 @@ const About: React.FC<{ onClose?: () => void }> = ({ onClose = undefined }) => {
   );
 };
 
-export default About;
+export default React.memo(About);

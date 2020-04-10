@@ -26,7 +26,7 @@ const unpackRoster = (compactRoster: CompactRosterState): RosterState => {
 const Roster = () => {
   const dispatch: AppDispatch = useDispatch();
   const roster = useSelector((state: RootState) => state.roster);
-  const ui = useSelector((state: RootState) => state.ui);
+  const viewMode = useSelector((state: RootState) => state.ui.viewMode);
 
   return (
     <>
@@ -35,12 +35,12 @@ const Roster = () => {
           <Unit id={id} key={id} />
         ))}
       </Box>
-      {!Object.keys(roster.units).length && !ui.viewMode && (
+      {!Object.keys(roster.units).length && !viewMode && (
         <Typography variant="h6" style={{ marginBottom: 25 }}>
           Click the button to add your first unit!
         </Typography>
       )}
-      {!ui.viewMode && (
+      {!viewMode && (
         <Fab
           color="secondary"
           style={{ marginLeft: 25, marginBottom: 25 }}
