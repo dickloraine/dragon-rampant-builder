@@ -20,7 +20,7 @@ import UnitDistributionChart from './UnitDistributionChart';
 const unitData = data.unitData;
 const fantasticalRulesData = data.fantasticalRulesData;
 
-export default function Statistics() {
+const Statistics = () => {
   const dispatch: AppDispatch = useDispatch();
   const statisticsExpanded = useSelector(
     (state: RootState) => state.ui.statisticsExpanded
@@ -134,4 +134,6 @@ export default function Statistics() {
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
-}
+};
+
+export default Statistics;

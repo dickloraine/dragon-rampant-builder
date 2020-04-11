@@ -38,4 +38,4 @@ const ListName = () => {
   );
 };
 
-export default React.memo(ListName);
+export default ListName;

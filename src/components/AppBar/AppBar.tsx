@@ -21,7 +21,7 @@ import SaveList from '../SaveList';
 import SideMenu from '../SideMenu';
 import TotalPoints from './TotalPoints';
 
-export default function AppBar() {
+const AppBar = () => {
   const dispatch: AppDispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
 
@@ -91,4 +91,6 @@ export default function AppBar() {
       <Toolbar />
     </Box>
   );
-}
+};
+
+export default AppBar;

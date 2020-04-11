@@ -138,4 +138,4 @@ const SpellTable = () => {
   );
 };
 
-export default React.memo(SpellTable);
+export default SpellTable;
