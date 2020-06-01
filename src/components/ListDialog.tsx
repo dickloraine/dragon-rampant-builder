@@ -21,7 +21,6 @@ const ListDialog: React.FC<{
   };
   const handleOnClick = (text: string) => {
     action(text);
-    if (onClose) onClose();
     handleClose();
   };
 
