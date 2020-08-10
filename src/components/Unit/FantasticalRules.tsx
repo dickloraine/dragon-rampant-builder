@@ -7,6 +7,7 @@ import {
   Input,
   MenuItem,
   Select,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -20,6 +21,7 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
   const [open, setOpen] = React.useState(false);
   const unitData = data.unitData[unit.name];
   const fantasticalRulesData = data.fantasticalRulesData;
+  const rulesData = data.rulesData;
 
   let fantasticalRules = unitData.fantasticalRules;
   if (!fantasticalRules || !fantasticalRules.length) return <div></div>;
@@ -51,7 +53,7 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
               control={
                 <Checkbox
                   checked={true}
-                  onClick={() =>
+                  onChange={() =>
                     onChange({
                       ...unit,
                       fantasticalRules: [
@@ -62,12 +64,14 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
                 />
               }
               label={
-                <Typography>
-                  {name}{' '}
-                  <Typography color="secondary" component="span">
-                    @{fantasticalRulesData[name].points}
+                <Tooltip title={rulesData[name]}>
+                  <Typography>
+                    {name}{' '}
+                    <Typography color="secondary" component="span">
+                      @{fantasticalRulesData[name].points}
+                    </Typography>
                   </Typography>
-                </Typography>
+                </Tooltip>
               }
               key={name}
             />
@@ -88,20 +92,24 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
           {fantasticalRules.map((name) => (
             <MenuItem key={name} value={name}>
               {unit.fantasticalRules.indexOf(name) < 0 && (
-                <Typography>
-                  {name}{' '}
-                  <Typography color="secondary" component="span">
-                    @{fantasticalRulesData[name].points}
+                <Tooltip title={rulesData[name]}>
+                  <Typography>
+                    {name}{' '}
+                    <Typography color="secondary" component="span">
+                      @{fantasticalRulesData[name].points}
+                    </Typography>
                   </Typography>
-                </Typography>
+                </Tooltip>
               )}
               {unit.fantasticalRules.indexOf(name) > -1 && (
-                <Typography color="primary">
-                  {name}{' '}
-                  <Typography color="secondary" component="span">
-                    @{fantasticalRulesData[name].points}
+                <Tooltip title={rulesData[name]}>
+                  <Typography color="primary">
+                    {name}{' '}
+                    <Typography color="secondary" component="span">
+                      @{fantasticalRulesData[name].points}
+                    </Typography>
                   </Typography>
-                </Typography>
+                </Tooltip>
               )}
             </MenuItem>
           ))}

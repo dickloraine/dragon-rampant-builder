@@ -2,15 +2,21 @@ import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import BackupIcon from '@material-ui/icons/Backup';
 import { saveAs } from 'file-saver';
 import React from 'react';
-import store from 'store';
+import { rosterStore } from 'store/persistantStorage';
 
 const Backup: React.FC<{ showText: boolean; onClose?: () => void }> = ({
   showText = false,
   onClose = undefined,
 }) => {
-  const backup = () => {
-    const savedLists = JSON.stringify(store.get('savedRosters') || []);
-    const file = new Blob([savedLists], { type: 'text/plain;charset=utf-8' });
+  const backup = async () => {
+    const savedLists: any = {};
+    await rosterStore.iterate((val, key) => {
+      savedLists[key] = val;
+    });
+
+    const file = new Blob([JSON.stringify(savedLists)], {
+      type: 'text/plain;charset=utf-8',
+    });
 
     let date = new Date();
     const offsetMs = date.getTimezoneOffset() * 60 * 1000;

@@ -3,8 +3,8 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import useUserTheme from 'hooks/useUserTheme';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import store from 'store';
-import { updateUI } from 'store/uiSlice';
+import { uiStore } from 'store/persistantStorage';
+import { UIState, updateUI } from 'store/uiSlice';
 import AppBar from './AppBar';
 import ListName from './ListName';
 import Roster from './Roster';
@@ -18,7 +18,10 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(updateUI({ ...store.get('uiOptions') }));
+    uiStore
+      .getItem<Partial<UIState>>('uiOptions')
+      .then((options) => options != null && dispatch(updateUI(options)))
+      .catch((err) => console.log(err));
   }, [dispatch]);
 
   const theme = useUserTheme();

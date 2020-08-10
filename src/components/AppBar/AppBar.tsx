@@ -3,7 +3,6 @@ import {
   Box,
   Hidden,
   IconButton,
-  IconProps,
   Toolbar,
   Tooltip,
   Typography,
@@ -34,7 +33,7 @@ const AppBar = () => {
 
   const ToggleUIButton: React.FC<{
     option: keyof UIState;
-    Icon: React.ComponentType<IconProps>;
+    Icon: any;
     title: string;
     onClick: (arg0: keyof UIState, arg1: boolean) => void;
   }> = ({ option, Icon, title, onClick }) => (

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import store from 'store';
+import { uiStore } from './persistantStorage';
 
 export type UIState = {
   viewMode: boolean;
@@ -24,16 +24,22 @@ const uiSlice = createSlice({
   } as UIState,
   reducers: {
     setUI: (_, action: PayloadAction<UIState>) => {
-      store.set('uiOptions', { ...action.payload });
+      uiStore
+        .setItem('uiOptions', { ...action.payload })
+        .catch((err) => console.log(err));
       return { ...action.payload };
     },
     toggleUIOption: (state: UIState, action: PayloadAction<keyof UIState>) => {
       const option = action.payload;
-      store.set('uiOptions', { ...state, [option]: !state[option] });
+      uiStore
+        .setItem('uiOptions', { ...state, [option]: !state[option] })
+        .catch((err) => console.log(err));
       state[option] = !state[option];
     },
     updateUI: (state, action: PayloadAction<Partial<UIState>>) => {
-      store.set('uiOptions', { ...state, ...action.payload });
+      uiStore
+        .setItem('uiOptions', { ...state, ...action.payload })
+        .catch((err) => console.log(err));
       return { ...state, ...action.payload };
     },
   },

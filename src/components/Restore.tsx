@@ -2,8 +2,8 @@ import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import RestorePageIcon from '@material-ui/icons/RestorePage';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import store from 'store';
 import { showFeedback, toggleForceInputUpdate } from 'store/appStateSlice';
+import { rosterStore } from 'store/persistantStorage';
 
 const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   showText,
@@ -14,17 +14,18 @@ const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   let fileReader: FileReader;
   const fileDialog = React.useRef<HTMLInputElement>(null);
 
-  const restore = () => {
+  const restore = async () => {
     try {
-      let savedLists = store.get('savedRosters') || [];
       const content = fileReader.result as string;
-      const contentAsObject: Object = JSON.parse(content);
-      savedLists = { ...savedLists, ...contentAsObject };
-      store.set('savedRosters', savedLists);
+      const savedLists: Object = JSON.parse(content);
+      await Promise.all(
+        Object.entries(savedLists).map(([key, val]) => rosterStore.setItem(key, val))
+      );
       dispatch(toggleForceInputUpdate());
       dispatch(showFeedback(`Restored!`, 'success'));
     } catch (err) {
       dispatch(showFeedback(`Could not restore!`, 'error'));
+      console.log(err);
     }
     if (onClose) onClose();
   };

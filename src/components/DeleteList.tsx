@@ -2,8 +2,8 @@ import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import store from 'store';
 import { showFeedback } from 'store/appStateSlice';
+import { rosterStore } from 'store/persistantStorage';
 import ListDialog from './ListDialog';
 
 const DeleteList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
@@ -13,16 +13,10 @@ const DeleteList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   const dispatch = useDispatch();
   const [savedRosters, setSavedRosters] = useState<string[]>([]);
 
-  const handleOpen = () =>
-    setSavedRosters([...Object.keys(store.get('savedRosters', {}))]);
+  const handleOpen = () => rosterStore.keys().then((keys) => setSavedRosters(keys));
 
-  const removeList = (name: string) => {
-    if (name === 'Delete all') store.set('savedRosters', []);
-    else {
-      let savedLists = store.get('savedRosters');
-      delete savedLists[name];
-      store.set('savedRosters', savedLists);
-    }
+  const removeList = async (name: string) => {
+    await rosterStore.removeItem(name);
     dispatch(showFeedback('Deleted!', 'success'));
   };
 
