@@ -39,9 +39,9 @@ const uiSlice = createSlice({
 
 const { _setUI, _toggleUIOption, _updateUI } = uiSlice.actions;
 
-type UIThunk = ThunkAction<void, UIState, unknown, Action<string>>;
+type UIThunk = ThunkAction<void, any, unknown, Action<string>>;
 
-export const setUIs = (newState: UIState): UIThunk => (dispatch) => {
+export const setUI = (newState: UIState): UIThunk => (dispatch) => {
   uiStore.setItem('uiOptions', { ...newState }).catch((err) => console.log(err));
   dispatch(_setUI(newState));
 };
@@ -50,7 +50,7 @@ export const toggleUIOption = (option: keyof UIState): UIThunk => (
   dispatch,
   getState
 ) => {
-  const state = getState();
+  const state: UIState = getState().ui;
   uiStore
     .setItem('uiOptions', { ...state, [option]: !state[option] })
     .catch((err) => console.log(err));
@@ -61,8 +61,9 @@ export const updateUI = (options: Partial<UIState>): UIThunk => (
   dispatch,
   getState
 ) => {
+  const state: UIState = getState().ui;
   uiStore
-    .setItem('uiOptions', { ...getState(), ...options })
+    .setItem('uiOptions', { ...state, ...options })
     .catch((err) => console.log(err));
   dispatch(_updateUI(options));
 };

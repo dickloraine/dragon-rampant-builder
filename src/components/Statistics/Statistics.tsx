@@ -1,5 +1,6 @@
 import {
   Chip,
+  CircularProgress,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
@@ -8,14 +9,14 @@ import {
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import data from 'store/data';
 import { getTotalPoints } from 'store/rosterSlice';
 import { RootState } from 'store/store';
 import { toggleUIOption } from 'store/uiSlice';
-import PointDistributionChart from './PointDistributionChart';
-import UnitDistributionChart from './UnitDistributionChart';
+const PointDistributionChart = lazy(() => import('./PointDistributionChart'));
+const UnitDistributionChart = lazy(() => import('./UnitDistributionChart'));
 
 const unitData = data.unitData;
 const fantasticalRulesData = data.fantasticalRulesData;
@@ -115,7 +116,7 @@ const Statistics = () => {
             style={{ marginRight: 10, marginBottom: 25 }}
           />
           {unitsCost > 0 && (
-            <>
+            <Suspense fallback={<CircularProgress />}>
               <Typography variant="h6" style={{ marginTop: 25 }}>
                 Unit Distribution
               </Typography>
@@ -128,7 +129,7 @@ const Statistics = () => {
                 Point Distribution
               </Typography>
               <PointDistributionChart data={dataPoints} height={300} colors={COLORS} />
-            </>
+            </Suspense>
           )}
         </div>
       </ExpansionPanelDetails>
