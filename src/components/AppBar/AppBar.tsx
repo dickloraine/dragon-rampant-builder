@@ -13,7 +13,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { newRoster } from 'store/rosterSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { RootState } from 'store/store';
 import { UIState, updateUI } from 'store/uiSlice';
 import LoadList from '../LoadList';
 import SaveList from '../SaveList';
@@ -21,7 +21,7 @@ import SideMenu from '../SideMenu';
 import TotalPoints from './TotalPoints';
 
 const AppBar = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
 
   const changeViewMode = (clicked: keyof UIState, newState: boolean) => {

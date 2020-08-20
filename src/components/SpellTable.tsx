@@ -22,13 +22,13 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import data from 'store/data';
 import { getSpecialRules } from 'store/rosterSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { RootState } from 'store/store';
 import { toggleUIOption } from 'store/uiSlice';
 
 const spellData = data.spellData;
 
 const SpellTable = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch();
   const spellsExpanded = useSelector((state: RootState) => state.ui.spellsExpanded);
   const units = useSelector((state: RootState) => state.roster.units);
   const [open, setOpen] = useState([...Array(Object.keys(spellData))].map(() => false));

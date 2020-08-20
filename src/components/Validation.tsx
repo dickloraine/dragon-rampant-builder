@@ -13,7 +13,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from 'store/store';
+import { RootState } from 'store/store';
 import { toggleUIOption } from 'store/uiSlice';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Validation = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch();
   const validationExpanded = useSelector(
     (state: RootState) => state.ui.validationExpanded
   );

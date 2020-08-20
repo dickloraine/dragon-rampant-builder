@@ -12,13 +12,13 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import data from 'store/data';
 import { getSpecialRules } from 'store/rosterSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { RootState } from 'store/store';
 import { toggleUIOption } from 'store/uiSlice';
 
 const rulesData = data.rulesData;
 
 const RulesSummary = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch();
   const rulesSummaryExpanded = useSelector(
     (state: RootState) => state.ui.rulesSummaryExpanded
   );

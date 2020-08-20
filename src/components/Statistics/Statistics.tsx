@@ -12,7 +12,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import data from 'store/data';
 import { getTotalPoints } from 'store/rosterSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { RootState } from 'store/store';
 import { toggleUIOption } from 'store/uiSlice';
 import PointDistributionChart from './PointDistributionChart';
 import UnitDistributionChart from './UnitDistributionChart';
@@ -21,7 +21,7 @@ const unitData = data.unitData;
 const fantasticalRulesData = data.fantasticalRulesData;
 
 const Statistics = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch();
   const statisticsExpanded = useSelector(
     (state: RootState) => state.ui.statisticsExpanded
   );
