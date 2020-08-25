@@ -40,6 +40,7 @@ const AppBar = () => {
     <Tooltip title={title}>
       <IconButton
         color="inherit"
+        aria-label={title}
         onClick={() => {
           onClick(option, !ui[option]);
         }}
@@ -63,7 +64,11 @@ const AppBar = () => {
             <Hidden xsDown mdUp>
               <Typography variant="h5">&nbsp;&nbsp;DRAB&nbsp;&nbsp;</Typography>
             </Hidden>
-            <IconButton color="inherit" onClick={() => dispatch(newRoster())}>
+            <IconButton
+              color="inherit"
+              aria-label="reload"
+              onClick={() => dispatch(newRoster())}
+            >
               <ReplayIcon />
             </IconButton>
             <SaveList />

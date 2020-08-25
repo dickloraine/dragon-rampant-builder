@@ -93,7 +93,7 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
       anchor={(openFunc) => (
         <>
           <Tooltip title="Export">
-            <IconButton color="inherit" onClick={openFunc}>
+            <IconButton color="inherit" aria-label="Export List" onClick={openFunc}>
               <ShareIcon />
             </IconButton>
           </Tooltip>

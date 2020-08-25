@@ -30,7 +30,7 @@ const ImportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
       anchor={(openFunc) => (
         <>
           <Tooltip title="Import list">
-            <IconButton color="inherit" onClick={openFunc}>
+            <IconButton color="inherit" aria-label="Import List" onClick={openFunc}>
               <GetAppIcon />
             </IconButton>
           </Tooltip>

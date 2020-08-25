@@ -34,7 +34,7 @@ const SaveList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   return (
     <>
       <Tooltip title="Save List">
-        <IconButton color="inherit" onClick={saveRoster}>
+        <IconButton color="inherit" aria-label="Save List" onClick={saveRoster}>
           <SaveIcon />
         </IconButton>
       </Tooltip>

@@ -45,6 +45,7 @@ const Roster = () => {
           color="secondary"
           style={{ marginLeft: 25, marginBottom: 25 }}
           onClick={() => dispatch(addUnit())}
+          aria-label="Add unit"
         >
           <AddIcon />
         </Fab>

@@ -17,7 +17,7 @@ const Darkmode: React.FC<{ showText?: boolean }> = ({ showText }) => {
   return (
     <>
       <Tooltip title="Dark Mode">
-        <IconButton onClick={handleClick}>
+        <IconButton onClick={handleClick} aria-label="Toggle Dark mode">
           <BrightnessHighIcon color={darkMode ? 'inherit' : 'disabled'} />
         </IconButton>
       </Tooltip>

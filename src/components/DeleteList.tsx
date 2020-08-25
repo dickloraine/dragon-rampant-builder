@@ -27,7 +27,7 @@ const DeleteList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
       anchor={(openFunc) => (
         <>
           <Tooltip title="Delete List">
-            <IconButton color="inherit" onClick={openFunc}>
+            <IconButton color="inherit" aria-label="Delete List" onClick={openFunc}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>

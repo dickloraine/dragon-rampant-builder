@@ -26,6 +26,7 @@ const ListName = () => {
     <FormControl>
       <Typography
         className={classes.root}
+        aria-label="List name"
         variant="h4"
         key={inputUpdate.toString()}
         component="input"

@@ -36,7 +36,7 @@ const LoadList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
       anchor={(openFunc) => (
         <>
           <Tooltip title="Load List">
-            <IconButton color="inherit" onClick={openFunc}>
+            <IconButton color="inherit" aria-label="Load List" onClick={openFunc}>
               <SaveOutlinedIcon />
             </IconButton>
           </Tooltip>
