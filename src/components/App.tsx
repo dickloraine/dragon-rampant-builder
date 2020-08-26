@@ -1,10 +1,7 @@
 import { Container, CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import useUserTheme from 'hooks/useUserTheme';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { uiStore } from 'store/persistantStorage';
-import { UIState, updateUI } from 'store/uiSlice';
+import React from 'react';
 import AppBar from './AppBar';
 import ListName from './ListName';
 import Roster from './Roster';
@@ -15,15 +12,6 @@ import Statistics from './Statistics/Statistics';
 import Validation from './Validation';
 
 const App = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    uiStore
-      .getItem<Partial<UIState>>('uiOptions')
-      .then((options) => options != null && dispatch(updateUI(options)))
-      .catch((err) => console.log(err));
-  }, [dispatch]);
-
   const theme = useUserTheme();
 
   return (

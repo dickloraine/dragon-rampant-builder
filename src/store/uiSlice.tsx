@@ -12,9 +12,16 @@ export type UIState = {
   statisticsExpanded: boolean;
 };
 
-const uiSlice = createSlice({
-  name: 'ui',
-  initialState: {
+const getInitialState = () => {
+  try {
+    const initialState = localStorage.getItem('localforage/uiOptions');
+    if (initialState !== null) {
+      return JSON.parse(initialState) as UIState;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return {
     viewMode: false,
     editMode: false,
     darkMode: null,
@@ -22,7 +29,12 @@ const uiSlice = createSlice({
     rulesSummaryExpanded: true,
     spellsExpanded: false,
     statisticsExpanded: true,
-  } as UIState,
+  };
+};
+
+const uiSlice = createSlice({
+  name: 'ui',
+  initialState: getInitialState(),
   reducers: {
     _setUI: (_, action: PayloadAction<UIState>) => {
       return { ...action.payload };
