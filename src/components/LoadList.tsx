@@ -1,11 +1,10 @@
-import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { showFeedback, toggleForceInputUpdate } from 'store/appStateSlice';
 import { rosterStore } from 'store/persistantStorage';
 import { CompactRosterState, setRoster } from 'store/rosterSlice';
-import ListDialog from './ListDialog';
+import ListDialogMenu from './ListDialogMenu';
 import { unpackRoster } from './Roster';
 
 const LoadList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
@@ -30,21 +29,14 @@ const LoadList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   };
 
   return (
-    <ListDialog
+    <ListDialogMenu
       action={loadList}
       onOpen={handleOpen}
-      anchor={(openFunc) => (
-        <>
-          <Tooltip title="Load List">
-            <IconButton color="inherit" aria-label="Load List" onClick={openFunc}>
-              <SaveOutlinedIcon />
-            </IconButton>
-          </Tooltip>
-          {showText && <Typography onClick={openFunc}>Load List</Typography>}
-        </>
-      )}
       options={savedRosters}
       title="Choose List to load"
+      text="Load List"
+      icon={<SaveOutlinedIcon />}
+      showText={showText}
       onClose={onClose}
     />
   );

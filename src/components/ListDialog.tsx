@@ -1,8 +1,15 @@
-import { Dialog, DialogTitle, List, ListItem, ListItemIcon } from '@material-ui/core';
+import {
+  Box,
+  Dialog,
+  DialogTitle,
+  List,
+  ListItem,
+  ListItemIcon,
+} from '@material-ui/core';
 import React from 'react';
 
 const ListDialog: React.FC<{
-  anchor: (openFunc: () => void) => JSX.Element;
+  anchor: JSX.Element;
   action: (text: string) => void;
   options: [string, JSX.Element | null][] | string[];
   title: string;
@@ -31,7 +38,9 @@ const ListDialog: React.FC<{
 
   return (
     <>
-      {anchor(handleOpen)}
+      <Box display="flex" alignItems="center" onClick={handleOpen}>
+        {anchor}
+      </Box>
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle>{title}</DialogTitle>
         <List>

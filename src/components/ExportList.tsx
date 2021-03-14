@@ -1,4 +1,3 @@
-import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
@@ -8,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showFeedback } from 'store/appStateSlice';
 import { getTotalPoints } from 'store/rosterSlice';
 import { AppDispatch, RootState } from 'store/store';
-import ListDialog from './ListDialog';
+import ListDialogMenu from './ListDialogMenu';
 import { packRoster } from './Roster';
 
 const copyToClipboard = (text: string) => navigator.clipboard.writeText(text);
@@ -88,20 +87,13 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   };
 
   return (
-    <ListDialog
+    <ListDialogMenu
       action={exportList}
-      anchor={(openFunc) => (
-        <>
-          <Tooltip title="Export">
-            <IconButton color="inherit" aria-label="Export List" onClick={openFunc}>
-              <ShareIcon />
-            </IconButton>
-          </Tooltip>
-          {showText && <Typography onClick={openFunc}>Export List</Typography>}
-        </>
-      )}
       options={options}
       title="Chose how to export"
+      text="Export"
+      icon={<ShareIcon />}
+      showText={showText}
       onClose={onClose}
     />
   );

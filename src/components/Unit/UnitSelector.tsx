@@ -18,9 +18,9 @@ const UnitSelector: React.FC<{
   return (
     <ListDialog
       action={setSelectedUnit}
-      anchor={(openFunc: () => void) => (
+      anchor={
         <>
-          <Typography variant="h5" onClick={openFunc}>
+          <Typography variant="h5">
             <Chip label={unit.points} color="primary" />
             &nbsp;&nbsp;
             {name}
@@ -32,7 +32,7 @@ const UnitSelector: React.FC<{
             </Typography>
           )}
         </>
-      )}
+      }
       options={options}
       title="Choose unit type"
     />
