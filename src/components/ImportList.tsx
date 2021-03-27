@@ -27,16 +27,16 @@ const ImportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
 
   return (
     <TextInputDialog
-      anchor={(openFunc) => (
+      anchor={
         <>
           <Tooltip title="Import list">
-            <IconButton color="inherit" aria-label="Import List" onClick={openFunc}>
+            <IconButton color="inherit" aria-label="Import List">
               <GetAppIcon />
             </IconButton>
           </Tooltip>
-          {showText && <Typography onClick={openFunc}>Import list</Typography>}
+          {showText && <Typography>Import list</Typography>}
         </>
-      )}
+      }
       action={handleImport}
       title="Enter the import string"
       label="Exported String"

@@ -37,13 +37,13 @@ const Actions: React.FC<{ id: number; unit: Unit }> = ({ id, unit }) => {
         <Box flexGrow={1}></Box>
         <Box display="flex" alignItems="center">
           <TextInputDialog
-            anchor={(openFunc: () => void) => (
+            anchor={
               <Tooltip title="Rename unit">
-                <IconButton onClick={openFunc}>
+                <IconButton>
                   <TextFieldsIcon />
                 </IconButton>
               </Tooltip>
-            )}
+            }
             action={rename}
             title="Enter the name for the unit"
             label="Unit name"

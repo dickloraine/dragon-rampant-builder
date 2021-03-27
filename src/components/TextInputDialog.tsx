@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -9,7 +10,7 @@ import {
 import React from 'react';
 
 const TextInputDialog: React.FC<{
-  anchor: (openFunc: () => void) => JSX.Element;
+  anchor: JSX.Element;
   action: (text: string) => void;
   title?: string;
   label?: string;
@@ -55,7 +56,9 @@ const TextInputDialog: React.FC<{
 
   return (
     <>
-      {anchor(handleOpen)}
+      <Box display="flex" alignItems="center" onClick={handleOpen}>
+        {anchor}
+      </Box>
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
