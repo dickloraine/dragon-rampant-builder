@@ -41,7 +41,9 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
   const handleRemove = () => dispatch(removeUnit(id));
 
   return (
-    <Card style={{ marginBottom: 25, maxWidth: 400, width: '100%' }}>
+    <Card
+      style={{ marginBottom: 25, maxWidth: 400, width: '100%', position: 'relative' }}
+    >
       {viewMode ? (
         <CardHeader
           title={

@@ -20,8 +20,15 @@ const Actions: React.FC<{ id: number; unit: Unit }> = ({ id, unit }) => {
   const rename = (value: string) => dispatch(renameUnit(id, value));
 
   return (
-    <Box>
-      <Box display="flex" width="97%" style={{ height: 25, marginTop: 10 }}>
+    <Box
+      style={{
+        position: 'absolute',
+        bottom: 5,
+        width: '95%',
+        paddingRight: 15,
+      }}
+    >
+      <Box display="flex" style={{ height: 25 }}>
         <Box display="flex" alignItems="center">
           <Tooltip title="Move back">
             <IconButton onClick={moveLeft}>
