@@ -10,15 +10,12 @@ import {
 } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import InfoIcon from '@material-ui/icons/Info';
-import React, { useState } from 'react';
+import React from 'react';
+import useOpen from '../hooks/useOpen';
 
 const About: React.FC<{ onClose?: () => void }> = ({ onClose = undefined }) => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    if (onClose) onClose();
-    setOpen(false);
-  };
+  const { open, handleOpen, handleClose } = useOpen(false, undefined, onClose);
+
   return (
     <>
       <Tooltip title="Load List">

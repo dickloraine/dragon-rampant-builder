@@ -8,6 +8,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import React from 'react';
+import useOpen from '../hooks/useOpen';
 
 const TextInputDialog: React.FC<{
   anchor: JSX.Element;
@@ -32,16 +33,9 @@ const TextInputDialog: React.FC<{
   onClose,
   onOpen,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const { open, handleOpen, handleClose } = useOpen(false, onOpen, onClose);
   const [value, setValue] = React.useState('');
-  const handleOpen = () => {
-    setOpen(true);
-    if (onOpen) onOpen();
-  };
-  const handleClose = () => {
-    if (onClose) onClose();
-    setOpen(false);
-  };
+
   const handleKeyPressed = (key: string) => {
     if (key === 'Enter') {
       setValue(value);

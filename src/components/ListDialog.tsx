@@ -7,6 +7,7 @@ import {
   ListItemIcon,
 } from '@material-ui/core';
 import React from 'react';
+import useOpen from '../hooks/useOpen';
 
 const ListDialog: React.FC<{
   anchor: JSX.Element;
@@ -16,16 +17,8 @@ const ListDialog: React.FC<{
   onClose?: () => void;
   onOpen?: () => void;
 }> = ({ anchor, action, options, title, onClose, onOpen }) => {
-  const [open, setOpen] = React.useState(false);
+  const { open, handleOpen, handleClose } = useOpen(false, onOpen, onClose);
 
-  const handleOpen = () => {
-    setOpen(true);
-    if (onOpen) onOpen();
-  };
-  const handleClose = () => {
-    if (onClose) onClose();
-    setOpen(false);
-  };
   const handleOnClick = (text: string) => {
     action(text);
     handleClose();

@@ -13,12 +13,13 @@ import {
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import React from 'react';
 import data, { Unit } from 'store/data';
+import useOpen from '../../hooks/useOpen';
 
 const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
   unit,
   onChange,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const { open, handleOpen, handleClose } = useOpen();
   const unitData = data.unitData[unit.name];
   const fantasticalRulesData = data.fantasticalRulesData;
   const rulesData = data.rulesData;
@@ -35,8 +36,6 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
     }
   }
 
-  const handleClose = () => setOpen(false);
-  const handleOpen = () => setOpen(true);
   const handleChange = (e: React.ChangeEvent<{ value: unknown }>) =>
     onChange({ ...unit, fantasticalRules: [...(e.target.value as string[])] });
 
