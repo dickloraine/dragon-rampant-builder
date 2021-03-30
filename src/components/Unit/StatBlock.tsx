@@ -14,7 +14,7 @@ const StatBlock: React.FC<{ stats: UnitStats }> = ({ stats }) => {
   let shootingValue = stats.shoot ? `${stats.shootValue}+/${stats.shootRange}"` : '-';
 
   return (
-    <TableContainer>
+    <TableContainer style={{ marginBottom: 20 }}>
       <Table size="small">
         <Hidden xsDown>
           <TableBody>
