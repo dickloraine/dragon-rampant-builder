@@ -5,7 +5,7 @@ import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Unit } from 'store/data';
+import { Unit } from 'store/dataSlice';
 import { addUnit, moveUnit, renameUnit } from 'store/rosterSlice';
 import { AppDispatch, RootState } from 'store/store';
 import TextInputDialog from '../TextInputDialog';

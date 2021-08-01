@@ -10,6 +10,7 @@ export type AppState = {
   };
   inputUpdate: boolean;
   autoDarkMode: boolean;
+  customizeMode: boolean;
 };
 
 const appStateSlice = createSlice({
@@ -22,6 +23,7 @@ const appStateSlice = createSlice({
     },
     inputUpdate: false,
     autoDarkMode: false,
+    customizeMode: false,
   } as AppState,
   reducers: {
     toggleForceInputUpdate: (state) => {
@@ -45,6 +47,9 @@ const appStateSlice = createSlice({
     setAutoDarkMode: (state, action) => {
       state.autoDarkMode = action.payload;
     },
+    setCustomizeMode: (state, action) => {
+      state.customizeMode = action.payload;
+    },
   },
 });
 
@@ -53,5 +58,6 @@ export const {
   closeFeedback,
   showFeedback,
   setAutoDarkMode,
+  setCustomizeMode,
 } = appStateSlice.actions;
 export default appStateSlice.reducer;

@@ -2,19 +2,27 @@ import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import BackupIcon from '@material-ui/icons/Backup';
 import { saveAs } from 'file-saver';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { rosterStore } from 'store/persistantStorage';
+import { RootState } from 'store/store';
 
 const Backup: React.FC<{ showText: boolean; onClose?: () => void }> = ({
   showText = false,
   onClose = undefined,
 }) => {
+  const customData = useSelector((state: RootState) => state.data.customData);
+
   const backup = async () => {
-    const savedLists: any = {};
+    const backupState: any = {
+      rosters: {},
+      customData: customData,
+    };
+
     await rosterStore.iterate((val, key) => {
-      savedLists[key] = val;
+      backupState.rosters[key] = val;
     });
 
-    const file = new Blob([JSON.stringify(savedLists)], {
+    const file = new Blob([JSON.stringify(backupState)], {
       type: 'text/plain;charset=utf-8',
     });
 

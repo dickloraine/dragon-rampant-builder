@@ -8,3 +8,8 @@ export const rosterStore = localforage.createInstance({
   name: 'drabDB',
   storeName: 'rosterStore',
 });
+
+export const dataStore = localforage.createInstance({
+  name: 'drabDB',
+  storeName: 'dataStore',
+});

@@ -1,7 +1,7 @@
 import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   List,
   ListItem,
   ListItemIcon,
@@ -49,23 +49,31 @@ const Validation = () => {
         unit.name,
         'Short range missiles and Mixed Weapons may not be used together!',
       ]);
+    if (
+      unit.fantasticalRules.includes('Unstoppable March of the Dead') &&
+      !unit.fantasticalRules.includes('Leader')
+    )
+      warnings.push([
+        unit.name,
+        'Only a leader can take "Unstoppable March of the Dead"',
+      ]);
   }
 
   return (
     <>
       {warnings.length !== 0 && (
-        <ExpansionPanel
+        <Accordion
           expanded={validationExpanded}
           onChange={() => dispatch(toggleUIOption('validationExpanded'))}
           style={{ maxWidth: 1210 }}
         >
-          <ExpansionPanelSummary
+          <AccordionSummary
             className={classes.title}
             expandIcon={<ExpandMoreIcon className={classes.title} />}
           >
             <Typography variant="h5">Warnings</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails className={classes.details}>
+          </AccordionSummary>
+          <AccordionDetails className={classes.details}>
             <List>
               {warnings.map(([name, text], index) => (
                 <ListItem key={index}>
@@ -76,8 +84,8 @@ const Validation = () => {
                 </ListItem>
               ))}
             </List>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+          </AccordionDetails>
+        </Accordion>
       )}
     </>
   );

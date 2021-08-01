@@ -8,13 +8,17 @@ import {
   Typography,
 } from '@material-ui/core';
 import React from 'react';
-import data, { Unit } from 'store/data';
+import { useSelector } from 'react-redux';
+import { Unit } from 'store/dataSlice';
+import { RootState } from 'store/store';
 
 const Options: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
   unit,
   onChange,
 }) => {
-  const optionsData = data.unitData[unit.name].options;
+  const optionsData = useSelector(
+    (state: RootState) => state.data.unitData[unit.name].options
+  );
   if (!optionsData || !Object.keys(optionsData).length) return <div></div>;
 
   const handleChange = (option: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +46,7 @@ const Options: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
               />
             }
             label={
-              <Tooltip title={optionsData[option].summary}>
+              <Tooltip title={optionsData[option].summary || ''}>
                 <Typography>
                   {option}{' '}
                   <Typography color="secondary" component="span">

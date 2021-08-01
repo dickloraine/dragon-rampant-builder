@@ -28,7 +28,7 @@ const TextInputDialog: React.FC<{
   label = '',
   defaultValue = '',
   cancelText = 'Cancel',
-  okayText = 'okay',
+  okayText = 'Okay',
   margin = 'dense',
   onClose,
   onOpen,
@@ -38,7 +38,6 @@ const TextInputDialog: React.FC<{
 
   const handleKeyPressed = (key: string) => {
     if (key === 'Enter') {
-      setValue(value);
       action(value);
       handleClose();
     } else if (key === 'ESC') handleClose();
@@ -71,7 +70,7 @@ const TextInputDialog: React.FC<{
           <Button onClick={handleClose} color="primary">
             {cancelText}
           </Button>
-          <Button onClick={handleAction} color="primary">
+          <Button onClick={handleAction} disabled={!value} color="primary">
             {okayText}
           </Button>
         </DialogActions>

@@ -1,9 +1,9 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Chip,
   CircularProgress,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
   Typography,
   useMediaQuery,
 } from '@material-ui/core';
@@ -11,18 +11,18 @@ import { useTheme } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import data from 'store/data';
 import { getTotalPoints } from 'store/rosterSlice';
 import { RootState } from 'store/store';
 import { toggleUIOption } from 'store/uiSlice';
 const PointDistributionChart = lazy(() => import('./PointDistributionChart'));
 const UnitDistributionChart = lazy(() => import('./UnitDistributionChart'));
 
-const unitData = data.unitData;
-const fantasticalRulesData = data.fantasticalRulesData;
-
 const Statistics = () => {
   const dispatch = useDispatch();
+  const unitData = useSelector((state: RootState) => state.data.unitData);
+  const fantasticalRulesData = useSelector(
+    (state: RootState) => state.data.fantasticalRulesData
+  );
   const statisticsExpanded = useSelector(
     (state: RootState) => state.ui.statisticsExpanded
   );
@@ -84,15 +84,15 @@ const Statistics = () => {
   ];
 
   return (
-    <ExpansionPanel
+    <Accordion
       expanded={statisticsExpanded}
       onChange={() => dispatch(toggleUIOption('statisticsExpanded'))}
       style={{ maxWidth: 1210 }}
     >
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="h5">Statistics</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <div>
           <Chip
             label={totalPoints + ' Points'}
@@ -132,8 +132,8 @@ const Statistics = () => {
             </Suspense>
           )}
         </div>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   );
 };
 

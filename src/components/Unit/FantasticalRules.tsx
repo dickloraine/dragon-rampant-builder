@@ -12,7 +12,9 @@ import {
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import React from 'react';
-import data, { Unit } from 'store/data';
+import { useSelector } from 'react-redux';
+import { selectAllRules, Unit } from 'store/dataSlice';
+import { RootState } from 'store/store';
 import useOpen from '../../hooks/useOpen';
 
 const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
@@ -20,21 +22,14 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
   onChange,
 }) => {
   const { open, handleOpen, handleClose } = useOpen();
-  const unitData = data.unitData[unit.name];
-  const fantasticalRulesData = data.fantasticalRulesData;
-  const rulesData = data.rulesData;
+  const fantasticalRulesData = useSelector(
+    (state: RootState) => state.data.fantasticalRulesData
+  );
+  const rulesData = useSelector((state: RootState) => selectAllRules(state));
 
-  let fantasticalRules = unitData.fantasticalRules;
-  if (!fantasticalRules || !fantasticalRules.length) return <div></div>;
-  if (fantasticalRules[0] === 'any')
-    fantasticalRules = Object.keys(fantasticalRulesData);
-  if (fantasticalRules[0] === 'exclude') {
-    const toCheck = fantasticalRules.slice(1);
-    fantasticalRules = Object.keys(fantasticalRulesData);
-    for (const excluded of toCheck) {
-      fantasticalRules = fantasticalRules.filter((val) => val !== excluded);
-    }
-  }
+  let fantasticalRules = Object.keys(fantasticalRulesData).filter(
+    (rule) => !fantasticalRulesData[rule].exclude_units.includes(unit.name)
+  );
 
   const handleChange = (e: React.ChangeEvent<{ value: unknown }>) =>
     onChange({ ...unit, fantasticalRules: [...(e.target.value as string[])] });
@@ -63,7 +58,7 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
                 />
               }
               label={
-                <Tooltip title={rulesData[name]}>
+                <Tooltip title={rulesData[name].description}>
                   <Typography>
                     {name}{' '}
                     <Typography color="secondary" component="span">
@@ -91,7 +86,7 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
           {fantasticalRules.map((name) => (
             <MenuItem key={name} value={name}>
               {unit.fantasticalRules.indexOf(name) < 0 && (
-                <Tooltip title={rulesData[name]}>
+                <Tooltip title={rulesData[name].description}>
                   <Typography>
                     {name}{' '}
                     <Typography color="secondary" component="span">
@@ -101,7 +96,7 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
                 </Tooltip>
               )}
               {unit.fantasticalRules.indexOf(name) > -1 && (
-                <Tooltip title={rulesData[name]}>
+                <Tooltip title={rulesData[name].description}>
                   <Typography color="primary">
                     {name}{' '}
                     <Typography color="secondary" component="span">

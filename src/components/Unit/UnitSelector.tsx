@@ -1,7 +1,7 @@
 import { Chip, Typography } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import React from 'react';
-import { Unit } from 'store/data';
+import { Unit } from 'store/dataSlice';
 import ListDialog from '../ListDialog';
 
 const UnitSelector: React.FC<{

@@ -12,7 +12,7 @@
       "attackValue": 0,
       "defenceValue": 0,
       "shootValue": 0,
-      "shootRange": "-",
+      "shootRange": 0,
       "movement": 0,
       "strengthPoints": 0
     },
@@ -66,7 +66,7 @@
         }
       }
     },
-    "fantasticalRules": ["any"]
+    "fantasticalRules": []
   },
   "Heavy Riders": {
     "name": "Heavy Riders",
@@ -102,14 +102,14 @@
         "points": 2,
         "summary": "May not enter rough terrain. Armour is increased to 4.",
         "add": [
-          "May not enter rough terrain"
+          "Chariots"
         ],
         "setStats": {
           "armour": 4
         }
       }
     },
-    "fantasticalRules": ["any"]
+    "fantasticalRules": []
   },
   "Light Riders": {
     "name": "Light Riders",
@@ -141,7 +141,7 @@
         }
       }
     },
-    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Summoner", "Cleric", "Slayer"]
+    "fantasticalRules": []
   },
   "Greater Warbeasts": {
     "name": "Greater Warbeasts",
@@ -192,7 +192,7 @@
         }
       }
     },
-    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Summoner", "Cleric", "Slayer"]
+    "fantasticalRules": []
   },
   "Lesser Warbeasts": {
     "name": "Lesser Warbeasts",
@@ -237,7 +237,7 @@
         }
       }
     },
-    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Summoner", "Cleric", "Slayer"]
+    "fantasticalRules": []
   },
   "Elite Foot": {
     "name": "Elite Foot",
@@ -270,7 +270,7 @@
         }
       }
     },
-    "fantasticalRules": ["any"]
+    "fantasticalRules": []
   },
   "Heavy Foot": {
     "name": "Heavy Foot",
@@ -304,7 +304,7 @@
         ]
       }
     },
-    "fantasticalRules": ["any"]
+    "fantasticalRules": []
   },
   "Light Foot": {
     "name": "Light Foot",
@@ -359,7 +359,7 @@
         ]
       }
     },
-    "fantasticalRules": ["any"]
+    "fantasticalRules": []
   },
   "Bellicose Foot": {
     "name": "Bellicose Foot",
@@ -393,7 +393,7 @@
         }
       }
     },
-    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Summoner", "Cleric", "Slayer"]
+    "fantasticalRules": []
   },
   "Heavy Missiles": {
     "name": "Heavy Missiles",
@@ -422,7 +422,7 @@
         }
       }
     },
-    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Cleric", "Slayer"]
+    "fantasticalRules": []
   },
   "Light Missiles": {
     "name": "Light Missiles",
@@ -451,7 +451,7 @@
         }
       }
     },
-    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Cleric", "Slayer"]
+    "fantasticalRules": []
   },
   "Scouts": {
     "name": "Scouts",
@@ -477,7 +477,7 @@
       "Fleet Footed"
     ],
     "options": {},
-    "fantasticalRules": ["exclude", "Spellcaster", "Wizardlings", "Summoner", "Exploder", "Cleric", "Slayer"]
+    "fantasticalRules": []
   },
   "Ravenous Hordes": {
     "name": "Ravenous Hordes",
@@ -498,6 +498,6 @@
     },
     "rules": [],
     "options": {},
-    "fantasticalRules": ["No Feelings", "Venomous", "Hatred", "Fear"]
+    "fantasticalRules": []
   }
 }

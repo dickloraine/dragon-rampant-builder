@@ -10,7 +10,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import data, { Unit as UnitType } from 'store/data';
+import { selectUnitNames, Unit as UnitType } from 'store/dataSlice';
 import { removeUnit, setUnit, updateUnit } from 'store/rosterSlice';
 import { AppDispatch, RootState } from 'store/store';
 import ExpandIcon from '../ExpandIcon';
@@ -27,6 +27,7 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
   const unit = useSelector((state: RootState) => state.roster.units[id]);
   const viewMode = useSelector((state: RootState) => state.ui.viewMode);
   const editMode = useSelector((state: RootState) => state.ui.editMode);
+  const unitNames = useSelector((state: RootState) => selectUnitNames(state));
 
   const [expanded, setExpanded] = React.useState(true);
   const handleExpandClick = () => setExpanded(!expanded);
@@ -67,9 +68,7 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
         />
       ) : (
         <CardHeader
-          title={
-            <UnitSelector unit={unit} onClose={changeUnit} options={data.unitNames} />
-          }
+          title={<UnitSelector unit={unit} onClose={changeUnit} options={unitNames} />}
           action={
             <Button onClick={handleRemove}>
               <CloseIcon />
