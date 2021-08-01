@@ -8,7 +8,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import React from 'react';
-import { Spell } from 'store/dataSlice';
+import { Spell } from 'store/types';
 import range from 'utils/range';
 import { CustomFormProps } from './CustomizeList';
 

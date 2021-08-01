@@ -6,7 +6,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showFeedback } from 'store/appStateSlice';
 import { getTotalPoints } from 'store/rosterSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { AppDispatch, RootState } from 'store/types';
 import copyToClipboard from 'utils/copyToClipboard';
 import ListDialogMenu from './ListDialogMenu';
 import { packRoster } from './Roster';

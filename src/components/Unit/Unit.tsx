@@ -10,9 +10,9 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUnitNames, Unit as UnitType } from 'store/dataSlice';
+import { selectUnitNames } from 'store/dataSlice';
 import { removeUnit, setUnit, updateUnit } from 'store/rosterSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { AppDispatch, RootState, Unit as UnitType } from 'store/types';
 import ExpandIcon from '../ExpandIcon';
 import Actions from './Actions';
 import buildUnit from './buildUnit';

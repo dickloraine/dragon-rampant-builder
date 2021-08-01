@@ -4,7 +4,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showFeedback } from 'store/appStateSlice';
 import { rosterStore } from 'store/persistantStorage';
-import { AppDispatch, RootState } from 'store/store';
+import { AppDispatch, RootState } from 'store/types';
 import { packRoster } from './Roster';
 
 const SaveList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({

@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { showFeedback, toggleForceInputUpdate } from 'store/appStateSlice';
 import { rosterStore } from 'store/persistantStorage';
-import { CompactRosterState, setRoster } from 'store/rosterSlice';
+import { setRoster } from 'store/rosterSlice';
+import { CompactRosterState } from 'store/types';
 import ListDialogMenu from './ListDialogMenu';
 import { unpackRoster } from './Roster';
 

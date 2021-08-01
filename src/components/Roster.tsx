@@ -2,9 +2,14 @@ import { Box, Fab, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CompactUnit } from 'store/dataSlice';
-import { addUnit, CompactRosterState, RosterState } from 'store/rosterSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { addUnit } from 'store/rosterSlice';
+import {
+  AppDispatch,
+  CompactRosterState,
+  CompactUnit,
+  RootState,
+  RosterState,
+} from 'store/types';
 import buildUnit from './Unit/buildUnit';
 import Unit from './Unit/Unit';
 

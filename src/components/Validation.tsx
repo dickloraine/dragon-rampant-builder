@@ -13,7 +13,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/store';
+import { RootState } from 'store/types';
 import { toggleUIOption } from 'store/uiSlice';
 
 const useStyles = makeStyles((theme) => ({

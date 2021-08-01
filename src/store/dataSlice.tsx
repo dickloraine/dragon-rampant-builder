@@ -1,5 +1,4 @@
 import {
-  Action,
   createAsyncThunk,
   createSelector,
   createSlice,
@@ -10,96 +9,18 @@ import rulesData from 'assets/dragonRampantData/rules.json';
 import spellData from 'assets/dragonRampantData/spells.json';
 import unitData from 'assets/dragonRampantData/units.json';
 import produce from 'immer';
-import { ThunkAction } from 'redux-thunk';
 import { dataStore } from './persistantStorage';
-import { RootState } from './store';
-
-export type UnitStats = {
-  attack: number;
-  move: number;
-  shoot: number;
-  courage: number;
-  armour: number;
-  attackValue: number;
-  defenceValue: number;
-  shootValue: number;
-  shootRange: number | string;
-  movement: number;
-  strengthPoints: number;
-};
-
-export type UnitOption = {
-  points?: number;
-  summary?: string;
-  remove?: string[];
-  add?: string[];
-  setStats?: Partial<UnitStats>;
-};
-
-type UnitOptions = { [optionName: string]: UnitOption };
-
-interface BaseUnit {
-  name: string;
-  type: string;
-  points: number;
-  stats: UnitStats;
-  rules: string[];
-  fantasticalRules: string[];
-  customName?: string;
-}
-
-export interface Unit extends BaseUnit {
-  options: string[];
-}
-
-export interface DataUnit extends BaseUnit {
-  options: UnitOptions;
-}
-
-export interface CompactUnit {
-  name: string;
-  options: string[];
-  fantasticalRules: string[];
-  customName?: string;
-}
-
-export type FantasticalRule = {
-  name: string;
-  points: number;
-  exclude_units: string[];
-  description: string;
-};
-
-export type Rule = {
-  name: string;
-  description: string;
-};
-
-export type Spell = {
-  name: string;
-  difficulty: number;
-  target: string;
-  duration: string;
-  effect: string;
-};
-
-type Units = { [name: string]: DataUnit };
-type FantasticalRules = { [name: string]: FantasticalRule };
-type Rules = { [name: string]: Rule };
-type Spells = { [name: string]: Spell };
-
-export type CustomDataElement = DataUnit | FantasticalRule | Rule | Spell;
-
-export interface CustomData {
-  unitData: Units;
-  fantasticalRulesData: FantasticalRules;
-  rulesData: Rules;
-  spellData: Spells;
-}
-
-export interface Data extends CustomData {
-  customData: CustomData;
-}
+import {
+  CustomData,
+  CustomDataElement,
+  Data,
+  DataUnit,
+  FantasticalRule,
+  RootState,
+  Rule,
+  Spell,
+  Thunk,
+} from './types';
 
 export const getEmptyCustomData = (): CustomData => ({
   unitData: {},
@@ -167,8 +88,6 @@ export const selectAllRules = createSelector(
     ...fantasticalRules,
   })
 );
-
-export type Thunk = ThunkAction<void, RootState, unknown, Action<string>>;
 
 export const importCustomData =
   (data: CustomData): Thunk =>

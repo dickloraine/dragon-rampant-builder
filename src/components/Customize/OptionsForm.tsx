@@ -20,8 +20,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import produce from 'immer';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { DataUnit, UnitOption, UnitStats } from 'store/dataSlice';
-import { RootState } from 'store/store';
+import { DataUnit, RootState, UnitOption, UnitStats } from 'store/types';
 import range from 'utils/range';
 import statData from 'utils/statData';
 

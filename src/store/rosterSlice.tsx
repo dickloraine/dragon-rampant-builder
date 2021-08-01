@@ -1,24 +1,7 @@
-import { Action, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ThunkAction } from 'redux-thunk';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { selectAllRules } from 'store/dataSlice';
-import { CompactUnit, Data, Unit } from './dataSlice';
 import store from './store';
-
-type RosterUnits = { [id: number]: Unit };
-
-export type RosterState = {
-  name: string;
-  nextID: number;
-  units: RosterUnits;
-  unitOrder: number[];
-};
-
-export type CompactRosterState = {
-  name: string;
-  nextID: number;
-  units: { [id: number]: CompactUnit };
-  unitOrder: number[];
-};
+import { Data, RosterState, RosterUnits, Thunk, Unit } from './types';
 
 const rosterInitialState: RosterState = {
   name: 'New List',
@@ -95,8 +78,6 @@ const rosterSlice = createSlice({
 });
 
 const { _addUnit, _setUnit } = rosterSlice.actions;
-
-type Thunk = ThunkAction<void, any, unknown, Action<string>>;
 
 export const addUnit =
   (unit?: Unit, index?: number): Thunk =>

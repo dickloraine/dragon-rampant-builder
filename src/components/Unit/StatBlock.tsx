@@ -8,7 +8,7 @@ import {
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React from 'react';
-import { UnitStats } from 'store/dataSlice';
+import { UnitStats } from 'store/types';
 import statData from 'utils/statData';
 
 const StatCells: React.FC<{

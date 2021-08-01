@@ -21,7 +21,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpecialRules } from 'store/rosterSlice';
-import { RootState } from 'store/store';
+import { RootState } from 'store/types';
 import { toggleUIOption } from 'store/uiSlice';
 
 const SpellTable = () => {

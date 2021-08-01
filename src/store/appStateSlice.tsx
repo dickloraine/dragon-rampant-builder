@@ -1,17 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-type severity = 'error' | 'info' | 'success' | 'warning';
-
-export type AppState = {
-  feedback: {
-    open: boolean;
-    message: string;
-    severity: severity;
-  };
-  inputUpdate: boolean;
-  autoDarkMode: boolean;
-  customizeMode: boolean;
-};
+import { AppState, Severity } from './types';
 
 const appStateSlice = createSlice({
   name: 'appState',
@@ -25,6 +13,7 @@ const appStateSlice = createSlice({
     autoDarkMode: false,
     customizeMode: false,
   } as AppState,
+
   reducers: {
     toggleForceInputUpdate: (state) => {
       state.inputUpdate = !state.inputUpdate;
@@ -33,14 +22,14 @@ const appStateSlice = createSlice({
       state.feedback.open = false;
     },
     showFeedback: {
-      reducer: (state, action: PayloadAction<[string, severity]>) => {
-        const [message, severity] = action.payload;
-        state.feedback = { open: true, message: message, severity: severity };
+      reducer: (state, action: PayloadAction<[string, Severity]>) => {
+        const [message, Severity] = action.payload;
+        state.feedback = { open: true, message: message, severity: Severity };
       },
       prepare: (
         message: string,
-        severity: severity
-      ): { payload: [string, severity] } => ({
+        severity: Severity
+      ): { payload: [string, Severity] } => ({
         payload: [message, severity],
       }),
     },

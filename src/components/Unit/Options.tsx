@@ -9,8 +9,7 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Unit } from 'store/dataSlice';
-import { RootState } from 'store/store';
+import { RootState, Unit } from 'store/types';
 
 const Options: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
   unit,

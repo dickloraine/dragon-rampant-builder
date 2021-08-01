@@ -12,7 +12,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import useOpen from 'hooks/useOpen';
 import React, { useState } from 'react';
-import { CustomDataElement } from 'store/dataSlice';
+import { CustomDataElement } from 'store/types';
 
 export interface CustomFormProps<T extends CustomDataElement> {
   open: boolean;

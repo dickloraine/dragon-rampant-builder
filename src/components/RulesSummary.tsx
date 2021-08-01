@@ -12,7 +12,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAllRules } from 'store/dataSlice';
 import { getSpecialRules } from 'store/rosterSlice';
-import { RootState } from 'store/store';
+import { RootState } from 'store/types';
 import { toggleUIOption } from 'store/uiSlice';
 
 const RulesSummary = () => {

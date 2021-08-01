@@ -4,7 +4,7 @@ import { saveAs } from 'file-saver';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { rosterStore } from 'store/persistantStorage';
-import { RootState } from 'store/store';
+import { RootState } from 'store/types';
 
 const Backup: React.FC<{ showText: boolean; onClose?: () => void }> = ({
   showText = false,

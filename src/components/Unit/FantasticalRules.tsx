@@ -13,8 +13,8 @@ import {
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectAllRules, Unit } from 'store/dataSlice';
-import { RootState } from 'store/store';
+import { selectAllRules } from 'store/dataSlice';
+import { RootState, Unit } from 'store/types';
 import useOpen from '../../hooks/useOpen';
 
 const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({

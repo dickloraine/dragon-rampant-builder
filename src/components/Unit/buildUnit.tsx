@@ -1,5 +1,5 @@
-import { CompactUnit, Unit } from 'store/dataSlice';
 import store from 'store/store';
+import { CompactUnit, Unit } from 'store/types';
 
 const buildUnit = (unitToBuild: CompactUnit | Unit) => {
   const unitData = store.getState().data.unitData[unitToBuild.name];

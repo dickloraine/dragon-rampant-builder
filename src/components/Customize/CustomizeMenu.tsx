@@ -2,7 +2,7 @@ import { CircularProgress, Dialog } from '@material-ui/core';
 import React, { lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCustomizeMode } from 'store/appStateSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { AppDispatch, RootState } from 'store/types';
 const CustomizeMenuContent = lazy(() => import('./CustomizeMenuContent'));
 
 export interface PanelProps {

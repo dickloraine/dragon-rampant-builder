@@ -16,8 +16,8 @@ import produce from 'immer';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showFeedback } from 'store/appStateSlice';
-import { CustomData, getEmptyCustomData } from 'store/dataSlice';
-import { RootState } from 'store/store';
+import { getEmptyCustomData } from 'store/dataSlice';
+import { CustomData, RootState } from 'store/types';
 import copyToClipboard from 'utils/copyToClipboard';
 
 const DataGroup: React.FC<{

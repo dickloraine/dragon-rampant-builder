@@ -12,7 +12,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTotalPoints } from 'store/rosterSlice';
-import { RootState } from 'store/store';
+import { RootState } from 'store/types';
 import { toggleUIOption } from 'store/uiSlice';
 const PointDistributionChart = lazy(() => import('./PointDistributionChart'));
 const UnitDistributionChart = lazy(() => import('./UnitDistributionChart'));

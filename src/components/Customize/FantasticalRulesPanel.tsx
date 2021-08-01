@@ -1,12 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showFeedback } from 'store/appStateSlice';
-import {
-  addFantasticalRule,
-  FantasticalRule,
-  removeFantasticalRule,
-} from 'store/dataSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { addFantasticalRule, removeFantasticalRule } from 'store/dataSlice';
+import { AppDispatch, FantasticalRule, RootState } from 'store/types';
 import { PanelProps } from './CustomizeMenu';
 import CustomizePanel from './CustomizePanel';
 import FantasticalRulesForm from './FantasticalRulesForm';

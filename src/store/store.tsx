@@ -4,17 +4,18 @@ import dataReducer from './dataSlice';
 import rosterReducer from './rosterSlice';
 import uiReducer from './uiSlice';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   ui: uiReducer,
   roster: rosterReducer,
   appState: appStateReducer,
   data: dataReducer,
 });
-export type RootState = ReturnType<typeof rootReducer>;
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 export type AppDispatch = typeof store.dispatch;
 

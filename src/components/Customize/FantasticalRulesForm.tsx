@@ -9,8 +9,8 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { FantasticalRule, selectUnitNames } from 'store/dataSlice';
-import { RootState } from 'store/store';
+import { selectUnitNames } from 'store/dataSlice';
+import { FantasticalRule, RootState } from 'store/types';
 import range from 'utils/range';
 import { CustomFormProps } from './CustomizeList';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSpell, removeSpell, Spell } from 'store/dataSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { addSpell, removeSpell } from 'store/dataSlice';
+import { AppDispatch, RootState, Spell } from 'store/types';
 import { PanelProps } from './CustomizeMenu';
 import CustomizePanel from './CustomizePanel';
 import SpellsForm from './SpellsForm';
