@@ -2,7 +2,7 @@ import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import BrightnessHighIcon from '@material-ui/icons/BrightnessHigh';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/store';
+import { RootState } from 'store/types';
 import { updateUI } from 'store/uiSlice';
 
 const Darkmode: React.FC<{ showText?: boolean }> = ({ showText }) => {

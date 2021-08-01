@@ -2,7 +2,7 @@ import { Fab, Hidden, Typography } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { getTotalPoints } from 'store/rosterSlice';
-import { RootState } from 'store/store';
+import { RootState } from 'store/types';
 
 const TotalPoints = () => {
   const units = useSelector((state: RootState) => state.roster.units);

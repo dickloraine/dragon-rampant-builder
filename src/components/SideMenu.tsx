@@ -1,6 +1,17 @@
-import { Divider, Drawer, List, ListItem } from '@material-ui/core';
+import {
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
+import ColorLensIcon from '@material-ui/icons/ColorLens';
 import MenuIcon from '@material-ui/icons/Menu';
 import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { setCustomizeMode } from 'store/appStateSlice';
 import About from './About';
 import Backup from './Backup';
 import DarkMode from './DarkMode';
@@ -13,6 +24,12 @@ import SaveList from './SaveList';
 
 const SideMenu = () => {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+
+  const showCustomizeMenu = () => {
+    dispatch(setCustomizeMode(true));
+    setOpen(false);
+  };
 
   const toggleDrawer = (open: boolean) => (event: any) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -50,6 +67,15 @@ const SideMenu = () => {
           </ListItem>
           <ListItem button key={'Restore'}>
             <Restore onClose={handleClose} showText={true} />
+          </ListItem>
+          <Divider />
+          <ListItem button key={'FR'}>
+            <Tooltip title="Customize">
+              <IconButton color="inherit" onClick={showCustomizeMenu}>
+                <ColorLensIcon />
+              </IconButton>
+            </Tooltip>
+            <Typography onClick={showCustomizeMenu}>Customize</Typography>
           </ListItem>
           <Divider />
           <ListItem button key={'DarkMode'}>

@@ -1,7 +1,9 @@
-import data, { CompactUnit, Unit } from 'store/data';
+import store from 'store/store';
+import { CompactUnit, Unit } from 'store/types';
 
 const buildUnit = (unitToBuild: CompactUnit | Unit) => {
-  const unitData = data.unitData[unitToBuild.name];
+  const unitData = store.getState().data.unitData[unitToBuild.name];
+  const fantasticalRulesData = store.getState().data.fantasticalRulesData;
 
   let unit: Unit = {
     ...unitData,
@@ -34,7 +36,7 @@ const buildUnit = (unitToBuild: CompactUnit | Unit) => {
     }
   }
   for (const fant of unit.fantasticalRules) {
-    const fantasticRule = data.fantasticalRulesData[fant];
+    const fantasticRule = fantasticalRulesData[fant];
     points += fantasticRule.points;
     unit.rules = [...unit.rules, fantasticRule.name];
   }

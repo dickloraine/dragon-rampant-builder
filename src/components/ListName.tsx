@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateRoster } from 'store/rosterSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { AppDispatch, RootState } from 'store/types';
 
 const useStyles = makeStyles((theme) => ({
   root: {

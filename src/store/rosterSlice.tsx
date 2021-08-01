@@ -1,21 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import data, { CompactUnit, Unit } from './data';
-
-type RosterUnits = { [id: number]: Unit };
-
-export type RosterState = {
-  name: string;
-  nextID: number;
-  units: RosterUnits;
-  unitOrder: number[];
-};
-
-export type CompactRosterState = {
-  name: string;
-  nextID: number;
-  units: { [id: number]: CompactUnit };
-  unitOrder: number[];
-};
+import { selectAllRules } from 'store/dataSlice';
+import store from './store';
+import { Data, RosterState, RosterUnits, Thunk, Unit } from './types';
 
 const rosterInitialState: RosterState = {
   name: 'New List',
@@ -34,31 +20,19 @@ const rosterSlice = createSlice({
       ...state,
       ...action.payload,
     }),
-    addUnit: {
-      reducer: (state: RosterState, action: PayloadAction<[Unit?, number?]>) => {
-        let [unit, index] = action.payload;
-        unit = unit
-          ? unit
-          : { ...data.unitData.Unit, options: [], fantasticalRules: [] };
-        const id = state.nextID;
-        index == null
-          ? state.unitOrder.push(id)
-          : state.unitOrder.splice(index + 1, 0, id);
-        state.nextID += 1;
-        state.units[id] = unit;
-      },
-      prepare: (unit?: Unit, index?: number): { payload: [Unit?, number?] } => ({
-        payload: [unit, index],
-      }),
+    _addUnit: (state: RosterState, action: PayloadAction<[Data, Unit?, number?]>) => {
+      let [data, unit, index] = action.payload;
+      unit = unit ? unit : { ...data.unitData.Unit, options: [], fantasticalRules: [] };
+      const id = state.nextID;
+      index == null
+        ? state.unitOrder.push(id)
+        : state.unitOrder.splice(index + 1, 0, id);
+      state.nextID += 1;
+      state.units[id] = unit;
     },
-    setUnit: {
-      reducer: (state, action: PayloadAction<[number, string]>) => {
-        const [id, name] = action.payload;
-        state.units[id] = { ...data.unitData[name], options: [], fantasticalRules: [] };
-      },
-      prepare: (id: number, name: string): { payload: [number, string] } => ({
-        payload: [id, name],
-      }),
+    _setUnit: (state, action: PayloadAction<[Data, number, string]>) => {
+      const [data, id, name] = action.payload;
+      state.units[id] = { ...data.unitData[name], options: [], fantasticalRules: [] };
     },
     updateUnit: {
       reducer: (state, action: PayloadAction<[number, Partial<Unit>]>) => {
@@ -103,6 +77,22 @@ const rosterSlice = createSlice({
   },
 });
 
+const { _addUnit, _setUnit } = rosterSlice.actions;
+
+export const addUnit =
+  (unit?: Unit, index?: number): Thunk =>
+  (dispatch, getState) => {
+    const data = getState().data;
+    dispatch(_addUnit([data, unit, index]));
+  };
+
+export const setUnit =
+  (id: number, name: string): Thunk =>
+  (dispatch, getState) => {
+    const data = getState().data;
+    dispatch(_setUnit([data, id, name]));
+  };
+
 const getTotalPoints = createSelector(
   (units: RosterUnits) => units,
   (units) => Object.values(units).reduce((acc, unit) => acc + unit.points, 0)
@@ -110,21 +100,23 @@ const getTotalPoints = createSelector(
 
 const getSpecialRules = createSelector(
   (units: RosterUnits) => units,
-  (units) =>
-    Object.values(units)
+  (units) => {
+    const rulesData = selectAllRules(store.getState());
+    return Object.values(units)
       .reduce(
         (acc: string[], unit) =>
           unit.rules.reduce(
             (acc, rule) =>
-              data.rulesData[data.rulesData[rule]]
-                ? [...acc, data.rulesData[rule]]
+              rulesData[rulesData[rule].description]
+                ? [...acc, rulesData[rule].description]
                 : [...acc, rule],
             acc
           ),
         []
       )
       .sort()
-      .filter((rule, index, ary) => !index || rule !== ary[index - 1])
+      .filter((rule, index, ary) => !index || rule !== ary[index - 1]);
+  }
 );
 
 export { getTotalPoints, getSpecialRules };
@@ -133,8 +125,6 @@ export const {
   newRoster,
   setRoster,
   updateRoster,
-  addUnit,
-  setUnit,
   updateUnit,
   removeUnit,
   renameUnit,

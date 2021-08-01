@@ -1,16 +1,7 @@
 import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
 import { uiStore } from './persistantStorage';
-
-export type UIState = {
-  viewMode: boolean;
-  editMode: boolean;
-  darkMode: null | boolean;
-  validationExpanded: boolean;
-  rulesSummaryExpanded: boolean;
-  spellsExpanded: boolean;
-  statisticsExpanded: boolean;
-};
+import { UIState } from './types';
 
 const getInitialState = () => {
   try {
@@ -53,31 +44,31 @@ const { _setUI, _toggleUIOption, _updateUI } = uiSlice.actions;
 
 type UIThunk = ThunkAction<void, any, unknown, Action<string>>;
 
-export const setUI = (newState: UIState): UIThunk => (dispatch) => {
-  uiStore.setItem('uiOptions', { ...newState }).catch((err) => console.log(err));
-  dispatch(_setUI(newState));
-};
+export const setUI =
+  (newState: UIState): UIThunk =>
+  (dispatch) => {
+    uiStore.setItem('uiOptions', { ...newState }).catch((err) => console.log(err));
+    dispatch(_setUI(newState));
+  };
 
-export const toggleUIOption = (option: keyof UIState): UIThunk => (
-  dispatch,
-  getState
-) => {
-  const state: UIState = getState().ui;
-  uiStore
-    .setItem('uiOptions', { ...state, [option]: !state[option] })
-    .catch((err) => console.log(err));
-  dispatch(_toggleUIOption(option));
-};
+export const toggleUIOption =
+  (option: keyof UIState): UIThunk =>
+  (dispatch, getState) => {
+    const state: UIState = getState().ui;
+    uiStore
+      .setItem('uiOptions', { ...state, [option]: !state[option] })
+      .catch((err) => console.log(err));
+    dispatch(_toggleUIOption(option));
+  };
 
-export const updateUI = (options: Partial<UIState>): UIThunk => (
-  dispatch,
-  getState
-) => {
-  const state: UIState = getState().ui;
-  uiStore
-    .setItem('uiOptions', { ...state, ...options })
-    .catch((err) => console.log(err));
-  dispatch(_updateUI(options));
-};
+export const updateUI =
+  (options: Partial<UIState>): UIThunk =>
+  (dispatch, getState) => {
+    const state: UIState = getState().ui;
+    uiStore
+      .setItem('uiOptions', { ...state, ...options })
+      .catch((err) => console.log(err));
+    dispatch(_updateUI(options));
+  };
 
 export default uiSlice.reducer;

@@ -1,9 +1,9 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAutoDarkMode } from 'store/appStateSlice';
-import { AppDispatch, RootState } from 'store/store';
+import { AppDispatch, RootState } from 'store/types';
 
 const useUserTheme = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -14,7 +14,7 @@ const useUserTheme = () => {
 
   const theme = React.useMemo(
     () =>
-      createMuiTheme({
+      createTheme({
         palette: {
           type: darkMode ? 'dark' : 'light',
         },

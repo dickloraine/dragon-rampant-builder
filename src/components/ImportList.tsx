@@ -39,7 +39,7 @@ const ImportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
       }
       action={handleImport}
       title="Enter the import string"
-      label="Exported String"
+      label="Import String"
       okayText="Import"
       onClose={onClose}
     />

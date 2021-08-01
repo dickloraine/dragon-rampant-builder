@@ -1,89 +1,65 @@
 import {
-  Hidden,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableRow,
 } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React from 'react';
-import { UnitStats } from 'store/data';
+import { UnitStats } from 'store/types';
+import statData from 'utils/statData';
+
+const StatCells: React.FC<{
+  stat: keyof UnitStats;
+  stats: UnitStats;
+  isPhone: boolean;
+  overrideValue?: string;
+}> = ({ stat, stats, isPhone, overrideValue }) => {
+  const data = statData[stat];
+  const value = overrideValue || (stats[stat] ? stats[stat] + data.suffix : '-');
+
+  return (
+    <>
+      <TableCell>{isPhone ? data.shortName : data.name}</TableCell>
+      <TableCell>{value}</TableCell>
+    </>
+  );
+};
 
 const StatBlock: React.FC<{ stats: UnitStats }> = ({ stats }) => {
-  let shooting = stats.shoot ? `${stats.shoot}+` : '-';
+  const theme = useTheme();
+  const isPhone = useMediaQuery(theme.breakpoints.down('xs'));
+  const cellProps = { stats: stats, isPhone: isPhone };
+
   let shootingValue = stats.shoot ? `${stats.shootValue}+/${stats.shootRange}"` : '-';
 
   return (
     <TableContainer style={{ marginBottom: 20 }}>
       <Table size="small">
-        <Hidden xsDown>
-          <TableBody>
-            <TableRow>
-              <TableCell>Attack</TableCell>
-              <TableCell>{stats.attack}+</TableCell>
-              <TableCell>Attack Value</TableCell>
-              <TableCell>{stats.attackValue}+</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Move</TableCell>
-              <TableCell>{stats.move}+</TableCell>
-              <TableCell>Defence Value</TableCell>
-              <TableCell>{stats.defenceValue}+</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Shoot</TableCell>
-              <TableCell>{shooting}</TableCell>
-              <TableCell>Shoot Value</TableCell>
-              <TableCell>{shootingValue}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Courage</TableCell>
-              <TableCell>{stats.courage}+</TableCell>
-              <TableCell>Movement</TableCell>
-              <TableCell>{stats.movement}"</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Armour</TableCell>
-              <TableCell>{stats.armour}</TableCell>
-              <TableCell>Strength Points</TableCell>
-              <TableCell>{stats.strengthPoints}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Hidden>
-        <Hidden smUp>
-          <TableBody>
-            <TableRow>
-              <TableCell>A</TableCell>
-              <TableCell>{stats.attack}+</TableCell>
-              <TableCell>AV</TableCell>
-              <TableCell>{stats.attackValue}+</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>M</TableCell>
-              <TableCell>{stats.move}+</TableCell>
-              <TableCell>DV</TableCell>
-              <TableCell>{stats.defenceValue}+</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>S</TableCell>
-              <TableCell>{shooting}</TableCell>
-              <TableCell>SV</TableCell>
-              <TableCell>{shootingValue}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>C</TableCell>
-              <TableCell>{stats.courage}+</TableCell>
-              <TableCell>MR</TableCell>
-              <TableCell>{stats.movement}"</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Ar</TableCell>
-              <TableCell>{stats.armour}</TableCell>
-              <TableCell>SP</TableCell>
-              <TableCell>{stats.strengthPoints}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Hidden>
+        <TableBody>
+          <TableRow>
+            <StatCells stat="attack" {...cellProps} />
+            <StatCells stat="attackValue" {...cellProps} />
+          </TableRow>
+          <TableRow>
+            <StatCells stat="move" {...cellProps} />
+            <StatCells stat="defenceValue" {...cellProps} />
+          </TableRow>
+          <TableRow>
+            <StatCells stat="shoot" {...cellProps} />
+            <StatCells stat="shootValue" overrideValue={shootingValue} {...cellProps} />
+          </TableRow>
+          <TableRow>
+            <StatCells stat="courage" {...cellProps} />
+            <StatCells stat="movement" {...cellProps} />
+          </TableRow>
+          <TableRow>
+            <StatCells stat="armour" {...cellProps} />
+            <StatCells stat="strengthPoints" {...cellProps} />
+          </TableRow>
+        </TableBody>
       </Table>
     </TableContainer>
   );

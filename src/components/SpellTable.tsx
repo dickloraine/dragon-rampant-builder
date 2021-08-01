@@ -1,9 +1,9 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Collapse,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
   Hidden,
   List,
   ListItem,
@@ -20,15 +20,13 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import data from 'store/data';
 import { getSpecialRules } from 'store/rosterSlice';
-import { RootState } from 'store/store';
+import { RootState } from 'store/types';
 import { toggleUIOption } from 'store/uiSlice';
-
-const spellData = data.spellData;
 
 const SpellTable = () => {
   const dispatch = useDispatch();
+  const spellData = useSelector((state: RootState) => state.data.spellData);
   const spellsExpanded = useSelector((state: RootState) => state.ui.spellsExpanded);
   const units = useSelector((state: RootState) => state.roster.units);
   const [open, setOpen] = useState([...Array(Object.keys(spellData))].map(() => false));
@@ -50,15 +48,15 @@ const SpellTable = () => {
   return (
     <>
       {spellcasterInRoster() && (
-        <ExpansionPanel
+        <Accordion
           expanded={spellsExpanded}
           onChange={() => dispatch(toggleUIOption('spellsExpanded'))}
           style={{ maxWidth: 1210 }}
         >
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h5">Spell Table</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails style={{ maxWidth: 800 }}>
+          </AccordionSummary>
+          <AccordionDetails style={{ maxWidth: 800 }}>
             <Hidden smDown>
               <TableContainer>
                 <Table size="small" style={{ minWidth: 650 }}>
@@ -131,8 +129,8 @@ const SpellTable = () => {
                 ))}
               </List>
             </Hidden>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+          </AccordionDetails>
+        </Accordion>
       )}
     </>
   );
