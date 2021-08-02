@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3cc41b00ba242b229047e1b4953235d2",
+    "revision": "418f7ce1befe7dac8f235ff530d4926f",
     "url": "/dragon-rampant-builder/index.html"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dragon-rampant-builder/static/js/3.622caeb0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3375c36af6f6faf80a13",
-    "url": "/dragon-rampant-builder/static/js/4.db714915.chunk.js"
+    "revision": "2ceb8615ad2ff67b19db",
+    "url": "/dragon-rampant-builder/static/js/4.d5f84d6e.chunk.js"
   },
   {
     "revision": "9c4f92aeb71972530ce5",
@@ -36,7 +36,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dragon-rampant-builder/static/js/main.9bea2a03.chunk.js"
   },
   {
-    "revision": "9707f46d299600be7d92",
-    "url": "/dragon-rampant-builder/static/js/runtime-main.fbd69665.js"
+    "revision": "f772409626de06555ab9",
+    "url": "/dragon-rampant-builder/static/js/runtime-main.ff4ba3cc.js"
   }
 ]);
