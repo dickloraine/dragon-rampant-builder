@@ -79,7 +79,6 @@ const OptionsForm: React.FC<{
       <DialogContent>
         {/* ---------------------------------- Name --------------------------------- */}
         <TextField
-          autoFocus
           label="Name"
           type="text"
           margin="normal"

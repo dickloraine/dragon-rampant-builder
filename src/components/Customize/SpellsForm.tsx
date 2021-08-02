@@ -22,7 +22,6 @@ function SpellsForm(props: CustomFormProps<Spell>) {
       <DialogTitle>Spell</DialogTitle>
       <DialogContent>
         <TextField
-          autoFocus
           label="Name"
           type="text"
           margin="normal"

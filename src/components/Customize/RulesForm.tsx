@@ -20,7 +20,6 @@ function RulesForm(props: CustomFormProps<Rule>) {
       <DialogTitle>Rule</DialogTitle>
       <DialogContent>
         <TextField
-          autoFocus
           label="Name"
           type="text"
           margin="normal"

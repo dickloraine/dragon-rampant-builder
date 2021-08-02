@@ -93,7 +93,6 @@ function UnitsForm(props: CustomFormProps<DataUnit>) {
         <FormControl>
           {/* --------------------------------- Name -------------------------------- */}
           <TextField
-            autoFocus
             label="Name"
             type="text"
             margin="normal"

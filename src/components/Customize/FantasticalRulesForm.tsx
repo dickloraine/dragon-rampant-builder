@@ -25,7 +25,6 @@ function FantasticalRulesForm(props: CustomFormProps<FantasticalRule>) {
       <DialogTitle>Fantastical Rule</DialogTitle>
       <DialogContent>
         <TextField
-          autoFocus
           label="Name"
           type="text"
           margin="normal"
