@@ -1,6 +1,7 @@
 import { Box, Button, ButtonGroup, DialogTitle } from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import ShareIcon from '@material-ui/icons/Share';
+import useOpen from 'hooks/useOpen';
 import React, { useCallback, useState } from 'react';
 import ExportCustomData from './ExportCustomData';
 import FantasticalRulesPanel from './FantasticalRulesPanel';
@@ -11,7 +12,8 @@ import UnitsPanel from './UnitsPanel';
 
 const CustomizeMenuContent = () => {
   const [expanded, setExpanded] = useState<string>('');
-  const [openImExport, setOpenImExport] = useState<string>('');
+  const [openImport, handleOpenImport, handleCloseImport] = useOpen();
+  const [openExport, handleOpenExport, handleCloseExport] = useOpen();
 
   const handleChange = useCallback(
     (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
@@ -19,8 +21,6 @@ const CustomizeMenuContent = () => {
     },
     []
   );
-
-  const handleImExportClose = useCallback(() => setOpenImExport(''), []);
 
   return (
     <>
@@ -34,27 +34,21 @@ const CustomizeMenuContent = () => {
           <Button
             aria-label="Import custom data"
             startIcon={<GetAppIcon />}
-            onClick={() => setOpenImExport('import')}
+            onClick={() => handleOpenImport()}
           >
             Import
           </Button>
           <Button
             aria-label="Export custom data"
             startIcon={<ShareIcon />}
-            onClick={() => setOpenImExport('export')}
+            onClick={() => handleOpenExport()}
           >
             Export
           </Button>
         </ButtonGroup>
       </Box>
-      <ImportCustomData
-        open={openImExport === 'import'}
-        handleClose={handleImExportClose}
-      />
-      <ExportCustomData
-        open={openImExport === 'export'}
-        handleClose={handleImExportClose}
-      />
+      <ImportCustomData open={openImport} handleClose={handleCloseImport} />
+      <ExportCustomData open={openExport} handleClose={handleCloseExport} />
     </>
   );
 };

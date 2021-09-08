@@ -33,7 +33,7 @@ const TextInputDialog: React.FC<{
   onClose,
   onOpen,
 }) => {
-  const { open, handleOpen, handleClose } = useOpen(false, onOpen, onClose);
+  const [open, handleOpen, handleClose] = useOpen(false, onOpen, onClose);
   const [value, setValue] = React.useState('');
 
   const handleKeyPressed = (key: string) => {

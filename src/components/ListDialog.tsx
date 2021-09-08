@@ -17,7 +17,7 @@ const ListDialog: React.FC<{
   onClose?: () => void;
   onOpen?: () => void;
 }> = ({ anchor, action, options, title, onClose, onOpen }) => {
-  const { open, handleOpen, handleClose } = useOpen(false, onOpen, onClose);
+  const [open, handleOpen, handleClose] = useOpen(false, onOpen, onClose);
 
   const handleOnClick = (text: string) => {
     action(text);

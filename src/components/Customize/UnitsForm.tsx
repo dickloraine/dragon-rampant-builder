@@ -26,6 +26,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
+import useOpen from 'hooks/useOpen';
 import produce from 'immer';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -80,8 +81,7 @@ function UnitsForm(props: CustomFormProps<DataUnit>) {
   const isPhone = useMediaQuery(theme.breakpoints.down('xs'));
   const unit = initialState;
   const rules = useSelector((state: RootState) => state.data.rulesData);
-
-  const [optionsOpen, setOptionsOpen] = useState(false);
+  const [optionsOpen, handleOpenOptions, handleCloseOptions] = useOpen();
   const [currentOption, setCurrentOption] = useState<UnitOption>({ ...emptyOption });
   const [currentOptionName, setCurrentOptionName] = useState('Name');
   const selectProps = { unit: unit, changeState: changeState, isPhone: isPhone };
@@ -205,7 +205,7 @@ function UnitsForm(props: CustomFormProps<DataUnit>) {
                   onClick={() => {
                     setCurrentOption(unit.options[name]);
                     setCurrentOptionName(name);
-                    setOptionsOpen(true);
+                    handleOpenOptions();
                   }}
                 >
                   <EditIcon color="primary" />
@@ -235,7 +235,7 @@ function UnitsForm(props: CustomFormProps<DataUnit>) {
               onClick={() => {
                 setCurrentOption(emptyOption);
                 setCurrentOptionName('Name');
-                setOptionsOpen(true);
+                handleOpenOptions();
               }}
               startIcon={<AddCircleIcon />}
             >
@@ -245,7 +245,7 @@ function UnitsForm(props: CustomFormProps<DataUnit>) {
         </List>
         <OptionsForm
           open={optionsOpen}
-          handleClose={() => setOptionsOpen(false)}
+          handleClose={handleCloseOptions}
           name={currentOptionName}
           option={currentOption}
           unit={unit}

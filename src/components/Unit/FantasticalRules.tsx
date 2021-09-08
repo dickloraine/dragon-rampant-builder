@@ -21,7 +21,7 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
   unit,
   onChange,
 }) => {
-  const { open, handleOpen, handleClose } = useOpen();
+  const [open, handleOpen, handleClose] = useOpen();
   const fantasticalRulesData = useSelector(
     (state: RootState) => state.data.fantasticalRulesData
   );

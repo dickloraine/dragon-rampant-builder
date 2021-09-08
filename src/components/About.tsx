@@ -14,7 +14,7 @@ import React from 'react';
 import useOpen from '../hooks/useOpen';
 
 const About: React.FC<{ onClose?: () => void }> = ({ onClose = undefined }) => {
-  const { open, handleOpen, handleClose } = useOpen(false, undefined, onClose);
+  const [open, handleOpen, handleClose] = useOpen(false, undefined, onClose);
 
   return (
     <>

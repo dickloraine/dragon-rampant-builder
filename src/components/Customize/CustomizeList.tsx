@@ -33,7 +33,7 @@ export interface CustomizeListProps<T extends CustomDataElement> {
 
 function CustomizeList<T extends CustomDataElement>(props: CustomizeListProps<T>) {
   const { data, CustomForm, emptyState, removeFunc, addFunc } = props;
-  const { open, handleOpen, handleClose } = useOpen(false);
+  const [open, handleOpen, handleClose] = useOpen(false);
   const [state, setstate] = useState(emptyState);
   const [originalName, setOriginalName] = useState('');
 
