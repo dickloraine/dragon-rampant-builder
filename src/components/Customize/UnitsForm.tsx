@@ -5,13 +5,7 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
-  IconButton,
   InputLabel,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
   MenuItem,
   Select,
   Table,
@@ -23,9 +17,6 @@ import {
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import EditIcon from '@material-ui/icons/Edit';
 import useOpen from 'hooks/useOpen';
 import produce from 'immer';
 import React, { useState } from 'react';
@@ -33,6 +24,7 @@ import { useSelector } from 'react-redux';
 import { DataUnit, RootState, UnitOption, UnitStats } from 'store/types';
 import range from 'utils/range';
 import statData from 'utils/statData';
+import { ListWithItemActions } from '../ListWithItemActions';
 import { CustomFormProps } from './CustomizeList';
 import OptionsForm from './OptionsForm';
 
@@ -85,6 +77,26 @@ function UnitsForm(props: CustomFormProps<DataUnit>) {
   const [currentOption, setCurrentOption] = useState<UnitOption>({ ...emptyOption });
   const [currentOptionName, setCurrentOptionName] = useState('Name');
   const selectProps = { unit: unit, changeState: changeState, isPhone: isPhone };
+
+  const handleOptionEdit = (name: string) => {
+    setCurrentOption(unit.options[name]);
+    setCurrentOptionName(name);
+    handleOpenOptions();
+  };
+
+  const handleOptionDelete = (name: string) => {
+    changeState(
+      produce(unit, (draft) => {
+        delete draft.options[name];
+      })
+    );
+  };
+
+  const handleOptionAdd = () => {
+    setCurrentOption(emptyOption);
+    setCurrentOptionName('Name');
+    handleOpenOptions();
+  };
 
   return (
     <Dialog onClose={handleClose} open={open}>
@@ -196,53 +208,12 @@ function UnitsForm(props: CustomFormProps<DataUnit>) {
         <InputLabel id="options-label" style={{ marginTop: 15 }}>
           Options
         </InputLabel>
-        <List>
-          {Object.keys(unit.options).map((name) => (
-            <ListItem id={name} key={name}>
-              <ListItemIcon>
-                <IconButton
-                  aria-label="Edit"
-                  onClick={() => {
-                    setCurrentOption(unit.options[name]);
-                    setCurrentOptionName(name);
-                    handleOpenOptions();
-                  }}
-                >
-                  <EditIcon color="primary" />
-                </IconButton>
-              </ListItemIcon>
-              <ListItemText>{name}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton
-                  size="small"
-                  aria-label="Delete"
-                  onClick={() =>
-                    changeState(
-                      produce(unit, (draft) => {
-                        delete draft.options[name];
-                      })
-                    )
-                  }
-                >
-                  <DeleteForeverIcon color="action" />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
-          <ListItem id="add_fr" key="add_fr">
-            <Button
-              aria-label="Add option"
-              onClick={() => {
-                setCurrentOption(emptyOption);
-                setCurrentOptionName('Name');
-                handleOpenOptions();
-              }}
-              startIcon={<AddCircleIcon />}
-            >
-              Add option
-            </Button>
-          </ListItem>
-        </List>
+        <ListWithItemActions
+          data={unit.options}
+          handleClickActionOne={handleOptionEdit}
+          handleClickActionTwo={handleOptionDelete}
+          handleClickSpecialAction={handleOptionAdd}
+        />
         <OptionsForm
           open={optionsOpen}
           handleClose={handleCloseOptions}

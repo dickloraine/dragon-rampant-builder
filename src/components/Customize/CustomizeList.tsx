@@ -1,18 +1,7 @@
-import {
-  Button,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
-} from '@material-ui/core';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import EditIcon from '@material-ui/icons/Edit';
 import useOpen from 'hooks/useOpen';
 import React, { useState } from 'react';
 import { CustomDataElement } from 'store/types';
+import { ListWithItemActions } from '../ListWithItemActions';
 
 export interface CustomFormProps<T extends CustomDataElement> {
   open: boolean;
@@ -51,47 +40,26 @@ function CustomizeList<T extends CustomDataElement>(props: CustomizeListProps<T>
     }
   };
 
+  const handleEdit = (name: string) => {
+    setstate(data[name]);
+    setOriginalName(name);
+    handleOpen();
+  };
+
+  const handleAdd = () => {
+    setstate(emptyState);
+    setOriginalName('');
+    handleOpen();
+  };
+
   return (
-    <List>
-      {Object.keys(data).map((name) => (
-        <ListItem id={name} key={name}>
-          <ListItemIcon>
-            <IconButton
-              aria-label="Edit"
-              onClick={() => {
-                setstate(data[name]);
-                setOriginalName(name);
-                handleOpen();
-              }}
-            >
-              <EditIcon color="primary" />
-            </IconButton>
-          </ListItemIcon>
-          <ListItemText>{name}</ListItemText>
-          <ListItemSecondaryAction>
-            <IconButton
-              size="small"
-              aria-label="Delete"
-              onClick={() => removeFunc(name)}
-            >
-              <DeleteForeverIcon color="action" />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-      ))}
-      <ListItem id="add_fr" key="add_fr">
-        <Button
-          aria-label="Add"
-          startIcon={<AddCircleIcon color="secondary" />}
-          onClick={() => {
-            setstate(emptyState);
-            setOriginalName('');
-            handleOpen();
-          }}
-        >
-          Add new
-        </Button>
-      </ListItem>
+    <>
+      <ListWithItemActions
+        data={data}
+        handleClickActionOne={handleEdit}
+        handleClickActionTwo={removeFunc}
+        handleClickSpecialAction={handleAdd}
+      />
       <CustomForm
         open={open}
         handleClose={handleClose}
@@ -100,7 +68,7 @@ function CustomizeList<T extends CustomDataElement>(props: CustomizeListProps<T>
         changeState={setstate}
         validateName={validateName}
       />
-    </List>
+    </>
   );
 }
 
