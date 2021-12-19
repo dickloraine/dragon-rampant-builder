@@ -4,18 +4,17 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addUnit, moveUnit, renameUnit } from 'store/rosterSlice';
-import { AppDispatch, RootState, Unit } from 'store/types';
+import { AppDispatch, Unit } from 'store/types';
 import TextInputDialog from '../TextInputDialog';
 
 const Actions: React.FC<{ id: number; unit: Unit }> = ({ id, unit }) => {
   const dispatch: AppDispatch = useDispatch();
-  const roster = useSelector((state: RootState) => state.roster);
 
   const moveLeft = () => dispatch(moveUnit(id, 'left'));
   const moveRight = () => dispatch(moveUnit(id, 'right'));
-  const cloneUnit = () => dispatch(addUnit(unit, roster.unitOrder.indexOf(id)));
+  const cloneUnit = () => dispatch(addUnit(unit, id));
   const rename = (value: string) => dispatch(renameUnit(id, value));
 
   return (

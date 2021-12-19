@@ -6,8 +6,7 @@ import { Data, RosterState, RosterUnits, Thunk, Unit } from './types';
 const rosterInitialState: RosterState = {
   name: 'New List',
   nextID: 0,
-  units: {},
-  unitOrder: [],
+  units: [],
 };
 
 const rosterSlice = createSlice({
@@ -23,12 +22,7 @@ const rosterSlice = createSlice({
     _addUnit: (state: RosterState, action: PayloadAction<[Data, Unit?, number?]>) => {
       let [data, unit, index] = action.payload;
       unit = unit ? unit : { ...data.unitData.Unit, options: [], fantasticalRules: [] };
-      const id = state.nextID;
-      index == null
-        ? state.unitOrder.push(id)
-        : state.unitOrder.splice(index + 1, 0, id);
-      state.nextID += 1;
-      state.units[id] = unit;
+      index == null ? state.units.push(unit) : state.units.splice(index + 1, 0, unit);
     },
     _setUnit: (state, action: PayloadAction<[Data, number, string]>) => {
       const [data, id, name] = action.payload;
@@ -46,8 +40,7 @@ const rosterSlice = createSlice({
     },
     removeUnit: (state, action: PayloadAction<number>) => {
       const id = action.payload;
-      delete state.units[id];
-      state.unitOrder.splice(state.unitOrder.indexOf(id), 1);
+      state.units.splice(id, 1);
     },
     renameUnit: {
       reducer: (state, action: PayloadAction<[number, string]>) => {
@@ -60,13 +53,12 @@ const rosterSlice = createSlice({
     },
     moveUnit: {
       reducer: (state, action: PayloadAction<[number, 'left' | 'right']>) => {
-        const [id, direction] = action.payload;
-        const index = state.unitOrder.indexOf(id);
+        const [index, direction] = action.payload;
         const nextIndex = direction === 'left' ? index - 1 : index + 1;
-        if (nextIndex < 0 || nextIndex >= state.unitOrder.length) return state;
-        [state.unitOrder[nextIndex], state.unitOrder[index]] = [
-          state.unitOrder[index],
-          state.unitOrder[nextIndex],
+        if (nextIndex < 0 || nextIndex >= state.units.length) return state;
+        [state.units[nextIndex], state.units[index]] = [
+          state.units[index],
+          state.units[nextIndex],
         ];
       },
       prepare: (

@@ -14,7 +14,7 @@ import buildUnit from './Unit/buildUnit';
 import Unit from './Unit/Unit';
 
 const packRoster = (roster: RosterState): CompactRosterState => {
-  const units: CompactUnit[] = Object.values(roster.units).map((unit) => ({
+  const units: CompactUnit[] = roster.units.map((unit) => ({
     name: unit.name,
     customName: unit.customName || '',
     options: unit.options,
@@ -36,7 +36,7 @@ const Roster = () => {
   return (
     <>
       <Box display="flex" flexDirection="row" flexWrap="wrap">
-        {roster.unitOrder.map((id) => (
+        {roster.units.map((unit, id) => (
           <Unit id={id} key={id} />
         ))}
       </Box>

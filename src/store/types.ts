@@ -106,20 +106,18 @@ export type AppState = {
   customizeMode: boolean;
 };
 
-export type RosterUnits = { [id: number]: Unit };
+export type RosterUnits = Unit[];
 
 export type RosterState = {
   name: string;
   nextID: number;
   units: RosterUnits;
-  unitOrder: number[];
 };
 
 export type CompactRosterState = {
   name: string;
   nextID: number;
-  units: { [id: number]: CompactUnit };
-  unitOrder: number[];
+  units: CompactUnit[];
 };
 
 export type UIState = {
