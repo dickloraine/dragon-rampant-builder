@@ -1,31 +1,25 @@
-import { Fab, Hidden, Typography } from '@material-ui/core';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { getTotalPoints } from 'store/rosterSlice';
-import { RootState } from 'store/types';
+import { Fab, Typography } from '@mui/material';
+import { useAppSelector } from '../../hooks/reduxHooks';
+import { getTotalPoints } from '../../store/rosterSlice';
 
 const TotalPoints = () => {
-  const units = useSelector((state: RootState) => state.roster.units);
+  const units = useAppSelector((state) => state.roster.units);
   const armyCost = getTotalPoints(units);
 
   return (
     <>
-      <Hidden smDown>
-        <Typography variant="h6">
-          &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
-          <Fab color="secondary" size="small">
-            <Typography variant="h6">{armyCost}</Typography>
-          </Fab>
-        </Typography>
-      </Hidden>
-      <Hidden mdUp>
-        <Typography variant="h6">
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <Fab color="secondary" size="small">
-            <Typography variant="h6">{armyCost}</Typography>
-          </Fab>
-        </Typography>
-      </Hidden>
+      <Typography variant="h4" sx={{ display: { xs: 'none', md: 'block' } }}>
+        &nbsp;&nbsp;&nbsp;&nbsp;Total Points&nbsp;&nbsp;
+        <Fab color="secondary" size="small">
+          <Typography variant="h4">{armyCost}</Typography>
+        </Fab>
+      </Typography>
+      <Typography variant="h4" sx={{ display: { md: 'none', xs: 'block' } }}>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <Fab color="secondary" size="small">
+          <Typography variant="h4">{armyCost}</Typography>
+        </Fab>
+      </Typography>
     </>
   );
 };

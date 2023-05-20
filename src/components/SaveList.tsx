@@ -1,18 +1,17 @@
-import { IconButton, Tooltip, Typography } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
+import SaveIcon from '@mui/icons-material/Save';
+import { IconButton, Tooltip, Typography } from '@mui/material';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { showFeedback } from 'store/appStateSlice';
-import { rosterStore } from 'store/persistantStorage';
-import { AppDispatch, RootState } from 'store/types';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { showFeedback } from '../store/appStateSlice';
+import { rosterStore } from '../store/persistantStorage';
 import { packRoster } from './Roster';
 
 const SaveList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   onClose,
   showText,
 }) => {
-  const dispatch: AppDispatch = useDispatch();
-  const roster = useSelector((state: RootState) => state.roster);
+  const dispatch = useAppDispatch();
+  const roster = useAppSelector((state) => state.roster);
 
   const saveRoster = () => {
     if (roster.name === 'New List') {
@@ -31,16 +30,14 @@ const SaveList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
       });
   };
 
-  return (
-    <>
-      <Tooltip title="Save List">
-        <IconButton color="inherit" aria-label="Save List" onClick={saveRoster}>
-          <SaveIcon />
-        </IconButton>
-      </Tooltip>
-      {showText && <Typography onClick={saveRoster}>Save List</Typography>}
-    </>
-  );
+  return <>
+    <Tooltip title="Save List">
+      <IconButton color="inherit" aria-label="Save List" onClick={saveRoster} size="large">
+        <SaveIcon />
+      </IconButton>
+    </Tooltip>
+    {showText && <Typography onClick={saveRoster}>Save List</Typography>}
+  </>;
 };
 
 export default React.memo(SaveList);

@@ -5,17 +5,18 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-} from '@material-ui/core';
+} from '@mui/material';
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { showFeedback } from 'store/appStateSlice';
-import { importCustomData } from 'store/dataSlice';
+import { useAppDispatch } from '../../hooks/reduxHooks';
+import { showFeedback } from '../../store/appStateSlice';
+import { importCustomData } from '../../store/dataSlice';
+import { CustomData } from '../../store/types';
 
 const ImportCustomData: React.FC<{ open: boolean; handleClose: () => void }> = ({
   open,
   handleClose,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [value, setValue] = React.useState('');
 
   const handleImport = () => {
@@ -24,7 +25,7 @@ const ImportCustomData: React.FC<{ open: boolean; handleClose: () => void }> = (
       return;
     }
     try {
-      const data = JSON.parse(value);
+      const data: CustomData = JSON.parse(value) as CustomData;
       dispatch(importCustomData(data));
       dispatch(showFeedback('Custom data imported!', 'success'));
     } catch (err) {
@@ -48,6 +49,7 @@ const ImportCustomData: React.FC<{ open: boolean; handleClose: () => void }> = (
       <DialogTitle>Enter the import string</DialogTitle>
       <DialogContent>
         <TextField
+          variant="standard"
           autoFocus
           margin="normal"
           label="Import String"

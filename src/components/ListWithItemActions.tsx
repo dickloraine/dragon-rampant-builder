@@ -1,3 +1,6 @@
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Button,
   IconButton,
@@ -7,23 +10,20 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   SvgIconTypeMap,
-} from '@material-ui/core';
-import { OverridableComponent } from '@material-ui/core/OverridableComponent';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import EditIcon from '@material-ui/icons/Edit';
-import React, { FC } from 'react';
+} from '@mui/material';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
+import { FC } from 'react';
 
 interface ListWithItemActionsProps {
-  data: Object;
+  data: object;
   actionOneName?: string;
-  ActionOneIcon?: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
+  ActionOneIcon?: OverridableComponent<SvgIconTypeMap<object, 'svg'>>;
   handleClickActionOne: (name: string) => void;
   actionTwoName?: string;
-  ActionTwoIcon?: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
+  ActionTwoIcon?: OverridableComponent<SvgIconTypeMap<object, 'svg'>>;
   handleClickActionTwo: (name: string) => void;
   actionSpecialName?: string;
-  ActionSpecialIcon?: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
+  ActionSpecialIcon?: OverridableComponent<SvgIconTypeMap<object, 'svg'>>;
   handleClickSpecialAction: () => void;
 }
 
@@ -47,7 +47,7 @@ export const ListWithItemActions: FC<ListWithItemActionsProps> = ({
             <IconButton
               aria-label={actionOneName}
               onClick={() => handleClickActionOne(name)}
-            >
+              size="large">
               <ActionOneIcon color="primary" />
             </IconButton>
           </ListItemIcon>

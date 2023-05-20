@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close';
 import {
   Button,
   Card,
@@ -6,33 +7,30 @@ import {
   Chip,
   Collapse,
   Typography,
-} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+} from '@mui/material';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUnitNames } from 'store/dataSlice';
-import { removeUnit, setUnit, updateUnit } from 'store/rosterSlice';
-import { AppDispatch, RootState, Unit as UnitType } from 'store/types';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { removeUnit, updateUnit } from '../../store/rosterSlice';
+import { Unit as UnitType } from '../../store/types';
 import ExpandIcon from '../ExpandIcon';
 import Actions from './Actions';
-import buildUnit from './buildUnit';
 import FantasticalRules from './FantasticalRules';
 import Options from './Options';
 import SpecialRules from './SpecialRules';
+import Spells from './Spells';
 import StatBlock from './StatBlock';
+import Trait from './Trait';
 import UnitSelector from './UnitSelector';
+import buildUnit from './buildUnit';
 
 const Unit: React.FC<{ id: number }> = ({ id }) => {
-  const dispatch: AppDispatch = useDispatch();
-  const unit = useSelector((state: RootState) => state.roster.units[id]);
-  const viewMode = useSelector((state: RootState) => state.ui.viewMode);
-  const editMode = useSelector((state: RootState) => state.ui.editMode);
-  const unitNames = useSelector((state: RootState) => selectUnitNames(state));
+  const dispatch = useAppDispatch();
+  const unit = useAppSelector((state) => state.roster.units[id]);
+  const viewMode = useAppSelector((state) => state.ui.viewMode);
+  const editMode = useAppSelector((state) => state.ui.editMode);
 
   const [expanded, setExpanded] = React.useState(true);
   const handleExpandClick = () => setExpanded(!expanded);
-
-  const changeUnit = (name: string) => dispatch(setUnit(id, name));
 
   const handleChange = (unit: UnitType) => {
     unit = buildUnit(unit);
@@ -42,25 +40,21 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
   const handleRemove = () => dispatch(removeUnit(id));
 
   return (
-    <Card
-      style={{ marginBottom: 25, maxWidth: 400, width: '100%', position: 'relative' }}
-    >
+    <Card sx={{ mb: 3, maxWidth: 380, width: '100%', position: 'relative' }}>
       {viewMode ? (
         <CardHeader
           title={
             <>
-              <Typography variant="h5">
+              <Typography variant="h3">
                 <Chip label={unit.points} color="primary" />
                 &nbsp;&nbsp;
                 {unit.customName ? unit.customName : unit.name}
               </Typography>
               {unit.customName &&
                 (expanded ? (
-                  <Typography style={{ marginLeft: 45, marginBottom: -25 }}>
-                    {unit.name}
-                  </Typography>
+                  <Typography sx={{ ml: '45px', mb: -3 }}>{unit.name}</Typography>
                 ) : (
-                  <Typography style={{ marginLeft: 45 }}>{unit.name}</Typography>
+                  <Typography sx={{ ml: '45px' }}>{unit.name}</Typography>
                 ))}
             </>
           }
@@ -68,7 +62,7 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
         />
       ) : (
         <CardHeader
-          title={<UnitSelector unit={unit} onClose={changeUnit} options={unitNames} />}
+          title={<UnitSelector unit={unit} id={id} />}
           action={
             <Button onClick={handleRemove}>
               <CloseIcon />
@@ -84,6 +78,8 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
               <SpecialRules rules={unit.rules} />
             </>
           )}
+          <Trait onChange={handleChange} unit={unit} />
+          <Spells onChange={handleChange} unit={unit} />
           {!viewMode && (
             <>
               <Options onChange={handleChange} unit={unit} />

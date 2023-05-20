@@ -1,16 +1,16 @@
-import { IconButton, Tooltip, Typography } from '@material-ui/core';
-import RestorePageIcon from '@material-ui/icons/RestorePage';
+import RestorePageIcon from '@mui/icons-material/RestorePage';
+import { IconButton, Tooltip, Typography } from '@mui/material';
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { showFeedback, toggleForceInputUpdate } from 'store/appStateSlice';
-import { importCustomData } from 'store/dataSlice';
-import { rosterStore } from 'store/persistantStorage';
+import { useAppDispatch } from '../hooks/reduxHooks';
+import { showFeedback, toggleForceInputUpdate } from '../store/appStateSlice';
+import { importCustomData } from '../store/dataSlice';
+import { rosterStore } from '../store/persistantStorage';
 
 const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   showText,
   onClose,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   let fileReader: FileReader;
   const fileDialog = React.useRef<HTMLInputElement>(null);
@@ -18,9 +18,10 @@ const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   const restore = async () => {
     try {
       const content = fileReader.result as string;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const data: any = JSON.parse(content);
 
-      // check if the new format with customData is used
+      // eslint-disable-next-line no-prototype-builtins
       if (data.hasOwnProperty('rosters')) {
         await Promise.all(
           Object.entries(data.rosters).map(([key, val]) =>
@@ -28,12 +29,6 @@ const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
           )
         );
         dispatch(importCustomData(data.customData));
-      }
-      // old data
-      else {
-        await Promise.all(
-          Object.entries(data).map(([key, val]) => rosterStore.setItem(key, val))
-        );
       }
       dispatch(toggleForceInputUpdate());
       dispatch(showFeedback(`Restored!`, 'success'));
@@ -54,24 +49,22 @@ const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
     if (fileDialog.current) fileDialog.current.click();
   };
 
-  return (
-    <>
-      <Tooltip title="Backup">
-        <IconButton color="inherit" onClick={openFileDialog}>
-          <RestorePageIcon />
-        </IconButton>
-      </Tooltip>
-      {showText && <Typography onClick={openFileDialog}>Restore</Typography>}
-      <input
-        type="file"
-        ref={fileDialog}
-        style={{ display: 'none' }}
-        id="restoreFile"
-        accept=".sav"
-        onChange={handleFileChosen}
-      />
-    </>
-  );
+  return <>
+    <Tooltip title="Backup">
+      <IconButton color="inherit" onClick={openFileDialog} size="large">
+        <RestorePageIcon />
+      </IconButton>
+    </Tooltip>
+    {showText && <Typography onClick={openFileDialog}>Restore</Typography>}
+    <input
+      type="file"
+      ref={fileDialog}
+      style={{ display: 'none' }}
+      id="restoreFile"
+      accept=".sav"
+      onChange={handleFileChosen}
+    />
+  </>;
 };
 
 export default React.memo(Restore);

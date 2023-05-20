@@ -1,64 +1,118 @@
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
+  Box,
   Checkbox,
   FormControl,
   FormControlLabel,
-  FormGroup,
   FormLabel,
+  Input,
+  ListItemText,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Tooltip,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, Unit } from 'store/types';
+import { useAppSelector } from '../../hooks/reduxHooks';
+import useOpen from '../../hooks/useOpen';
+import { Unit } from '../../store/types';
 
 const Options: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
   unit,
   onChange,
 }) => {
-  const optionsData = useSelector(
-    (state: RootState) => state.data.unitData[unit.name].options
-  );
+  const [open, handleOpen, handleClose] = useOpen();
+  const optionsData = useAppSelector((state) => state.data.unitData[unit.name].options);
+  const inlineRules = useAppSelector((state) => state.ui.inlineRules);
+
   if (!optionsData || !Object.keys(optionsData).length) return <div></div>;
 
-  const handleChange = (option: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    let newUnit = { ...unit };
-
-    if (e.target.checked) {
-      newUnit.options = [...newUnit.options, option];
-    } else {
-      newUnit.options = newUnit.options.filter((val) => val !== option);
-    }
-
-    onChange(newUnit);
-  };
+  const handleChange = (e: SelectChangeEvent<string[]>) =>
+    onChange({ ...unit, options: [...e.target.value] });
 
   return (
-    <FormControl component="fieldset" style={{ marginTop: 10 }}>
-      <FormLabel component="legend">Options</FormLabel>
-      <FormGroup>
-        {Object.keys(optionsData).map((option) => (
+    <>
+      <FormLabel onClick={handleOpen} component="legend">
+        Options
+        <ArrowDropDownIcon sx={{ pt: '5px' }} />
+      </FormLabel>
+      {unit.options.map((name) => (
+        <div key={name}>
           <FormControlLabel
             control={
               <Checkbox
-                onChange={handleChange(option)}
-                checked={unit.options.includes(option)}
+                checked={true}
+                onChange={() =>
+                  onChange({
+                    ...unit,
+                    options: [...unit.options.filter((v) => v !== name)],
+                  })
+                }
               />
             }
             label={
-              <Tooltip title={optionsData[option].summary || ''}>
+              <Tooltip title={optionsData[name].description}>
                 <Typography>
-                  {option}{' '}
+                  {name}{' '}
                   <Typography color="secondary" component="span">
-                    @{optionsData[option].points}
+                    @{optionsData[name].points}
                   </Typography>
                 </Typography>
               </Tooltip>
             }
-            key={option}
+            key={name}
           />
-        ))}
-      </FormGroup>
-    </FormControl>
+        </div>
+      ))}
+      <FormControl variant="standard" sx={{ m: 0, width: 0, height: 0 }}>
+        <Select
+          variant="standard"
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          IconComponent={() => <Box />}
+          multiple
+          value={unit.options}
+          onChange={handleChange}
+          input={<Input />}
+          renderValue={() => ' '}
+        >
+          {Object.keys(optionsData).map((name) => (
+            <MenuItem
+              key={name}
+              value={name}
+              dense
+              sx={{ maxWidth: 380 }}
+              disabled={
+                optionsData[name].disabledBy?.some((x) => unit.options.includes(x)) ||
+                (optionsData[name].enabledBy &&
+                  !optionsData[name].enabledBy?.some((x) => unit.options.includes(x)))
+              }
+            >
+              <Tooltip title={optionsData[name].description}>
+                <ListItemText
+                  primary={
+                    <Typography
+                      variant="body2"
+                      color={unit.options.indexOf(name) > -1 ? 'primary' : 'inherit'}
+                    >
+                      {name}{' '}
+                      <Typography color="secondary" variant="body2" component="span">
+                        @{optionsData[name].points}
+                      </Typography>
+                    </Typography>
+                  }
+                  secondary={(inlineRules && optionsData[name]?.short) || ''}
+                  secondaryTypographyProps={{ sx: { whiteSpace: 'normal' } }}
+                  sx={{ m: 0 }}
+                />
+              </Tooltip>
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </>
   );
 };
 

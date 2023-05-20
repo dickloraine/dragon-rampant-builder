@@ -9,7 +9,7 @@ export type UnitStats = {
   move: number;
   shoot: number;
   courage: number;
-  armour: number;
+  armor: number;
   attackValue: number;
   defenceValue: number;
   shootValue: number;
@@ -19,14 +19,19 @@ export type UnitStats = {
 };
 
 export type UnitOption = {
+  name: string;
+  description: string;
   points?: number;
-  summary?: string;
+  short?: string;
   remove?: string[];
   add?: string[];
   setStats?: Partial<UnitStats>;
+  adjustStats?: Partial<UnitStats>;
+  disabledBy?: string[];
+  enabledBy?: string[];
 };
 
-type UnitOptions = { [optionName: string]: UnitOption };
+export type UnitOptions = { [optionName: string]: UnitOption };
 
 interface BaseUnit {
   name: string;
@@ -36,6 +41,8 @@ interface BaseUnit {
   rules: string[];
   fantasticalRules: string[];
   customName?: string;
+  spells?: string[];
+  trait?: string;
 }
 
 export interface Unit extends BaseUnit {
@@ -51,6 +58,8 @@ export interface CompactUnit {
   options: string[];
   fantasticalRules: string[];
   customName?: string;
+  spells?: string[];
+  trait?: string;
 }
 
 export type FantasticalRule = {
@@ -58,11 +67,15 @@ export type FantasticalRule = {
   points: number;
   exclude_units: string[];
   description: string;
+  short?: string;
+  setStats?: Partial<UnitStats>;
+  adjustStats?: Partial<UnitStats>;
 };
 
 export type Rule = {
   name: string;
   description: string;
+  short?: string;
 };
 
 export type Spell = {
@@ -71,12 +84,21 @@ export type Spell = {
   target: string;
   duration: string;
   effect: string;
+  short?: string;
 };
 
-type Units = { [name: string]: DataUnit };
-type FantasticalRules = { [name: string]: FantasticalRule };
-type Rules = { [name: string]: Rule };
-type Spells = { [name: string]: Spell };
+export type Trait = {
+  name: string;
+  roll: number;
+  description: string;
+  short?: string;
+};
+
+export type Units = { [name: string]: DataUnit };
+export type FantasticalRules = { [name: string]: FantasticalRule };
+export type Rules = { [name: string]: Rule };
+export type Spells = { [name: string]: Spell };
+export type Traits = { [name: string]: Trait };
 
 export type CustomDataElement = DataUnit | FantasticalRule | Rule | Spell;
 
@@ -84,10 +106,11 @@ export interface CustomData {
   unitData: Units;
   fantasticalRulesData: FantasticalRules;
   rulesData: Rules;
-  spellData: Spells;
+  spells: Spells;
 }
 
 export interface Data extends CustomData {
+  traits: Traits;
   customData: CustomData;
 }
 
@@ -110,22 +133,22 @@ export type RosterUnits = Unit[];
 
 export type RosterState = {
   name: string;
-  nextID: number;
   units: RosterUnits;
 };
 
 export type CompactRosterState = {
   name: string;
-  nextID: number;
   units: CompactUnit[];
 };
 
 export type UIState = {
   viewMode: boolean;
   editMode: boolean;
+  inlineRules: boolean;
   darkMode: null | boolean;
   validationExpanded: boolean;
   rulesSummaryExpanded: boolean;
-  spellsExpanded: boolean;
+  campaignExpanded: boolean;
+  powersExpanded: boolean;
   statisticsExpanded: boolean;
 };

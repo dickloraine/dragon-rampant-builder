@@ -4,11 +4,12 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit';
-import fantasticalRulesData from 'assets/dragonRampantData/fantasticalRules.json';
-import rulesData from 'assets/dragonRampantData/rules.json';
-import spellData from 'assets/dragonRampantData/spells.json';
-import unitData from 'assets/dragonRampantData/units.json';
 import produce from 'immer';
+import { fantasticalRulesData } from '../assets/dragonRampantData/fantasticalRules';
+import { rulesData } from '../assets/dragonRampantData/rules';
+import { spells } from '../assets/dragonRampantData/spells';
+import { traitData } from '../assets/dragonRampantData/traits';
+import { unitsData } from '../assets/dragonRampantData/units';
 import { dataStore } from './persistantStorage';
 import {
   CustomData,
@@ -26,14 +27,15 @@ export const getEmptyCustomData = (): CustomData => ({
   unitData: {},
   fantasticalRulesData: {},
   rulesData: {},
-  spellData: {},
+  spells: {},
 });
 
 const initialData: Data = {
-  unitData: unitData,
+  unitData: unitsData,
   fantasticalRulesData: fantasticalRulesData,
   rulesData: rulesData,
-  spellData: spellData,
+  spells: spells,
+  traits: traitData,
   customData: getEmptyCustomData(),
 };
 
@@ -64,7 +66,8 @@ const dataSlice = createSlice({
           ...customData.fantasticalRulesData,
         },
         rulesData: { ...initialData.rulesData, ...customData.rulesData },
-        spellData: { ...initialData.spellData, ...customData.spellData },
+        spells: { ...initialData.spells, ...customData.spells },
+        traits: { ...initialData.traits },
         customData: customData,
       };
     });
@@ -131,8 +134,8 @@ export const addFantasticalRule =
   addAndDispatch<FantasticalRule>('fantasticalRulesData');
 export const removeFantasticalRule = removeAndDispatch('fantasticalRulesData');
 
-export const addSpell = addAndDispatch<Spell>('spellData');
-export const removeSpell = removeAndDispatch('spellData');
+export const addSpell = addAndDispatch<Spell>('spells');
+export const removeSpell = removeAndDispatch('spells');
 
 export const addRule = addAndDispatch<Rule>('rulesData');
 export const removeRule = removeAndDispatch('rulesData');

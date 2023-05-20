@@ -1,10 +1,10 @@
-import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { showFeedback, toggleForceInputUpdate } from 'store/appStateSlice';
-import { rosterStore } from 'store/persistantStorage';
-import { setRoster } from 'store/rosterSlice';
-import { CompactRosterState } from 'store/types';
+import { useAppDispatch } from '../hooks/reduxHooks';
+import { showFeedback, toggleForceInputUpdate } from '../store/appStateSlice';
+import { rosterStore } from '../store/persistantStorage';
+import { setRoster } from '../store/rosterSlice';
+import { CompactRosterState } from '../store/types';
 import ListDialogMenu from './ListDialogMenu';
 import { unpackRoster } from './Roster';
 
@@ -12,7 +12,7 @@ const LoadList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   onClose,
   showText,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [savedRosters, setSavedRosters] = useState<string[]>([]);
 
   const handleOpen = () => rosterStore.keys().then((keys) => setSavedRosters(keys));
@@ -20,6 +20,7 @@ const LoadList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   const loadList = async (name: string) => {
     try {
       const compactRoster = await rosterStore.getItem<CompactRosterState>(name);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const roster = unpackRoster(compactRoster!);
       dispatch(setRoster({ ...roster }));
       dispatch(toggleForceInputUpdate());

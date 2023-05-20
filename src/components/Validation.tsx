@@ -1,3 +1,4 @@
+import { Error, ExpandMore } from '@mui/icons-material';
 import {
   Accordion,
   AccordionDetails,
@@ -7,56 +8,80 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import ErrorIcon from '@material-ui/icons/Error';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/types';
-import { toggleUIOption } from 'store/uiSlice';
-
-const useStyles = makeStyles((theme) => ({
-  title: {
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.error.contrastText,
-  },
-  details: {
-    backgroundColor: theme.palette.error.light,
-    color: theme.palette.error.contrastText,
-  },
-}));
+} from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { toggleUIOption } from '../store/uiSlice';
 
 const Validation = () => {
-  const dispatch = useDispatch();
-  const validationExpanded = useSelector(
-    (state: RootState) => state.ui.validationExpanded
-  );
-  const classes = useStyles();
-  const units = Object.values(useSelector((state: RootState) => state.roster.units));
+  const dispatch = useAppDispatch();
+  const validationExpanded = useAppSelector((state) => state.ui.validationExpanded);
+  const units = Object.values(useAppSelector((state) => state.roster.units));
 
   const warnings = [];
   for (const unit of units) {
-    if (unit.points > 10)
-      warnings.push([unit.name, 'No Unit may cost more than 10 points!']);
-    if (unit.name !== 'Unit' && unit.points <= 0)
-      warnings.push([unit.name, 'No Unit may cost 0 or less points!']);
+    const isPsycher = !unit.fantasticalRules.some((x) =>
+      ['Psychic 1', 'Psychic 2', 'Psychic 3', 'Psychic 4'].includes(x)
+    );
+    if (unit.points > 12)
+      warnings.push([unit.name, 'No Unit may cost more than 12 points!']);
+    if (unit.name !== 'Unit' && unit.points < 1)
+      warnings.push([unit.name, 'No Unit may cost less than one point!']);
     if (
-      unit.options.includes('Short range missiles') &&
-      unit.options.includes('Mixed Weapons')
+      unit.fantasticalRules.includes('Fanatical Discipline') &&
+      unit.stats.courage < 3
+    )
+      warnings.push([unit.name, 'This unit can´t have less than 3 courage!']);
+    if (
+      unit.fantasticalRules.includes('Hive Mind') &&
+      unit.fantasticalRules.includes('Commander')
+    )
+      warnings.push([unit.name, 'A Commander can´t have Hive Mind!']);
+    if (unit.fantasticalRules.includes('Slow') && unit.options.includes('Mobile'))
+      warnings.push([unit.name, 'Slow and Mobile can´t be used together!']);
+    if (
+      unit.fantasticalRules.includes('Contagious') &&
+      !(
+        unit.fantasticalRules.includes('Demonic') ||
+        unit.fantasticalRules.includes('Undead')
+      )
     )
       warnings.push([
         unit.name,
-        'Short range missiles and Mixed Weapons may not be used together!',
+        'Conatagious can only be taken by demonic or undead units!',
       ]);
+    if (unit.fantasticalRules.includes('Psychic Hazards') && !isPsycher)
+      warnings.push([unit.name, 'Only a psychic unit can take Psychic Hazards!']);
     if (
-      unit.fantasticalRules.includes('Unstoppable March of the Dead') &&
-      !unit.fantasticalRules.includes('Leader')
+      (unit.fantasticalRules.includes('Psychic Species 1') ||
+        unit.fantasticalRules.includes('Psychic Species 2') ||
+        unit.fantasticalRules.includes('Psychic Species 3')) &&
+      !isPsycher
     )
-      warnings.push([
-        unit.name,
-        'Only a leader can take "Unstoppable March of the Dead"',
-      ]);
+      warnings.push([unit.name, 'Only a psychic unit can take Psychic Species!']);
+    if (
+      unit.fantasticalRules.includes('Psychic 1') &&
+      unit.spells &&
+      unit.spells.length > 1
+    )
+      warnings.push([unit.name, 'A Psychic 1 unit can only take 1 Psychic Power!']);
+    if (
+      unit.fantasticalRules.includes('Psychic 2') &&
+      unit.spells &&
+      unit.spells.length > 2
+    )
+      warnings.push([unit.name, 'A Psychic 2 unit can only take 2 Psychic Powers!']);
+    if (
+      unit.fantasticalRules.includes('Psychic 3') &&
+      unit.spells &&
+      unit.spells.length > 3
+    )
+      warnings.push([unit.name, 'A Psychic 3 unit can only take 3 Psychic Powers!']);
+    if (
+      unit.fantasticalRules.includes('Psychic 4') &&
+      unit.spells &&
+      unit.spells.length > 3
+    )
+      warnings.push([unit.name, 'A Psychic 4 unit can only take 3 Psychic Powers!']);
   }
 
   return (
@@ -65,20 +90,22 @@ const Validation = () => {
         <Accordion
           expanded={validationExpanded}
           onChange={() => dispatch(toggleUIOption('validationExpanded'))}
-          style={{ maxWidth: 1210 }}
+          sx={{ maxWidth: 'breakpoints.values.lg' }}
         >
           <AccordionSummary
-            className={classes.title}
-            expandIcon={<ExpandMoreIcon className={classes.title} />}
+            sx={{ backgroundColor: 'error.main', color: 'error.contrastText' }}
+            expandIcon={<ExpandMore sx={{ color: 'error.contrastText' }} />}
           >
-            <Typography variant="h5">Warnings</Typography>
+            <Typography variant="h3">Warnings</Typography>
           </AccordionSummary>
-          <AccordionDetails className={classes.details}>
+          <AccordionDetails
+            sx={{ backgroundColor: 'error.light', color: 'error.contrastText' }}
+          >
             <List>
               {warnings.map(([name, text], index) => (
                 <ListItem key={index}>
-                  <ListItemIcon className={classes.details}>
-                    <ErrorIcon />
+                  <ListItemIcon sx={{ color: 'error.contrastText' }}>
+                    <Error />
                   </ListItemIcon>
                   <ListItemText primary={name} secondary={text} />
                 </ListItem>

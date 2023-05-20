@@ -1,15 +1,9 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-} from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import React from 'react';
-import { UnitStats } from 'store/types';
-import statData from 'utils/statData';
+import { UnitStats } from '../../store/types';
+import statData from '../../utils/statData';
 
 const StatCells: React.FC<{
   stat: keyof UnitStats;
@@ -28,15 +22,20 @@ const StatCells: React.FC<{
   );
 };
 
-const StatBlock: React.FC<{ stats: UnitStats }> = ({ stats }) => {
+const StatBlock: React.FC<{
+  stats: UnitStats;
+}> = ({ stats }) => {
   const theme = useTheme();
-  const isPhone = useMediaQuery(theme.breakpoints.down('xs'));
-  const cellProps = { stats: stats, isPhone: isPhone };
+  const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
+  const cellProps = {
+    stats: stats,
+    isPhone: isPhone,
+  };
 
-  let shootingValue = stats.shoot ? `${stats.shootValue}+/${stats.shootRange}"` : '-';
+  const shootingValue = stats.shoot ? `${stats.shootValue}+/${stats.shootRange}"` : '-';
 
   return (
-    <TableContainer style={{ marginBottom: 20 }}>
+    <TableContainer sx={{ mb: 2 }}>
       <Table size="small">
         <TableBody>
           <TableRow>
@@ -56,7 +55,7 @@ const StatBlock: React.FC<{ stats: UnitStats }> = ({ stats }) => {
             <StatCells stat="movement" {...cellProps} />
           </TableRow>
           <TableRow>
-            <StatCells stat="armour" {...cellProps} />
+            <StatCells stat="armor" {...cellProps} />
             <StatCells stat="strengthPoints" {...cellProps} />
           </TableRow>
         </TableBody>

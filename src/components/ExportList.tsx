@@ -1,13 +1,12 @@
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
-import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
-import ShareIcon from '@material-ui/icons/Share';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
+import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
+import ShareIcon from '@mui/icons-material/Share';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { showFeedback } from 'store/appStateSlice';
-import { getTotalPoints } from 'store/rosterSlice';
-import { AppDispatch, RootState } from 'store/types';
-import copyToClipboard from 'utils/copyToClipboard';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { showFeedback } from '../store/appStateSlice';
+import { getTotalPoints } from '../store/rosterSlice';
+import copyToClipboard from '../utils/copyToClipboard';
 import ListDialogMenu from './ListDialogMenu';
 import { packRoster } from './Roster';
 
@@ -15,14 +14,14 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   onClose,
   showText,
 }) => {
-  const dispatch: AppDispatch = useDispatch();
-  const roster = useSelector((state: RootState) => state.roster);
+  const dispatch = useAppDispatch();
+  const roster = useAppSelector((state) => state.roster);
+  const units = useAppSelector((state) => state.roster.units);
   const getImportableString = () => JSON.stringify(packRoster(roster));
-  const units = useSelector((state: RootState) => state.roster.units);
   const armyCost = getTotalPoints(units);
 
   const getListAsText = () => {
-    let text: string[] = [];
+    const text: string[] = [];
     text.push(`${roster.name} @${armyCost} points`);
     text.push('=====================================');
     for (const unit of Object.values(roster.units)) {
@@ -32,11 +31,10 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
           unit.points
         } points`
       );
-      text.push('-----------------------------------');
 
       const options = [...unit.options, ...unit.fantasticalRules];
       if (options.length) {
-        for (const option of options) text.push(`- ${option}`);
+        for (const option of options) text.push(`  - ${option}`);
       }
     }
     text.push('');
@@ -44,14 +42,14 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   };
 
   const getListAsMarkdown = () => {
-    let text: string[] = [];
-    text.push(`**${roster.name} @${armyCost} points**`);
+    const text: string[] = [];
+    text.push(`**${roster.name} --- ${armyCost} points**`);
     for (const unit of Object.values(roster.units)) {
       text.push('');
       text.push(
-        `* ${unit.customName ? unit.customName + ' (' + unit.name + ')' : unit.name} @${
-          unit.points
-        } points`
+        `* ${
+          unit.customName ? unit.customName + ' (' + unit.name + ')' : unit.name
+        } -- ${unit.points} points`
       );
 
       const options = [...unit.options, ...unit.fantasticalRules];
@@ -73,7 +71,7 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   const funcs = [getImportableString, getListAsText, getListAsMarkdown];
 
   const exportList = (text: string) => {
-    let exportFunc: () => string =
+    const exportFunc: () => string =
       funcs[options.reduce((acc, opt, i) => (opt[0] === text ? i : acc), 0)];
 
     try {

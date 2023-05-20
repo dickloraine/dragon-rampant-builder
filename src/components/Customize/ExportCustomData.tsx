@@ -11,14 +11,14 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
-} from '@material-ui/core';
+} from '@mui/material';
 import produce from 'immer';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { showFeedback } from 'store/appStateSlice';
-import { getEmptyCustomData } from 'store/dataSlice';
-import { CustomData, RootState } from 'store/types';
-import copyToClipboard from 'utils/copyToClipboard';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { showFeedback } from '../../store/appStateSlice';
+import { getEmptyCustomData } from '../../store/dataSlice';
+import { CustomData, RootState } from '../../store/types';
+import copyToClipboard from '../../utils/copyToClipboard';
 
 const DataGroup: React.FC<{
   data: CustomData;
@@ -75,8 +75,8 @@ const ExportCustomData: React.FC<{ open: boolean; handleClose: () => void }> = (
   handleClose,
 }) => {
   const [data, setData] = React.useState(getEmptyCustomData());
-  const customData = useSelector((state: RootState) => state.data.customData);
-  const dispatch = useDispatch();
+  const customData = useAppSelector((state: RootState) => state.data.customData);
+  const dispatch = useAppDispatch();
 
   const selectAll = () => setData(customData);
   const selectNone = () => setData(getEmptyCustomData());
@@ -103,7 +103,7 @@ const ExportCustomData: React.FC<{ open: boolean; handleClose: () => void }> = (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Export custom data</DialogTitle>
       <DialogContent>
-        <FormControl>
+        <FormControl variant="standard">
           {somethingToSelect && (
             <Box mb={1}>
               <ButtonGroup size="small" color="primary" variant="text">
@@ -119,7 +119,7 @@ const ExportCustomData: React.FC<{ open: boolean; handleClose: () => void }> = (
             type="fantasticalRulesData"
             {...groupProps}
           />
-          <DataGroup label="Spells" type="spellData" {...groupProps} />
+          <DataGroup label="Psychic Powers" type="spells" {...groupProps} />
         </FormControl>
       </DialogContent>
       <DialogActions>

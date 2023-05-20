@@ -1,16 +1,17 @@
-import { IconButton, Tooltip } from '@material-ui/core';
+import { IconButton, SvgIconTypeMap, Tooltip } from '@mui/material';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, UIState } from 'store/types';
-import { updateUI } from 'store/uiSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { UIState } from '../../store/types';
+import { updateUI } from '../../store/uiSlice';
 
 const ToggleViewMode: React.FC<{
   option: keyof UIState;
-  Icon: any;
+  Icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>>;
   title: string;
 }> = ({ option, Icon, title }) => {
-  const optionState = useSelector((state: RootState) => state.ui[option]);
-  const dispatch = useDispatch();
+  const optionState = useAppSelector((state) => state.ui[option]);
+  const dispatch = useAppDispatch();
 
   const changeViewMode = () => {
     const notClicked = option === 'viewMode' ? 'editMode' : 'viewMode';
@@ -21,7 +22,7 @@ const ToggleViewMode: React.FC<{
 
   return (
     <Tooltip title={title}>
-      <IconButton color="inherit" aria-label={title} onClick={changeViewMode}>
+      <IconButton color="inherit" aria-label={title} onClick={changeViewMode} size="large">
         <Icon fontSize="small" color={optionState ? 'inherit' : 'disabled'} />
       </IconButton>
     </Tooltip>

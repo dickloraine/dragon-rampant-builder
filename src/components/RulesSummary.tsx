@@ -1,3 +1,4 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
   AccordionDetails,
@@ -6,41 +7,30 @@ import {
   ListItem,
   ListItemText,
   Typography,
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectAllRules } from 'store/dataSlice';
-import { getSpecialRules } from 'store/rosterSlice';
-import { RootState } from 'store/types';
-import { toggleUIOption } from 'store/uiSlice';
+} from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { getSpecialRules } from '../store/rosterSlice';
+import { toggleUIOption } from '../store/uiSlice';
 
 const RulesSummary = () => {
-  const dispatch = useDispatch();
-  const rulesData = useSelector((state: RootState) => selectAllRules(state));
-  const rulesSummaryExpanded = useSelector(
-    (state: RootState) => state.ui.rulesSummaryExpanded
-  );
-  const units = useSelector((state: RootState) => state.roster.units);
-  const specialRules = getSpecialRules(units);
+  const dispatch = useAppDispatch();
+  const rulesSummaryExpanded = useAppSelector((state) => state.ui.rulesSummaryExpanded);
+  const specialRules = useAppSelector((state) => getSpecialRules(state));
 
   return (
     <Accordion
       expanded={rulesSummaryExpanded}
       onChange={() => dispatch(toggleUIOption('rulesSummaryExpanded'))}
-      style={{ maxWidth: 1210 }}
+      sx={{ maxWidth: 1210 }}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography variant="h5">Rules Summary</Typography>
+        <Typography variant="h3">Rules Summary</Typography>
       </AccordionSummary>
-      <AccordionDetails style={{ maxWidth: 800 }}>
+      <AccordionDetails sx={{ maxWidth: 800 }}>
         <List>
-          {specialRules.map((rule) => (
-            <ListItem key={rule}>
-              <ListItemText
-                primary={rule}
-                secondary={rulesData[rule].description || ''}
-              />
+          {Object.values(specialRules).map((rule) => (
+            <ListItem key={rule.name}>
+              <ListItemText primary={rule.name} secondary={rule.description || ''} />
             </ListItem>
           ))}
         </List>

@@ -1,11 +1,18 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { selectAllRules } from 'store/dataSlice';
-import store from './store';
-import { Data, RosterState, RosterUnits, Thunk, Unit } from './types';
+import { selectAllRules } from '../store/dataSlice';
+import {
+  Data,
+  RootState,
+  RosterState,
+  RosterUnits,
+  Rules,
+  Spells,
+  Thunk,
+  Unit,
+} from './types';
 
 const rosterInitialState: RosterState = {
   name: 'New List',
-  nextID: 0,
   units: [],
 };
 
@@ -19,7 +26,9 @@ const rosterSlice = createSlice({
       ...state,
       ...action.payload,
     }),
+    /* ------------------------------------ Units ------------------------------------ */
     _addUnit: (state: RosterState, action: PayloadAction<[Data, Unit?, number?]>) => {
+      // eslint-disable-next-line prefer-const
       let [data, unit, index] = action.payload;
       unit = unit ? unit : { ...data.unitData.Unit, options: [], fantasticalRules: [] };
       index == null ? state.units.push(unit) : state.units.splice(index + 1, 0, unit);
@@ -85,33 +94,55 @@ export const setUnit =
     dispatch(_setUnit([data, id, name]));
   };
 
-const getTotalPoints = createSelector(
+export const getTotalPoints = createSelector(
   (units: RosterUnits) => units,
   (units) => Object.values(units).reduce((acc, unit) => acc + unit.points, 0)
 );
 
-const getSpecialRules = createSelector(
-  (units: RosterUnits) => units,
-  (units) => {
-    const rulesData = selectAllRules(store.getState());
-    return Object.values(units)
-      .reduce(
-        (acc: string[], unit) =>
-          unit.rules.reduce(
-            (acc, rule) =>
-              rulesData[rulesData[rule].description]
-                ? [...acc, rulesData[rule].description]
-                : [...acc, rule],
-            acc
-          ),
-        []
-      )
-      .sort()
-      .filter((rule, index, ary) => !index || rule !== ary[index - 1]);
+export const getSpecialRules = createSelector(
+  (state: RootState) => state.roster.units,
+  (state: RootState) => selectAllRules(state),
+  (units, rulesData) => {
+    const unique_rules = new Set<string>();
+    units.forEach((unit) =>
+      unit.rules.forEach((ruleName) => unique_rules.add(ruleName))
+    );
+
+    return [...unique_rules].sort().reduce(
+      (acc: Rules, ruleName) =>
+        rulesData[ruleName]
+          ? {
+              ...acc,
+              [ruleName]: rulesData[ruleName],
+            }
+          : acc,
+      {}
+    );
   }
 );
 
-export { getTotalPoints, getSpecialRules };
+export const getSpells = createSelector(
+  (state: RootState) => state.roster.units,
+  (state: RootState) => state.data.spells,
+  (units, rulesData) => {
+    if (units.some(unit => unit.fantasticalRules.includes("Spellcaster"))) {
+      return rulesData
+    }
+
+    const unique_powers = new Set<string>();
+    units.forEach((unit) =>
+      unit.spells?.forEach((powerName) => unique_powers.add(powerName))
+    );
+
+    return [...unique_powers].sort().reduce(
+      (acc: Spells, powerName) => ({
+        ...acc,
+        [powerName]: rulesData[powerName],
+      }),
+      {}
+    );
+  }
+);
 
 export const {
   newRoster,

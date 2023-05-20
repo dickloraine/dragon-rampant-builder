@@ -1,5 +1,5 @@
-import store from 'store/store';
-import { CompactUnit, Unit } from 'store/types';
+import store from '../../store/store';
+import { CompactUnit, Unit, UnitStats } from '../../store/types';
 
 const buildUnit = (unitToBuild: CompactUnit | Unit) => {
   const unitData = store.getState().data.unitData[unitToBuild.name];
@@ -10,9 +10,12 @@ const buildUnit = (unitToBuild: CompactUnit | Unit) => {
     customName: unitToBuild.customName || '',
     options: [...unitToBuild.options],
     fantasticalRules: [...unitToBuild.fantasticalRules],
+    spells: unitToBuild.spells || [],
+    trait: unitToBuild.trait,
   };
 
   let points = unitData.points;
+  let statsToAdjust: Partial<UnitStats> = {};
   for (const opt of unit.options) {
     const option = unitData.options[opt];
     points += option.points || 0;
@@ -21,6 +24,10 @@ const buildUnit = (unitToBuild: CompactUnit | Unit) => {
       for (const [key, val] of Object.entries(option.setStats)) {
         unit = { ...unit, stats: { ...unit.stats, [key]: val } };
       }
+    }
+
+    if (option.adjustStats) {
+      statsToAdjust = { ...statsToAdjust, ...option.adjustStats };
     }
 
     if (option.add) {
@@ -35,12 +42,40 @@ const buildUnit = (unitToBuild: CompactUnit | Unit) => {
       }
     }
   }
-  for (const fant of unit.fantasticalRules) {
-    const fantasticRule = fantasticalRulesData[fant];
-    points += fantasticRule.points;
-    unit.rules = [...unit.rules, fantasticRule.name];
+
+  for (const rule of unit.fantasticalRules) {
+    const fantasticalRule = fantasticalRulesData[rule];
+    points += fantasticalRule.points;
+    unit.rules = [...unit.rules, fantasticalRule.name];
+
+    if (fantasticalRule.setStats) {
+      for (const [key, val] of Object.entries(fantasticalRule.setStats)) {
+        unit = { ...unit, stats: { ...unit.stats, [key]: val } };
+      }
+    }
+
+    if (fantasticalRule.adjustStats) {
+      statsToAdjust = { ...statsToAdjust, ...fantasticalRule.adjustStats };
+    }
   }
 
+  for (const [key, val] of Object.entries(statsToAdjust)) {
+    const k = key as keyof UnitStats;
+    const oldVal = unit.stats[k];
+    if (val && typeof val == 'number' && typeof oldVal == 'number') {
+      unit = { ...unit, stats: { ...unit.stats, [key]: oldVal + val } };
+    }
+  }
+
+  if (!unit.fantasticalRules.some((x) => x === 'Wizardlings'))
+    unit = { ...unit, spells: [] };
+
+  if (!unit.fantasticalRules.some((x) => x === 'Leader'))
+    unit = { ...unit, trait: undefined };
+
+  if (unit.rules.length > 0) {
+    unit = { ...unit, rules: [...unit.rules].sort() };
+  }
   unit = { ...unit, points: points };
   return unit;
 };
