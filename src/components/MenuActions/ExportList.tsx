@@ -33,7 +33,7 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
         } points`
       );
 
-      const options = [...unit.options, ...unit.xenosRules];
+      const options = [...unit.options, ...unit.fantasticalRules];
       if (options.length) {
         for (const option of options) text.push(`  - ${option}`);
       }
@@ -53,7 +53,7 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
         } -- ${unit.points} points`
       );
 
-      const options = [...unit.options, ...unit.xenosRules];
+      const options = [...unit.options, ...unit.fantasticalRules];
       if (options.length) {
         text.push('');
         for (const option of options) text.push(`    - ${option}`);
