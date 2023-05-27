@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
   Dialog,
@@ -6,8 +5,8 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material';
-import React, { BaseSyntheticEvent, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { BaseSyntheticEvent } from 'react';
+import { UseFormReturn } from 'react-hook-form';
 import { useAppSelector } from '../../../hooks/reduxHooks';
 import {
   FormContainer,
@@ -18,38 +17,22 @@ import {
 import { RootState, UnitOption } from '../../../store/types';
 import range from '../../../utils/range';
 import StatManipulation from '../common/StatManipulation';
-import { unitOptionSchema } from './unitSchemas';
 
 const OptionsForm: React.FC<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formContext: UseFormReturn<UnitOption, any>;
   open: boolean;
   handleClose: () => void;
-  option: UnitOption;
+  handleAction: (newState: UnitOption) => void;
   rules: string[];
-  onSubmit: (option: UnitOption) => void;
-}> = ({ open, handleClose, option, rules, onSubmit }) => {
+}> = ({ formContext, open, handleClose, handleAction, rules }) => {
   const specialRules = useAppSelector((state: RootState) => state.data.rulesData);
-
-  const formContext = useForm<UnitOption>({
-    resolver: yupResolver(unitOptionSchema),
-    defaultValues: { ...option },
-  });
-  const { reset, watch, setValue, handleSubmit } = formContext;
-
-  useEffect(() => {
-    if (open) {
-      reset({ ...option });
-    }
-  }, [reset, open, option]);
+  const { handleSubmit, watch, setValue } = formContext;
 
   const handleSubmitWithoutPropagation = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     e.stopPropagation();
     handleSubmit(handleAction)(e);
-  };
-
-  const handleAction = (option: UnitOption) => {
-    onSubmit(option);
-    handleClose();
   };
 
   return (
@@ -61,7 +44,7 @@ const OptionsForm: React.FC<{
       >
         <DialogContent>
           {/* --------------------------------- Name -------------------------------- */}
-          <TextFieldElement name="name" label="Name" type="text" fullWidth />
+          <TextFieldElement name="name" label="Name" type="text" required fullWidth />
           {/* -------------------------------- Points ------------------------------- */}
           <SelectElement
             name="points"
@@ -75,6 +58,7 @@ const OptionsForm: React.FC<{
             name="description"
             label="Description"
             type="text"
+            required
             fullWidth
             multiline
           />

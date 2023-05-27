@@ -9,7 +9,6 @@ import {
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import React from 'react';
-// import { FormContainer, MultiSelectElement } from 'react-hook-form-mui';
 import { SelectElement } from '../../../libs/react-hook-form-mui';
 import { UnitStats } from '../../../store/types';
 import statData from '../../../utils/statData';

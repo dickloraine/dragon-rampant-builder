@@ -12,10 +12,10 @@ import {
 } from '../../../libs/react-hook-form-mui';
 import { Spell } from '../../../store/types';
 import range from '../../../utils/range';
-import { CustomFormProps } from '../CustomizePanel/CustomizeList';
+import { CustomFormProps } from '../common/useCustomizeForm';
 
 function SpellsForm(props: CustomFormProps<Spell>) {
-  const { formContext, open, handleClose, handleAction, validateName } = props;
+  const { formContext, open, handleClose, handleAction } = props;
 
   return (
     <Dialog open={open}>
@@ -26,9 +26,9 @@ function SpellsForm(props: CustomFormProps<Spell>) {
             name="name"
             label="Name"
             type="text"
+            required
             margin="normal"
             fullWidth
-            customError={(name) => !validateName(name)}
           />
           <SelectElement
             name="difficulty"
@@ -42,6 +42,7 @@ function SpellsForm(props: CustomFormProps<Spell>) {
             name="target"
             label="Target"
             type="text"
+            required
             margin="normal"
             fullWidth
           />
@@ -49,6 +50,7 @@ function SpellsForm(props: CustomFormProps<Spell>) {
             name="duration"
             label="Duration"
             type="text"
+            required
             margin="normal"
             fullWidth
           />
@@ -56,6 +58,7 @@ function SpellsForm(props: CustomFormProps<Spell>) {
             name="effect"
             label="Effekt"
             type="text"
+            required
             margin="normal"
             fullWidth
             multiline

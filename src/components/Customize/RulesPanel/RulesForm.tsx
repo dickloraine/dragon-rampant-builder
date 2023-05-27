@@ -7,10 +7,10 @@ import {
 } from '@mui/material';
 import { FormContainer, TextFieldElement } from '../../../libs/react-hook-form-mui';
 import { Rule } from '../../../store/types';
-import { CustomFormProps } from '../CustomizePanel/CustomizeList';
+import { CustomFormProps } from '../common/useCustomizeForm';
 
 function RulesForm(props: CustomFormProps<Rule>) {
-  const { formContext, open, handleClose, handleAction, validateName } = props;
+  const { formContext, open, handleClose, handleAction } = props;
 
   return (
     <Dialog open={open}>
@@ -21,14 +21,15 @@ function RulesForm(props: CustomFormProps<Rule>) {
             name="name"
             label="Name"
             type="text"
+            required
             margin="normal"
             fullWidth
-            customError={(name) => !validateName(name)}
           />
           <TextFieldElement
             name="description"
             label="Description"
             type="text"
+            required
             margin="normal"
             fullWidth
             multiline

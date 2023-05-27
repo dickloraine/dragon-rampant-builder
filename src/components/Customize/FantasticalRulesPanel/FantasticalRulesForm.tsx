@@ -15,11 +15,11 @@ import {
 import { selectUnitNames } from '../../../store/dataSlice';
 import { FantasticalRule, RootState } from '../../../store/types';
 import range from '../../../utils/range';
-import { CustomFormProps } from '../CustomizePanel/CustomizeList';
 import StatManipulation from '../common/StatManipulation';
+import { CustomFormProps } from '../common/useCustomizeForm';
 
 function FantasticalRulesForm(props: CustomFormProps<FantasticalRule>) {
-  const { formContext, open, handleClose, handleAction, validateName } = props;
+  const { formContext, open, handleClose, handleAction } = props;
   const units = useAppSelector((state: RootState) => selectUnitNames(state));
   const { watch, setValue } = formContext;
 
@@ -32,9 +32,9 @@ function FantasticalRulesForm(props: CustomFormProps<FantasticalRule>) {
             name="name"
             label="Name"
             type="text"
+            required
             margin="normal"
             fullWidth
-            customError={(name) => !validateName(name)}
           />
           <SelectElement
             name="points"
@@ -48,6 +48,7 @@ function FantasticalRulesForm(props: CustomFormProps<FantasticalRule>) {
             name="description"
             label="Description"
             type="text"
+            required
             margin="normal"
             fullWidth
             multiline

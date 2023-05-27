@@ -5,7 +5,7 @@ import { useAppDispatch } from '../hooks/reduxHooks';
 import useUserTheme from '../hooks/useUserTheme';
 import { hydrateData } from '../store/dataSlice';
 import AppBar from './AppBar';
-import CustomizeMenu from './Customize/CustomizeMenu/CustomizeMenu';
+import CustomizeMenu from './Customize/CustomizeMenu';
 import ListName from './ListName';
 import Roster from './Roster';
 import RulesSummary from './RulesSummary';

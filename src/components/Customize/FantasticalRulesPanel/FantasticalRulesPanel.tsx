@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { showFeedback } from '../../../store/appStateSlice';
 import { addFantasticalRule, removeFantasticalRule } from '../../../store/dataSlice';
 import { FantasticalRule, RootState } from '../../../store/types';
-import { PanelProps } from '../CustomizeMenu/CustomizeMenu';
-import CustomizePanel from '../CustomizePanel/CustomizePanel';
+import { PanelProps } from '../CustomizeMenu';
+import CustomizePanel from '../CustomizePanel';
 import FantasticalRulesForm from './FantasticalRulesForm';
 import { emptyFantasticalRule, fantasticalRuleSchema } from './fantasticalRulesSchemas';
 

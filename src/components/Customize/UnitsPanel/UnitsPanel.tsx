@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { showFeedback } from '../../../store/appStateSlice';
 import { addUnit, removeUnit } from '../../../store/dataSlice';
 import { DataUnit, RootState } from '../../../store/types';
-import { PanelProps } from '../CustomizeMenu/CustomizeMenu';
-import CustomizePanel from '../CustomizePanel/CustomizePanel';
+import { PanelProps } from '../CustomizeMenu';
+import CustomizePanel from '../CustomizePanel';
 import UnitsForm from './UnitsForm';
 import { dataUnitSchema, emptyUnit } from './unitSchemas';
 
