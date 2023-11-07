@@ -125,13 +125,13 @@ export const getSpells = createSelector(
   (state: RootState) => state.roster.units,
   (state: RootState) => state.data.spells,
   (units, rulesData) => {
-    if (units.some(unit => unit.fantasticalRules.includes("Spellcaster"))) {
-      return rulesData
+    if (units.some((unit) => unit.fantasticalRules.includes('Spellcaster'))) {
+      return rulesData;
     }
 
     const unique_powers = new Set<string>();
-    units.forEach((unit) =>
-      unit.spells?.forEach((powerName) => unique_powers.add(powerName))
+    units.forEach(
+      (unit) => unit.spells?.forEach((powerName) => unique_powers.add(powerName))
     );
 
     return [...unique_powers].sort().reduce(
