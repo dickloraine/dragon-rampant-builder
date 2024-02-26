@@ -5,11 +5,11 @@ export const uiStore = localforage.createInstance({
 });
 
 export const rosterStore = localforage.createInstance({
-  name: 'xrabDB',
+  name: 'drabDB',
   storeName: 'rosterStore',
 });
 
 export const dataStore = localforage.createInstance({
-  name: 'xrabDB',
+  name: 'drabDB',
   storeName: 'dataStore',
 });
