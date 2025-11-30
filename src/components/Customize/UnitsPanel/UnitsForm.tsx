@@ -7,6 +7,7 @@ import {
   InputLabel,
 } from '@mui/material';
 import { produce } from 'immer';
+import { useWatch } from 'react-hook-form';
 import { useAppSelector } from '../../../hooks/reduxHooks';
 import {
   FormContainer,
@@ -24,23 +25,25 @@ import { emptyOption, unitOptionSchema } from './unitSchemas';
 
 function UnitsForm(props: CustomFormProps<DataUnit>) {
   const { formContext, open, handleClose, handleAction } = props;
-  const { watch, setValue } = formContext;
+  const { getValues, setValue, control } = formContext;
   const rules = useAppSelector((state: RootState) => state.data.rulesData);
+  const watchedOptions = useWatch({ name: 'options', control });
+  const watchedRules = useWatch({ name: 'rules', control });
 
   const deleteOption = (name: string) => {
     setValue(
       'options',
-      produce(watch('options'), (draft) => {
+      produce(getValues('options'), (draft) => {
         delete draft[name];
       })
     );
   };
 
   const addOption = (newOption: UnitOption) =>
-    setValue('options', { ...watch('options'), [newOption.name]: newOption });
+    setValue('options', { ...getValues('options'), [newOption.name]: newOption });
 
   const { ElementsList, ...optionsFormProps } = useCustomizeForm<UnitOption>(
-    watch('options'),
+    watchedOptions,
     unitOptionSchema,
     emptyOption,
     deleteOption,
@@ -83,7 +86,7 @@ function UnitsForm(props: CustomFormProps<DataUnit>) {
           {/* ------------------------------- Options ------------------------------- */}
           <InputLabel id="options-label">Options</InputLabel>
           <ElementsList />
-          <OptionsForm {...optionsFormProps} rules={watch('rules')} />
+          <OptionsForm {...optionsFormProps} rules={watchedRules} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

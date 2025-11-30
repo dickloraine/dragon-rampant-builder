@@ -11,7 +11,7 @@ export default defineConfig({
         manualChunks: {
           react: ['react', 'react-dom'],
           redux: ['redux', 'react-redux', '@reduxjs/toolkit'],
-          mui: ['@mui/material', '@mui/icons-material', '@mui/x-date-pickers'],
+          mui: ['@mui/material', '@mui/icons-material'],
           hookform: ['react-hook-form', '@hookform/resolvers', 'yup'],
           localstorage: ['localforage', 'file-saver'],
         },
@@ -19,7 +19,11 @@ export default defineConfig({
     },
   },
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: ['babel-plugin-react-compiler'],
+      },
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: [

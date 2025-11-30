@@ -21,7 +21,6 @@ import { CustomFormProps } from '../common/useCustomizeForm';
 function FantasticalRulesForm(props: CustomFormProps<FantasticalRule>) {
   const { formContext, open, handleClose, handleAction } = props;
   const units = useAppSelector((state: RootState) => selectUnitNames(state));
-  const { watch, setValue } = formContext;
 
   return (
     <Dialog open={open}>
@@ -71,14 +70,12 @@ function FantasticalRulesForm(props: CustomFormProps<FantasticalRule>) {
           <StatManipulation
             title="Set Stats"
             type="setStats"
-            watch={watch}
-            setValue={setValue}
+            formContext={formContext}
           />
           <StatManipulation
             title="Adjust Stats"
             type="adjustStats"
-            watch={watch}
-            setValue={setValue}
+            formContext={formContext}
           />
         </DialogContent>
         <DialogActions>

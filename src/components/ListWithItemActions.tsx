@@ -7,7 +7,6 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemSecondaryAction,
   ListItemText,
   SvgIconTypeMap,
 } from '@mui/material';
@@ -42,7 +41,19 @@ export const ListWithItemActions: FC<ListWithItemActionsProps> = ({
   return (
     <List>
       {Object.keys(data).map((name) => (
-        <ListItem id={name} key={name}>
+        <ListItem
+          id={name}
+          key={name}
+          secondaryAction={
+            <IconButton
+              size="small"
+              aria-label={actionTwoName}
+              onClick={() => handleClickActionTwo(name)}
+            >
+              <ActionTwoIcon color="action" />
+            </IconButton>
+          }
+        >
           <ListItemIcon>
             <IconButton
               aria-label={actionOneName}
@@ -53,15 +64,6 @@ export const ListWithItemActions: FC<ListWithItemActionsProps> = ({
             </IconButton>
           </ListItemIcon>
           <ListItemText>{name}</ListItemText>
-          <ListItemSecondaryAction>
-            <IconButton
-              size="small"
-              aria-label={actionTwoName}
-              onClick={() => handleClickActionTwo(name)}
-            >
-              <ActionTwoIcon color="action" />
-            </IconButton>
-          </ListItemSecondaryAction>
         </ListItem>
       ))}
       <ListItem id="add_fr" key="add_fr">

@@ -27,7 +27,7 @@ const OptionsForm: React.FC<{
   rules: string[];
 }> = ({ formContext, open, handleClose, handleAction, rules }) => {
   const specialRules = useAppSelector((state: RootState) => state.data.rulesData);
-  const { handleSubmit, watch, setValue } = formContext;
+  const { handleSubmit } = formContext;
 
   const handleSubmitWithoutPropagation = (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -90,15 +90,13 @@ const OptionsForm: React.FC<{
           <StatManipulation
             title="Set Stats"
             type="setStats"
-            watch={watch}
-            setValue={setValue}
+            formContext={formContext}
           />
           {/* ----------------------------- Adjust Stats ---------------------------- */}
           <StatManipulation
             title="Adjust Stats"
             type="adjustStats"
-            watch={watch}
-            setValue={setValue}
+            formContext={formContext}
           />
         </DialogContent>
         <DialogActions>

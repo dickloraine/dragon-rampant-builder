@@ -6,12 +6,11 @@ import {
   InputLabel,
   List,
   ListItem,
-  ListItemSecondaryAction,
   Menu,
   MenuItem,
 } from '@mui/material';
 import { produce } from 'immer';
-import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
+import { UseFormReturn, useWatch } from 'react-hook-form';
 import useAnchor from '../../../hooks/useAnchor';
 import { SelectElement } from '../../../libs/react-hook-form-mui';
 import { UnitStats } from '../../../store/types';
@@ -21,14 +20,14 @@ type StatManipulationProps = {
   title: string;
   type: 'setStats' | 'adjustStats';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  watch: UseFormWatch<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setValue: UseFormSetValue<any>;
+  formContext: UseFormReturn<any, any>;
 };
 
-const StatManipulation = ({ title, type, watch, setValue }: StatManipulationProps) => {
+const StatManipulation = ({ title, type, formContext }: StatManipulationProps) => {
   const [anchorStat, handleClickStat, handleCloseStat] = useAnchor();
   const rangeType = type === 'setStats' ? 'range' : 'adjustRange';
+  const { setValue, control } = formContext;
+  const stats = useWatch({ name: type, control }) || {};
 
   return (
     <>
@@ -36,16 +35,11 @@ const StatManipulation = ({ title, type, watch, setValue }: StatManipulationProp
         {title}
       </InputLabel>
       <List>
-        {Object.keys(watch(type) || {}).map((name) => (
-          <ListItem id={name} key={name}>
-            <SelectElement
-              name={type + '.' + name}
-              label={statData[name].name}
-              type="number"
-              fullWidth
-              options={statData[name][rangeType]}
-            />
-            <ListItemSecondaryAction>
+        {Object.keys(stats).map((name) => (
+          <ListItem
+            id={name}
+            key={name}
+            secondaryAction={
               <IconButton
                 size="small"
                 aria-label="Delete"
@@ -53,7 +47,7 @@ const StatManipulation = ({ title, type, watch, setValue }: StatManipulationProp
                   setValue(
                     type,
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    produce(watch(type), (draft: any) => {
+                    produce(stats, (draft: any) => {
                       if (draft) delete draft[name as keyof UnitStats];
                     })
                   )
@@ -61,7 +55,15 @@ const StatManipulation = ({ title, type, watch, setValue }: StatManipulationProp
               >
                 <DeleteForeverIcon color="action" />
               </IconButton>
-            </ListItemSecondaryAction>
+            }
+          >
+            <SelectElement
+              name={type + '.' + name}
+              label={statData[name].name}
+              type="number"
+              fullWidth
+              options={statData[name][rangeType]}
+            />
           </ListItem>
         ))}
         <ListItem id="add_opt" key="add_opt">
@@ -76,12 +78,12 @@ const StatManipulation = ({ title, type, watch, setValue }: StatManipulationProp
             onClose={handleCloseStat}
           >
             {Object.keys(statData)
-              .filter((k) => !Object.keys(watch(type) || {}).includes(k))
+              .filter((k) => !Object.keys(stats).includes(k))
               .map((name) => (
                 <MenuItem
                   onClick={() =>
                     setValue(type, {
-                      ...watch(type),
+                      ...stats,
                       [name]: type === 'setStats' ? 4 : 0,
                     })
                   }

@@ -4,7 +4,7 @@ import { DataUnit, UnitOption, UnitStats } from '../../../store/types';
 import { dynamicSchemaObject } from '../../../utils/dynamicSchemaObject';
 import validName from '../common/validName';
 
-export const unitSetStatsSchema: ObjectSchema<UnitStats> = yup.object({
+export const unitStatsSchema: ObjectSchema<UnitStats> = yup.object({
   attack: yup.number().integer().min(0).max(12).required(),
   move: yup.number().integer().min(0).max(12).required(),
   shoot: yup.number().integer().min(0).max(12).required(),
@@ -18,18 +18,32 @@ export const unitSetStatsSchema: ObjectSchema<UnitStats> = yup.object({
   strengthPoints: yup.number().oneOf([6, 12]).required(),
 });
 
-export const unitAdjustStatsSchema: ObjectSchema<UnitStats> = yup.object({
-  attack: yup.number().integer().min(-12).max(12).required(),
-  move: yup.number().integer().min(-12).max(12).required(),
-  shoot: yup.number().integer().min(-12).max(12).required(),
-  courage: yup.number().integer().min(-12).max(12).required(),
-  armor: yup.number().integer().min(-6).max(6).required(),
-  attackValue: yup.number().integer().min(-6).max(6).required(),
-  defenceValue: yup.number().integer().min(-6).max(6).required(),
-  shootValue: yup.number().integer().min(-6).max(6).required(),
-  shootRange: yup.number().integer().min(-6).max(24).required(),
-  movement: yup.number().integer().min(-18).max(18).required(),
-  strengthPoints: yup.number().oneOf([-12, -6, 0, 6, 12]).required(),
+export const unitSetStatsSchema: ObjectSchema<Partial<UnitStats>> = yup.object({
+  attack: yup.number().integer().min(0).max(12),
+  move: yup.number().integer().min(0).max(12),
+  shoot: yup.number().integer().min(0).max(12),
+  courage: yup.number().integer().min(0).max(12),
+  armor: yup.number().integer().min(0).max(6),
+  attackValue: yup.number().integer().min(0).max(6),
+  defenceValue: yup.number().integer().min(0).max(6),
+  shootValue: yup.number().integer().min(0).max(6),
+  shootRange: yup.number().integer().min(0).max(24),
+  movement: yup.number().integer().min(0).max(18),
+  strengthPoints: yup.number().oneOf([6, 12]),
+});
+
+export const unitAdjustStatsSchema: ObjectSchema<Partial<UnitStats>> = yup.object({
+  attack: yup.number().integer().min(-12).max(12),
+  move: yup.number().integer().min(-12).max(12),
+  shoot: yup.number().integer().min(-12).max(12),
+  courage: yup.number().integer().min(-12).max(12),
+  armor: yup.number().integer().min(-6).max(6),
+  attackValue: yup.number().integer().min(-6).max(6),
+  defenceValue: yup.number().integer().min(-6).max(6),
+  shootValue: yup.number().integer().min(-6).max(6),
+  shootRange: yup.number().integer().min(-6).max(24),
+  movement: yup.number().integer().min(-18).max(18),
+  strengthPoints: yup.number().oneOf([-12, -6, 0, 6, 12]),
 });
 
 export const unitOptionSchema: ObjectSchema<UnitOption> = yup.object({
@@ -49,7 +63,7 @@ export const dataUnitSchema: ObjectSchema<DataUnit> = yup.object({
   name: validName,
   type: yup.string().required(),
   points: yup.number().integer().min(1).required(),
-  stats: unitSetStatsSchema,
+  stats: unitStatsSchema,
   rules: yup.array().of(yup.string().required()).required(),
   fantasticalRules: yup.array().of(yup.string().required()).required(),
   customName: yup.string(),
