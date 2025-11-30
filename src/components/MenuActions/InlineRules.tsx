@@ -22,4 +22,4 @@ const InlineRules: React.FC<{ showText?: boolean }> = ({ showText }) => {
   );
 };
 
-export default React.memo(InlineRules);
+export default InlineRules;

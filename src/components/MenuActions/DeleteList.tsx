@@ -34,4 +34,4 @@ const DeleteList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   );
 };
 
-export default React.memo(DeleteList);
+export default DeleteList;

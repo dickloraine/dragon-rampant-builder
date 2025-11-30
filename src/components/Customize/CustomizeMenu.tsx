@@ -8,7 +8,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import useOpen from '../../hooks/useOpen';
 import { setCustomizeMode } from '../../store/appStateSlice';
@@ -34,12 +34,10 @@ const CustomizeMenu = () => {
   const [openImport, handleOpenImport, handleCloseImport] = useOpen();
   const [openExport, handleOpenExport, handleCloseExport] = useOpen();
 
-  const handleChange = useCallback(
+  const handleChange =
     (panel: string) => (_event: React.ChangeEvent<object>, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : '');
-    },
-    []
-  );
+    };
 
   return (
     <Dialog open={open} onClose={() => dispatch(setCustomizeMode(false))}>
@@ -74,4 +72,4 @@ const CustomizeMenu = () => {
   );
 };
 
-export default React.memo(CustomizeMenu);
+export default CustomizeMenu;

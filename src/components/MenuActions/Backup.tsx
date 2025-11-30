@@ -50,4 +50,4 @@ const Backup: React.FC<{ showText: boolean; onClose?: () => void }> = ({
   );
 };
 
-export default React.memo(Backup);
+export default Backup;

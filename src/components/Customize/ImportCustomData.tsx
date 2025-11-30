@@ -71,4 +71,4 @@ const ImportCustomData: React.FC<{ open: boolean; handleClose: () => void }> = (
   );
 };
 
-export default React.memo(ImportCustomData);
+export default ImportCustomData;

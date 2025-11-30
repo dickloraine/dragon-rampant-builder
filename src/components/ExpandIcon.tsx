@@ -21,4 +21,4 @@ const ExpandIcon: React.FC<{
   );
 };
 
-export default React.memo(ExpandIcon);
+export default ExpandIcon;

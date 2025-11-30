@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { addSpell, removeSpell } from '../../../store/dataSlice';
 import { RootState, Spell } from '../../../store/types';
@@ -31,4 +30,4 @@ function SpellsPanel(props: PanelProps) {
   );
 }
 
-export default React.memo(SpellsPanel);
+export default SpellsPanel;

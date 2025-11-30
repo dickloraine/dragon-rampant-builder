@@ -49,4 +49,4 @@ const About: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   );
 };
 
-export default React.memo(About);
+export default About;

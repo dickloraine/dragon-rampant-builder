@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { showFeedback } from '../../../store/appStateSlice';
 import { addRule, removeRule } from '../../../store/dataSlice';
@@ -40,4 +39,4 @@ function RulesPanel(props: PanelProps) {
   );
 }
 
-export default React.memo(RulesPanel);
+export default RulesPanel;

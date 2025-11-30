@@ -39,4 +39,4 @@ const ImportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   );
 };
 
-export default React.memo(ImportList);
+export default ImportList;

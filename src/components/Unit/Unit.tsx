@@ -93,4 +93,4 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
   );
 };
 
-export default React.memo(Unit);
+export default Unit;

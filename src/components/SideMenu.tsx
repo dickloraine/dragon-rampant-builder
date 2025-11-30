@@ -9,7 +9,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { setCustomizeMode } from '../store/appStateSlice';
 import About from './MenuActions/About';
@@ -40,7 +40,7 @@ const SideMenu = () => {
     setOpen(open);
   };
 
-  const handleClose = useCallback(() => setOpen(false), []);
+  const handleClose = () => setOpen(false);
 
   return (
     <>
@@ -95,4 +95,4 @@ const SideMenu = () => {
   );
 };
 
-export default React.memo(SideMenu);
+export default SideMenu;

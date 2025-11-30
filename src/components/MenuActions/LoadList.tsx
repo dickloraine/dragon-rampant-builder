@@ -49,4 +49,4 @@ const LoadList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   );
 };
 
-export default React.memo(LoadList);
+export default LoadList;

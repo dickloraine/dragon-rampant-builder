@@ -27,4 +27,4 @@ const Darkmode: React.FC<{ showText?: boolean }> = ({ showText }) => {
   );
 };
 
-export default React.memo(Darkmode);
+export default Darkmode;

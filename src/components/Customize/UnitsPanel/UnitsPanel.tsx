@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { showFeedback } from '../../../store/appStateSlice';
 import { addUnit, removeUnit } from '../../../store/dataSlice';
@@ -39,4 +38,4 @@ function UnitsPanel(props: PanelProps) {
   );
 }
 
-export default React.memo(UnitsPanel);
+export default UnitsPanel;
