@@ -1,5 +1,5 @@
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import { JSX, ReactNode } from 'react';
 
 type MenuProps = {
   text: string;

@@ -1,7 +1,6 @@
 import SaveIcon from '@mui/icons-material/Save';
 import React from 'react';
-import { useStore } from 'react-redux';
-import { useAppDispatch } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppStore } from '../../hooks/reduxHooks';
 import { showFeedback } from '../../store/appStateSlice';
 import { rosterStore } from '../../store/persistantStorage';
 import { AppStore } from '../../store/store';
@@ -13,7 +12,7 @@ const SaveList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   showText,
 }) => {
   const dispatch = useAppDispatch();
-  const store: AppStore = useStore();
+  const store: AppStore = useAppStore();
 
   const saveRoster = () => {
     const roster = store.getState().roster;

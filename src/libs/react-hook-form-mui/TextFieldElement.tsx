@@ -1,4 +1,5 @@
 import { TextField, TextFieldProps } from '@mui/material';
+import { JSX } from 'react';
 import { Controller, ControllerProps, FieldError } from 'react-hook-form';
 
 export type TextFieldElementProps = Omit<TextFieldProps, 'name'> & {
@@ -8,13 +9,14 @@ export type TextFieldElementProps = Omit<TextFieldProps, 'name'> & {
 };
 
 export default function TextFieldElement({
-  validation = {},
+  validation: validation_ = {},
   parseError,
   type,
   required,
   name,
   ...rest
 }: TextFieldElementProps): JSX.Element {
+  const validation = { ...validation_ };
   if (required) {
     validation.required = 'This field is required';
   }

@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import { UseFormReturn, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import useOpen from '../../../hooks/useOpen';

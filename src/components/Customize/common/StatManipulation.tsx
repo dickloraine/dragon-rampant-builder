@@ -10,7 +10,7 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import produce from 'immer';
+import { produce } from 'immer';
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import useAnchor from '../../../hooks/useAnchor';
 import { SelectElement } from '../../../libs/react-hook-form-mui';

@@ -1,13 +1,14 @@
 import * as yup from 'yup';
+import { ObjectSchema } from 'yup';
 import { Spell } from '../../../store/types';
 import validName from '../common/validName';
 
-export const spellSchema = yup.object<Spell>({
+export const spellSchema: ObjectSchema<Spell> = yup.object({
   name: validName,
-  difficulty: yup.number().integer().min(2).max(12),
-  target: yup.string(),
-  duration: yup.string(),
-  effect: yup.string(),
+  difficulty: yup.number().integer().min(2).max(12).required(),
+  target: yup.string().required(),
+  duration: yup.string().required(),
+  effect: yup.string().required(),
   short: yup.string(),
 });
 

@@ -11,9 +11,9 @@ import React from 'react';
 import useOpen from '../hooks/useOpen';
 
 const ListDialog: React.FC<{
-  anchor: JSX.Element;
+  anchor: React.JSX.Element;
   action: (text: string) => void;
-  options: [string, JSX.Element | null][] | string[];
+  options: [string, React.JSX.Element | null][] | string[];
   title: string;
   onClose?: () => void;
   onOpen?: () => void;
@@ -25,10 +25,10 @@ const ListDialog: React.FC<{
     handleClose();
   };
 
-  const opts: [string, JSX.Element | null][] =
+  const opts: [string, React.JSX.Element | null][] =
     typeof (options as string[])[0] === 'string'
       ? (options as string[]).map((o: string) => [o, null])
-      : (options as [string, JSX.Element | null][]);
+      : (options as [string, React.JSX.Element | null][]);
 
   return (
     <>

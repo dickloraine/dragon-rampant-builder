@@ -20,7 +20,7 @@ const ImportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
       dispatch(setRoster({ ...list }));
       dispatch(toggleForceInputUpdate());
       dispatch(showFeedback('List imported!', 'success'));
-    } catch (err) {
+    } catch {
       dispatch(showFeedback('Could not import the list!', 'error'));
     }
   };

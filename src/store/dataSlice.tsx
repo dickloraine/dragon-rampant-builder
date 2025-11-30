@@ -4,7 +4,7 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit';
-import produce from 'immer';
+import { produce } from 'immer';
 import { fantasticalRulesData } from '../assets/dragonRampantData/fantasticalRules';
 import { rulesData } from '../assets/dragonRampantData/rules';
 import { spells } from '../assets/dragonRampantData/spells';

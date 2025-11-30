@@ -1,12 +1,13 @@
 import * as yup from 'yup';
+import { ObjectSchema } from 'yup';
 import { FantasticalRule } from '../../../store/types';
 import { unitAdjustStatsSchema, unitSetStatsSchema } from '../UnitsPanel/unitSchemas';
 import validName from '../common/validName';
 
-export const fantasticalRuleSchema = yup.object<FantasticalRule>({
+export const fantasticalRuleSchema: ObjectSchema<FantasticalRule> = yup.object({
   name: validName,
   points: yup.number().integer().min(0).required(),
-  exclude_units: yup.array().of(yup.string()),
+  exclude_units: yup.array().of(yup.string().required()).required(),
   description: yup.string().required(),
   short: yup.string(),
   setStats: unitSetStatsSchema,

@@ -7,7 +7,7 @@ import {
   FormHelperText,
 } from '@mui/material';
 import { red } from '@mui/material/colors';
-import React from 'react';
+import React, { JSX } from 'react';
 import { Controller, ControllerProps, FieldError } from 'react-hook-form';
 
 export type CheckboxElementProps = Omit<CheckboxProps, 'name'> & {
@@ -20,12 +20,13 @@ export type CheckboxElementProps = Omit<CheckboxProps, 'name'> & {
 
 export default function CheckboxElement({
   name,
-  validation = {},
+  validation: validation_ = {},
   required,
   parseError,
   label,
   ...rest
 }: CheckboxElementProps): JSX.Element {
+  const validation = { ...validation_ };
   if (required) {
     validation.required = 'This field is required';
   }

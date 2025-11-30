@@ -12,7 +12,7 @@ import {
   FormGroup,
   FormLabel,
 } from '@mui/material';
-import produce from 'immer';
+import { produce } from 'immer';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { showFeedback } from '../../store/appStateSlice';
@@ -92,7 +92,7 @@ const ExportCustomData: React.FC<{ open: boolean; handleClose: () => void }> = (
       copyToClipboard(exportString);
       dispatch(showFeedback('Custom data copied to clipboard!', 'success'));
       handleClose();
-    } catch (err) {
+    } catch {
       dispatch(showFeedback('Could not export the custom data!', 'error'));
     }
   };

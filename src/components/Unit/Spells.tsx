@@ -53,8 +53,10 @@ const Spells: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
                       <ListItemText
                         primary={name}
                         secondary={powersData[name]?.short || ''}
-                        primaryTypographyProps={{ variant: 'body2' }}
                         sx={{ m: 0 }}
+                        slotProps={{
+                          primary: { variant: 'body2' },
+                        }}
                       />
                     </ListItem>
                   ) : (
@@ -88,14 +90,17 @@ const Spells: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
                 <ListItemText
                   primary={name}
                   secondary={(inlineRules && powersData[name]?.short) || ''}
-                  primaryTypographyProps={{
-                    color:
-                      unit.spells && unit.spells.indexOf(name) > -1
-                        ? 'primary'
-                        : 'inherit',
-                  }}
-                  secondaryTypographyProps={{ sx: { whiteSpace: 'normal' } }}
                   sx={{ m: 0 }}
+                  slotProps={{
+                    primary: {
+                      color:
+                        unit.spells && unit.spells.indexOf(name) > -1
+                          ? 'primary'
+                          : 'inherit',
+                    },
+
+                    secondary: { sx: { whiteSpace: 'normal' } },
+                  }}
                 />
               </Tooltip>
             </MenuItem>

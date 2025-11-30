@@ -2,7 +2,7 @@ import { Action } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from './store';
 
-export type { AppDispatch, RootState } from './store';
+export type { AppDispatch, AppStore, RootState } from './store';
 
 export type UnitStats = {
   attack: number;

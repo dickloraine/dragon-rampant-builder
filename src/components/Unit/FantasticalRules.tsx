@@ -106,8 +106,10 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
                     </Typography>
                   }
                   secondary={(inlineRules && fantasticalRulesData[name]?.short) || ''}
-                  secondaryTypographyProps={{ sx: { whiteSpace: 'normal' } }}
                   sx={{ m: 0 }}
+                  slotProps={{
+                    secondary: { sx: { whiteSpace: 'normal' } },
+                  }}
                 />
               </Tooltip>
             </MenuItem>

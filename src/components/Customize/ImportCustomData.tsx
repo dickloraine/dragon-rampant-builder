@@ -28,7 +28,7 @@ const ImportCustomData: React.FC<{ open: boolean; handleClose: () => void }> = (
       const data: CustomData = JSON.parse(value) as CustomData;
       dispatch(importCustomData(data));
       dispatch(showFeedback('Custom data imported!', 'success'));
-    } catch (err) {
+    } catch {
       dispatch(showFeedback('Could not import the custom data!', 'error'));
     }
   };

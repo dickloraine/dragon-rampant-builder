@@ -54,8 +54,10 @@ const Trait: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
                   <ListItemText
                     primary={unit.trait}
                     secondary={(inlineRules && traitData[unit.trait]?.short) || ''}
-                    primaryTypographyProps={{ variant: 'body2' }}
                     sx={{ m: 0 }}
+                    slotProps={{
+                      primary: { variant: 'body2' },
+                    }}
                   />
                 </ListItem>
               </Tooltip>
@@ -81,8 +83,10 @@ const Trait: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
                 <ListItemText
                   primary={traitData[name].roll + ': ' + name}
                   secondary={(inlineRules && traitData[name]?.short) || ''}
-                  secondaryTypographyProps={{ sx: { whiteSpace: 'normal' } }}
                   sx={{ m: 0 }}
+                  slotProps={{
+                    secondary: { sx: { whiteSpace: 'normal' } },
+                  }}
                 />
               </Tooltip>
             </MenuItem>

@@ -9,7 +9,7 @@ import {
   RadioProps,
 } from '@mui/material';
 import { red } from '@mui/material/colors';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, JSX } from 'react';
 import { FieldError, useController } from 'react-hook-form';
 
 export type RadioButtonGroupProps = {

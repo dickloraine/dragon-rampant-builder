@@ -25,8 +25,10 @@ const SpecialRules: React.FC<{ rules: string[] }> = ({ rules }) => {
                 <ListItemText
                   primary={r}
                   secondary={(inlineRules && rulesData[r]?.short) || ''}
-                  primaryTypographyProps={{ variant: 'body2' }}
                   sx={{ m: 0 }}
+                  slotProps={{
+                    primary: { variant: 'body2' },
+                  }}
                 />
               </ListItem>
             </Tooltip>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
-import { createElement } from 'react';
+import { createElement, JSX } from 'react';
 import { Controller, ControllerProps, FieldError } from 'react-hook-form';
 
 export type SelectElementProps = Omit<TextFieldProps, 'name' | 'type' | 'onChange'> & {
@@ -24,11 +24,13 @@ export default function SelectElement({
   parseError,
   type,
   objectOnChange,
-  validation = {},
+  validation: validation_ = {},
+  InputLabelProps,
   ...rest
 }: SelectElementProps): JSX.Element {
   const isNativeSelect = !!rest.SelectProps?.native;
   const ChildComponent = isNativeSelect ? 'option' : MenuItem;
+  const validation = { ...validation_ };
   if (required) {
     validation.required = 'This field is required';
   }
@@ -40,11 +42,6 @@ export default function SelectElement({
         field: { onBlur, onChange, value },
         fieldState: { invalid, error },
       }) => {
-        // handle shrink on number input fields
-        if (type === 'number' && value) {
-          rest.InputLabelProps = rest.InputLabelProps || {};
-          rest.InputLabelProps.shrink = true;
-        }
         if (typeof value === 'object') {
           value = value[valueKey]; // if value is object get key
         }
@@ -77,6 +74,12 @@ export default function SelectElement({
                   : error.message
                 : rest.helperText
             }
+            slotProps={{
+              inputLabel:
+                type === 'number' && value
+                  ? { ...InputLabelProps, shrink: true }
+                  : InputLabelProps,
+            }}
           >
             {isNativeSelect && <option />}
             {options.map((item: any) =>

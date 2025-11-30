@@ -63,7 +63,7 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
     return text.join('\n');
   };
 
-  const options: [string, JSX.Element][] = [
+  const options: [string, React.JSX.Element][] = [
     ['As an importable String', <ArrowDownwardIcon />],
     ['As text', <FormatAlignLeftIcon />],
     ['As markdown text', <FormatAlignJustifyIcon />],
@@ -79,7 +79,7 @@ const ExportList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
       const list = exportFunc();
       copyToClipboard(list);
       dispatch(showFeedback('List copied to clipboard!', 'success'));
-    } catch (err) {
+    } catch {
       dispatch(showFeedback('Could not export the list!', 'error'));
     }
   };

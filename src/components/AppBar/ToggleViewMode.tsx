@@ -15,9 +15,8 @@ const ToggleViewMode: React.FC<{
 
   const changeViewMode = () => {
     const notClicked = option === 'viewMode' ? 'editMode' : 'viewMode';
-    optionState
-      ? dispatch(updateUI({ [option]: !optionState }))
-      : dispatch(updateUI({ [option]: !optionState, [notClicked]: false }));
+    if (optionState) dispatch(updateUI({ [option]: !optionState }));
+    else dispatch(updateUI({ [option]: !optionState, [notClicked]: false }));
   };
 
   return (

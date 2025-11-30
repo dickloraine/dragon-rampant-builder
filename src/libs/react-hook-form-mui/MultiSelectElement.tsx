@@ -9,6 +9,7 @@ import {
   Select,
   SelectProps,
 } from '@mui/material';
+import { JSX } from 'react';
 import { Controller, FieldError } from 'react-hook-form';
 
 export type MultiSelectElementProps = Omit<SelectProps, 'value'> & {

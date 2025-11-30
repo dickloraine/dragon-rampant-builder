@@ -31,7 +31,8 @@ const rosterSlice = createSlice({
       // eslint-disable-next-line prefer-const
       let [data, unit, index] = action.payload;
       unit = unit ? unit : { ...data.unitData.Unit, options: [], fantasticalRules: [] };
-      index == null ? state.units.push(unit) : state.units.splice(index + 1, 0, unit);
+      if (index == null) state.units.push(unit);
+      else state.units.splice(index + 1, 0, unit);
     },
     _setUnit: (state, action: PayloadAction<[Data, number, string]>) => {
       const [data, id, name] = action.payload;
@@ -130,8 +131,8 @@ export const getSpells = createSelector(
     }
 
     const unique_powers = new Set<string>();
-    units.forEach(
-      (unit) => unit.spells?.forEach((powerName) => unique_powers.add(powerName))
+    units.forEach((unit) =>
+      unit.spells?.forEach((powerName) => unique_powers.add(powerName))
     );
 
     return [...unique_powers].sort().reduce(

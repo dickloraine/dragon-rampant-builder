@@ -6,7 +6,7 @@ import {
   DialogTitle,
   InputLabel,
 } from '@mui/material';
-import produce from 'immer';
+import { produce } from 'immer';
 import { useAppSelector } from '../../../hooks/reduxHooks';
 import {
   FormContainer,

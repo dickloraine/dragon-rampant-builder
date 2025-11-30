@@ -11,36 +11,35 @@ const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   onClose,
 }) => {
   const dispatch = useAppDispatch();
-
-  let fileReader: FileReader;
   const fileDialog = React.useRef<HTMLInputElement>(null);
 
-  const restore = async () => {
-    try {
-      const content = fileReader.result as string;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const data: any = JSON.parse(content);
-
-      // eslint-disable-next-line no-prototype-builtins
-      if (data.hasOwnProperty('rosters')) {
-        await Promise.all(
-          Object.entries(data.rosters).map(([key, val]) =>
-            rosterStore.setItem(key, val)
-          )
-        );
-        dispatch(importCustomData(data.customData));
-      }
-      dispatch(toggleForceInputUpdate());
-      dispatch(showFeedback(`Restored!`, 'success'));
-    } catch (err) {
-      dispatch(showFeedback(`Could not restore!`, 'error'));
-      console.log(err);
-    }
-    if (onClose) onClose();
-  };
-
   const handleFileChosen = (event: React.ChangeEvent<HTMLInputElement>) => {
-    fileReader = new FileReader();
+    const fileReader = new FileReader();
+
+    const restore = async () => {
+      try {
+        const content = fileReader.result as string;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const data: any = JSON.parse(content);
+
+        // eslint-disable-next-line no-prototype-builtins
+        if (data.hasOwnProperty('rosters')) {
+          await Promise.all(
+            Object.entries(data.rosters).map(([key, val]) =>
+              rosterStore.setItem(key, val)
+            )
+          );
+          dispatch(importCustomData(data.customData));
+        }
+        dispatch(toggleForceInputUpdate());
+        dispatch(showFeedback(`Restored!`, 'success'));
+      } catch (err) {
+        dispatch(showFeedback(`Could not restore!`, 'error'));
+        console.log(err);
+      }
+      if (onClose) onClose();
+    };
+
     fileReader.onloadend = restore;
     if (event.target.files) fileReader.readAsText(event.target.files[0]);
   };

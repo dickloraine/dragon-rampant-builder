@@ -1,4 +1,4 @@
-FROM node:18-slim
+FROM node:25-slim
 
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \

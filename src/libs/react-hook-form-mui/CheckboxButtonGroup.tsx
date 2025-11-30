@@ -9,6 +9,7 @@ import {
   FormLabel,
 } from '@mui/material';
 import { red } from '@mui/material/colors';
+import { JSX } from 'react';
 import { FieldError, useController } from 'react-hook-form';
 
 export type CheckboxButtonGroupProps = {
@@ -20,7 +21,7 @@ export type CheckboxButtonGroupProps = {
   label?: string;
   labelKey?: string;
   valueKey?: string;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   onChange?: Function;
   returnObject?: boolean;
   disabled?: boolean;

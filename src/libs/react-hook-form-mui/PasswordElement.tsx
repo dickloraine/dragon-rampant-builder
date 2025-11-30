@@ -1,7 +1,7 @@
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { IconButton, InputAdornment } from '@mui/material';
-import { MouseEvent, useState } from 'react';
+import { JSX, MouseEvent, useState } from 'react';
 import TextFieldElement, { TextFieldElementProps } from './TextFieldElement';
 
 export type PasswordElementProps = TextFieldElementProps;

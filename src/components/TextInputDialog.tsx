@@ -11,7 +11,7 @@ import React from 'react';
 import useOpen from '../hooks/useOpen';
 
 export type TextInputDialogProps = {
-  anchor: JSX.Element;
+  anchor: React.JSX.Element;
   action: (text: string) => void;
   title?: string;
   label?: string;
