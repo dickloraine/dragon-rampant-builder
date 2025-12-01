@@ -26,7 +26,9 @@ const StatBlock: React.FC<{
   stats: UnitStats;
 }> = ({ stats }) => {
   const theme = useTheme();
-  const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
+  const _isPhone = useMediaQuery(theme.breakpoints.down('sm'));
+  const _isPrint = useMediaQuery('print');
+  const isPhone = _isPhone || _isPrint;
   const cellProps = {
     stats: stats,
     isPhone: isPhone,
