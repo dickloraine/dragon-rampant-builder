@@ -15,7 +15,7 @@ export const unitStatsSchema: ObjectSchema<UnitStats> = yup.object({
   shootValue: yup.number().integer().min(0).max(6).required(),
   shootRange: yup.number().integer().min(0).max(24).required(),
   movement: yup.number().integer().min(0).max(18).required(),
-  strengthPoints: yup.number().oneOf([6, 12]).required(),
+  strengthPoints: yup.number().min(1).max(18).required(),
 });
 
 export const unitSetStatsSchema: ObjectSchema<Partial<UnitStats>> = yup.object({
@@ -29,7 +29,7 @@ export const unitSetStatsSchema: ObjectSchema<Partial<UnitStats>> = yup.object({
   shootValue: yup.number().integer().min(0).max(6),
   shootRange: yup.number().integer().min(0).max(24),
   movement: yup.number().integer().min(0).max(18),
-  strengthPoints: yup.number().oneOf([6, 12]),
+  strengthPoints: yup.number().min(1).max(18),
 });
 
 export const unitAdjustStatsSchema: ObjectSchema<Partial<UnitStats>> = yup.object({
@@ -43,7 +43,7 @@ export const unitAdjustStatsSchema: ObjectSchema<Partial<UnitStats>> = yup.objec
   shootValue: yup.number().integer().min(-6).max(6),
   shootRange: yup.number().integer().min(-6).max(24),
   movement: yup.number().integer().min(-18).max(18),
-  strengthPoints: yup.number().oneOf([-12, -6, 0, 6, 12]),
+  strengthPoints: yup.number().min(-6).max(6),
 });
 
 export const unitOptionSchema: ObjectSchema<UnitOption> = yup.object({
