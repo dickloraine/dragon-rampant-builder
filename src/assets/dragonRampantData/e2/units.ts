@@ -1,4 +1,4 @@
-import { Units } from '../../store/types';
+import { Units } from '../../../store/types';
 
 export const unitsData: Units = {
   Unit: {
@@ -22,8 +22,8 @@ export const unitsData: Units = {
     options: {},
     fantasticalRules: [],
   },
-  'Elite Riders': {
-    name: 'Elite Riders',
+  'Elite Riders 2': {
+    name: 'Elite Riders 2',
     type: 'mounted',
     points: 6,
     stats: {

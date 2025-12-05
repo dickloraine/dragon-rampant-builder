@@ -22,6 +22,7 @@ import InlineRules from './MenuActions/InlineRules';
 import LoadList from './MenuActions/LoadList';
 import Restore from './MenuActions/Restore';
 import SaveList from './MenuActions/SaveList';
+import SwitchEdition from './MenuActions/SwitchEdition';
 
 const SideMenu = () => {
   const [open, setOpen] = React.useState(false);
@@ -57,6 +58,9 @@ const SideMenu = () => {
             <DeleteList onClose={handleClose} showText={true} />
           </ListItemButton>
           <Divider />
+          <ListItemButton key={'SwitchEdition'}>
+            <SwitchEdition onClose={handleClose} showText={true} />
+          </ListItemButton>
           <ListItemButton key={'Export'}>
             <ExportList onClose={handleClose} showText={true} />
           </ListItemButton>

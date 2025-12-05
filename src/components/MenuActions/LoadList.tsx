@@ -1,8 +1,8 @@
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { showFeedback, toggleForceInputUpdate } from '../../store/appStateSlice';
-import { rosterStore } from '../../store/persistantStorage';
+import { getRosterStore } from '../../store/persistantStorage';
 import { setRoster } from '../../store/rosterSlice';
 import { CompactRosterState } from '../../store/types';
 import ListDialog from '../ListDialog';
@@ -15,6 +15,8 @@ const LoadList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
 }) => {
   const dispatch = useAppDispatch();
   const [savedRosters, setSavedRosters] = useState<string[]>([]);
+  const edition = useAppSelector((state) => state.ui.edition);
+  const rosterStore = getRosterStore(edition);
 
   const handleOpen = () => rosterStore.keys().then((keys) => setSavedRosters(keys));
 

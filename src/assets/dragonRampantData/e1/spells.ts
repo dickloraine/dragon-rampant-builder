@@ -1,4 +1,4 @@
-import { Spells } from '../../store/types';
+import { Spells } from '../../../store/types';
 
 export const spells: Spells = {
   'Almighty Prod!': {

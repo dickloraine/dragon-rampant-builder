@@ -1,9 +1,8 @@
 import SaveIcon from '@mui/icons-material/Save';
 import React from 'react';
-import { useAppDispatch, useAppStore } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { showFeedback } from '../../store/appStateSlice';
-import { rosterStore } from '../../store/persistantStorage';
-import { AppStore } from '../../store/store';
+import { getRosterStore } from '../../store/persistantStorage';
 import { packRoster } from '../Roster';
 import MenuAction from './MenuAction';
 
@@ -12,10 +11,11 @@ const SaveList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   showText,
 }) => {
   const dispatch = useAppDispatch();
-  const store: AppStore = useAppStore();
+  const roster = useAppSelector((state) => state.roster);
+  const edition = useAppSelector((state) => state.ui.edition);
+  const rosterStore = getRosterStore(edition);
 
   const saveRoster = () => {
-    const roster = store.getState().roster;
     if (roster.name === 'New List') {
       dispatch(showFeedback('You have to give the list a name!', 'error'));
       return;

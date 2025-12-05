@@ -1,4 +1,4 @@
-import { Traits } from '../../store/types';
+import { Traits } from '../../../store/types';
 
 export const traitData: Traits = {
   Unworthy: {

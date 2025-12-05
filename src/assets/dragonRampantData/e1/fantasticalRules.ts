@@ -1,4 +1,4 @@
-import { FantasticalRules } from '../../store/types';
+import { FantasticalRules } from '../../../store/types';
 
 export const fantasticalRulesData: FantasticalRules = {
   Leader: {

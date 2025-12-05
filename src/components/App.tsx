@@ -1,7 +1,7 @@
 import { Container, CssBaseline } from '@mui/material';
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import useUserTheme from '../hooks/useUserTheme';
 import { hydrateData } from '../store/dataSlice';
 import AppBar from './AppBar';
@@ -16,10 +16,11 @@ import Validation from './Validation';
 const App = () => {
   const theme = useUserTheme();
   const dispatch = useAppDispatch();
+  const edition = useAppSelector((state) => state.ui.edition);
 
   useEffect(() => {
-    dispatch(hydrateData());
-  }, [dispatch]);
+    dispatch(hydrateData(edition));
+  }, [dispatch, edition]);
 
   return (
     <StyledEngineProvider injectFirst>

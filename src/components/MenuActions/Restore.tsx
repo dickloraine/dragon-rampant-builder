@@ -1,9 +1,9 @@
 import RestorePageIcon from '@mui/icons-material/RestorePage';
 import React from 'react';
-import { useAppDispatch } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { showFeedback, toggleForceInputUpdate } from '../../store/appStateSlice';
 import { importCustomData } from '../../store/dataSlice';
-import { rosterStore } from '../../store/persistantStorage';
+import { getRosterStore } from '../../store/persistantStorage';
 import MenuAction from './MenuAction';
 
 const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
@@ -12,6 +12,8 @@ const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
 }) => {
   const dispatch = useAppDispatch();
   const fileDialog = React.useRef<HTMLInputElement>(null);
+  const edition = useAppSelector((state) => state.ui.edition);
+  const rosterStore = getRosterStore(edition);
 
   const handleFileChosen = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileReader = new FileReader();

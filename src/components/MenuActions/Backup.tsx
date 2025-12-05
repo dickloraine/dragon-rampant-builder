@@ -2,7 +2,7 @@ import BackupIcon from '@mui/icons-material/Backup';
 import { saveAs } from 'file-saver';
 import React from 'react';
 import { useAppSelector } from '../../hooks/reduxHooks';
-import { rosterStore } from '../../store/persistantStorage';
+import { getRosterStore } from '../../store/persistantStorage';
 import { CustomData } from '../../store/types';
 import MenuAction from './MenuAction';
 
@@ -16,6 +16,7 @@ const Backup: React.FC<{ showText: boolean; onClose?: () => void }> = ({
   onClose = undefined,
 }) => {
   const customData = useAppSelector((state) => state.data.customData);
+  const edition = useAppSelector((state) => state.ui.edition);
 
   const backup = async () => {
     const backupState: BackupState = {
@@ -23,7 +24,7 @@ const Backup: React.FC<{ showText: boolean; onClose?: () => void }> = ({
       customData: customData,
     };
 
-    await rosterStore.iterate((val, key) => {
+    await getRosterStore(edition).iterate((val, key) => {
       backupState.rosters[key] = val;
     });
 

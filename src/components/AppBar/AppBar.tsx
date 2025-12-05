@@ -8,7 +8,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { useAppDispatch } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { newRoster } from '../../store/rosterSlice';
 import InlineRules from '../MenuActions/InlineRules';
 import LoadList from '../MenuActions/LoadList';
@@ -19,6 +19,7 @@ import TotalPoints from './TotalPoints';
 
 const AppBar = () => {
   const dispatch = useAppDispatch();
+  const edition = useAppSelector((state) => state.ui.edition);
 
   return (
     <Box display="flex">
@@ -26,14 +27,20 @@ const AppBar = () => {
         <Toolbar>
           <Box display="flex" alignItems="center">
             <SideMenu />
-            <Typography variant="h3" sx={{ display: { xs: 'none', md: 'block' } }}>
-              &nbsp;&nbsp;Dragon Rampant Army Builder&nbsp;&nbsp;
+            <Typography
+              variant="h3"
+              sx={{ display: { xs: 'none', md: 'block' }, ml: 2 }}
+            >
+              Dragon Rampant Army Builder
             </Typography>
             <Typography
               variant="h3"
-              sx={{ display: { xs: 'none', sm: 'block', md: 'none' } }}
+              sx={{ display: { xs: 'none', sm: 'block', md: 'none' }, ml: 2 }}
             >
-              &nbsp;&nbsp;DRAB&nbsp;&nbsp;
+              DRAB
+            </Typography>
+            <Typography variant="subtitle2" sx={{ paddingTop: '2px', mx: 1 }}>
+              {edition === 'second' ? '2nd' : '1st'}
             </Typography>
             <IconButton
               color="inherit"

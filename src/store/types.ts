@@ -4,6 +4,8 @@ import { RootState } from './store';
 
 export type { AppDispatch, AppStore, RootState } from './store';
 
+export type Edition = 'first' | 'second' | undefined;
+
 export type UnitStats = {
   attack: number;
   move: number;
@@ -142,6 +144,7 @@ export type CompactRosterState = {
 };
 
 export type UIState = {
+  edition: Edition;
   viewMode: boolean;
   editMode: boolean;
   inlineRules: boolean;

@@ -13,6 +13,7 @@ const getInitialState = () => {
     console.log(error);
   }
   return {
+    edition: undefined,
     viewMode: false,
     editMode: false,
     inlineRules: true,
@@ -32,7 +33,10 @@ const uiSlice = createSlice({
     _setUI: (_, action: PayloadAction<UIState>) => {
       return { ...action.payload };
     },
-    _toggleUIOption: (state: UIState, action: PayloadAction<keyof UIState>) => {
+    _toggleUIOption: (
+      state: UIState,
+      action: PayloadAction<keyof Omit<UIState, 'edition'>>
+    ) => {
       const option = action.payload;
       state[option] = !state[option];
     },
@@ -55,7 +59,7 @@ export const setUI =
   };
 
 export const toggleUIOption =
-  (option: keyof UIState): UIThunk =>
+  (option: keyof Omit<UIState, 'edition'>): UIThunk =>
   (dispatch, getState) => {
     const state: UIState = getState().ui;
     uiStore

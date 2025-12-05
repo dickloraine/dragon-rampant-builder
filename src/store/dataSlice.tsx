@@ -5,17 +5,23 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 import { produce } from 'immer';
-import { fantasticalRulesData } from '../assets/dragonRampantData/fantasticalRules';
-import { rulesData } from '../assets/dragonRampantData/rules';
-import { spells } from '../assets/dragonRampantData/spells';
-import { traitData } from '../assets/dragonRampantData/traits';
-import { unitsData } from '../assets/dragonRampantData/units';
-import { dataStore } from './persistantStorage';
+import { fantasticalRulesData } from '../assets/dragonRampantData/e1/fantasticalRules';
+import { rulesData } from '../assets/dragonRampantData/e1/rules';
+import { spells } from '../assets/dragonRampantData/e1/spells';
+import { traitData } from '../assets/dragonRampantData/e1/traits';
+import { unitsData } from '../assets/dragonRampantData/e1/units';
+import { fantasticalRulesData as fantasticalRulesData2 } from '../assets/dragonRampantData/e2/fantasticalRules';
+import { rulesData as rulesData2 } from '../assets/dragonRampantData/e2/rules';
+import { spells as spells2 } from '../assets/dragonRampantData/e2/spells';
+import { traitData as traitData2 } from '../assets/dragonRampantData/e2/traits';
+import { unitsData as unitsData2 } from '../assets/dragonRampantData/e2/units';
+import { getDataStore } from './persistantStorage';
 import {
   CustomData,
   CustomDataElement,
   Data,
   DataUnit,
+  Edition,
   FantasticalRule,
   RootState,
   Rule,
@@ -39,36 +45,52 @@ const initialData: Data = {
   customData: getEmptyCustomData(),
 };
 
-export const hydrateData = createAsyncThunk('data/hydrateData', async () => {
-  const customData = await dataStore.getItem('data');
-  if (customData !== null) {
-    return customData as CustomData;
+const getData = (edition: Edition): Data => {
+  if (edition === 'second')
+    return {
+      unitData: unitsData2,
+      fantasticalRulesData: fantasticalRulesData2,
+      rulesData: rulesData2,
+      spells: spells2,
+      traits: traitData2,
+      customData: getEmptyCustomData(),
+    };
+  return { ...initialData };
+};
+
+export const hydrateData = createAsyncThunk(
+  'data/hydrateData',
+  async (edition: Edition) => {
+    const data = getData(edition);
+    const customData = await getDataStore(edition)
+      .getItem('data')
+      .catch((err) => console.log(err));
+    if (customData) {
+      data.customData = customData as CustomData;
+    }
+    return data;
   }
-  return null;
-});
+);
 
 const dataSlice = createSlice({
   name: 'data',
-  initialState: initialData,
+  initialState: { ...initialData },
   reducers: {
     _setData: (_, action: PayloadAction<Data>) => ({ ...action.payload }),
   },
   extraReducers: (builder) => {
-    builder.addCase(hydrateData.fulfilled, (state, action) => {
-      const customData = action.payload;
-      if (customData === null) {
-        return state;
-      }
+    builder.addCase(hydrateData.fulfilled, (_, action) => {
+      const data = action.payload;
       return {
-        unitData: { ...initialData.unitData, ...customData.unitData },
+        unitData: { ...data.unitData, ...data.customData.unitData },
         fantasticalRulesData: {
-          ...initialData.fantasticalRulesData,
-          ...customData.fantasticalRulesData,
+          ...data.fantasticalRulesData,
+          ...data.customData.fantasticalRulesData,
         },
-        rulesData: { ...initialData.rulesData, ...customData.rulesData },
-        spells: { ...initialData.spells, ...customData.spells },
-        traits: { ...initialData.traits },
-        customData: customData,
+        rulesData: { ...data.rulesData, ...data.customData.rulesData },
+        spells: { ...data.spells, ...data.customData.spells },
+        traits: { ...data.traits },
+        customData: data.customData,
       };
     });
   },
@@ -103,7 +125,10 @@ export const importCustomData =
         });
       });
     });
-    dataStore.setItem('data', state.customData).catch((err) => console.log(err));
+    const edition = getState().ui.edition;
+    getDataStore(edition)
+      .setItem('data', state.customData)
+      .catch((err) => console.log(err));
     dispatch(_setData(state));
   };
 
@@ -123,7 +148,10 @@ const removeAndDispatch =
       delete draft[targetState][target];
       delete draft.customData[targetState][target];
     });
-    dataStore.setItem('data', state.customData).catch((err) => console.log(err));
+    const edition = getState().ui.edition;
+    getDataStore(edition)
+      .setItem('data', state.customData)
+      .catch((err) => console.log(err));
     dispatch(_setData(state));
   };
 
