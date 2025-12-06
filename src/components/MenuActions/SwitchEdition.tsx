@@ -4,32 +4,27 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { showFeedback } from '../../store/appStateSlice';
 import { newRoster } from '../../store/rosterSlice';
 import { updateUI } from '../../store/uiSlice';
-import ListDialog from '../ListDialog';
 import MenuAction from './MenuAction';
 
 const SwitchEdition: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
-  onClose,
   showText,
 }) => {
   const dispatch = useAppDispatch();
   const edition = useAppSelector((state) => state.ui.edition);
 
-  const switchEdition = (name: string) => {
-    if (name === edition) return;
-    dispatch(updateUI({ edition: name === 'second' ? name : 'first' }));
+  const switchEdition = () => {
+    const newEdition = edition === 'second' ? 'first' : 'second';
+    dispatch(updateUI({ edition: newEdition }));
     dispatch(newRoster());
-    dispatch(showFeedback(`Switched to ${name} edition!`, 'success'));
+    dispatch(showFeedback(`Switched to ${newEdition} edition!`, 'success'));
   };
 
   return (
-    <ListDialog
+    <MenuAction
+      text="Switch Edition"
       action={switchEdition}
-      anchor={
-        <MenuAction text={'Switch Edition'} icon={<SyncIcon />} showText={showText} />
-      }
-      options={['first', 'second'].filter((ed) => ed !== edition)}
-      title={`Choose edition (currently ${edition})`}
-      onClose={onClose}
+      icon={<SyncIcon />}
+      showText={showText}
     />
   );
 };
