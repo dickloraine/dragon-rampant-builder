@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { showFeedback, toggleForceInputUpdate } from '../../store/appStateSlice';
 import { importCustomData } from '../../store/dataSlice';
 import { getDataStore, getRosterStore } from '../../store/persistantStorage';
+import type { CustomData } from '../../store/types';
 import { emptyBackupState, type BackupState } from './Backup';
 import MenuAction from './MenuAction';
 
@@ -27,8 +28,7 @@ const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
         let data: BackupState;
 
         // migrate legacy single-edition backups
-        // eslint-disable-next-line no-prototype-builtins
-        if (!rawData.hasOwnProperty('first') && !rawData.hasOwnProperty('second')) {
+        if (!('first' in rawData) && !('second' in rawData)) {
           data = { ...emptyBackupState };
           data.first = rawData;
         } else {
@@ -45,7 +45,17 @@ const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
           if (edition === currentEdition) {
             dispatch(importCustomData(data[edition].customData));
           } else {
-            await getDataStore(edition).setItem('data', data[edition].customData);
+            const datastore = getDataStore(edition);
+            const customData = (await datastore.getItem('data')) as CustomData;
+            for (const targetState of Object.keys(customData) as Array<
+              keyof CustomData
+            >) {
+              Object.assign(
+                customData[targetState],
+                data[edition].customData[targetState]
+              );
+            }
+            await datastore.setItem('data', customData);
           }
         }
 
