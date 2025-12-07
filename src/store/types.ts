@@ -80,12 +80,27 @@ export type Rule = {
   short?: string;
 };
 
+export const spellSchools = [
+  'Amber',
+  'Crimson',
+  'Emerald',
+  'Indigo',
+  'Jade',
+  'Magenta',
+  'Saffron',
+  'Turquoise',
+  'Violet',
+] as const;
+
+export type SpellSchool = (typeof spellSchools)[number];
+
 export type Spell = {
   name: string;
   difficulty: number;
   target: string;
   duration: string;
   effect: string;
+  school?: SpellSchool;
   short?: string;
 };
 
