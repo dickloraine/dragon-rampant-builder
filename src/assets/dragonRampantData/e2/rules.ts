@@ -49,6 +49,13 @@ export const rulesData: Rules = {
       'As an ordered activation, successful on a 7+, the unit may choose to make a half move and Shoot either before or after this movement takes place. All models in the unit Shoot with –1 to their dice scores.',
     short: 'On 7+ half move and shoot. Shoot value -1.',
   },
+  Stomper: {
+    name: 'Stomper',
+    description:
+      'If unable to Retreat the full distance required due to a friendly unit blocking its path, that friendly unit loses the same number of Strength Points as the Retreating Greater Warbeasts. The friendly unit does not take a Courage test as a result of this stomping, and does not Retreat.',
+    short:
+      'Friendly units in the way of retreating lose the same number of Strength Points.',
+  },
   'Wall of Spears': {
     name: 'Wall of Spears',
     description:

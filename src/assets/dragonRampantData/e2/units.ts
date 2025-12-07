@@ -22,8 +22,8 @@ export const unitsData: Units = {
     options: {},
     fantasticalRules: [],
   },
-  'Elite Riders 2': {
-    name: 'Elite Riders 2',
+  'Elite Riders': {
+    name: 'Elite Riders',
     type: 'mounted',
     points: 6,
     stats: {
@@ -54,14 +54,21 @@ export const unitsData: Units = {
           shootRange: 12,
         },
       },
-      'Level Headed': {
-        name: 'Level Headed',
-        points: 2,
-        description: 'Remove Wild Charge and change Move to 5+.',
-        short: 'Remove Wild Charge, Move 5+.',
+      Drilled: {
+        name: 'Drilled',
+        points: 1,
+        description: 'Remove Wild Charge.',
+        short: 'Remove Wild Charge',
+        remove: ['Wild Charge'],
+      },
+      Motivated: {
+        name: 'Motivated',
+        points: 1,
+        description: 'Move becomes 6+.',
+        short: 'Move becomes 6+',
         remove: ['Wild Charge'],
         setStats: {
-          move: 5,
+          move: 6,
         },
       },
     },
@@ -100,7 +107,7 @@ export const unitsData: Units = {
       Chariots: {
         name: 'Chariots',
         points: 2,
-        description: 'May not enter rough terrain. armor is increased to 4.',
+        description: 'May not enter rough terrain. Armor is increased to 4.',
         short: "Can't enter rough terrain, armor 4.",
         add: ['Chariots'],
         setStats: {
@@ -138,6 +145,12 @@ export const unitsData: Units = {
           shootRange: 6,
         },
       },
+      'Good Shooters': {
+        name: 'Good Shooters',
+        points: 2,
+        description: 'Does not suffer the -1 penalty to Shoot Value when Skirmishing.',
+        short: 'No shoot penalty when Skirmishing.',
+      },
     },
     fantasticalRules: [],
   },
@@ -158,7 +171,7 @@ export const unitsData: Units = {
       movement: 10,
       strengthPoints: 6,
     },
-    rules: ['Ranger', 'Wild Charge'],
+    rules: ['Ranger', 'Wild Charge', 'Stomper'],
     options: {
       'Flame or Spore Attack': {
         name: 'Flame or Spore Attack',
@@ -299,6 +312,24 @@ export const unitsData: Units = {
         },
         remove: ['Wall of Spears'],
       },
+      Pikes: {
+        name: 'Pikes',
+        points: 1,
+        description:
+          'Defence Value becomes 3+ against Mounted units. Cannot be used with the Offensive option but may still form Wall of Spears. ',
+        short: 'Defence Value becomes 3+ against Mounted units.',
+      },
+      'Short range missiles': {
+        name: 'Short range missiles',
+        points: 1,
+        description: 'Add Shoot 6+/Range 6" hitting on 5+.',
+        short: 'Shoot 6+, shoot value 5+/6".',
+        setStats: {
+          shoot: 6,
+          shootValue: 5,
+          shootRange: 6,
+        },
+      },
     },
     fantasticalRules: [],
   },
@@ -331,6 +362,13 @@ export const unitsData: Units = {
           attackValue: 4,
         },
         remove: ['Wall of Spears'],
+      },
+      Pikes: {
+        name: 'Pikes',
+        points: 1,
+        description:
+          'Defence Value becomes 3+ against Mounted units. Cannot be used with the Offensive option but may still form Wall of Spears. ',
+        short: 'Defence Value becomes 3+ against Mounted units.',
       },
       'Short range missiles': {
         name: 'Short range missiles',
@@ -377,8 +415,8 @@ export const unitsData: Units = {
     },
     rules: ['Ranger', 'Wild Charge', 'Counter-charge vs. foot', 'Fleet Footed'],
     options: {
-      'Terrifically Shiny armor': {
-        name: 'Terrifically Shiny armor',
+      Armoured: {
+        name: 'Armoured',
         points: 2,
         description: 'Armor becomes 3.',
         short: 'Armor 3.',
@@ -417,6 +455,13 @@ export const unitsData: Units = {
           shootRange: 12,
         },
       },
+      Shielded: {
+        name: 'Shielded',
+        points: 2,
+        description:
+          'Unit increases their Armour by 2 against Shooting (to 4) and by 1 against Attacks when Defending (to 3). If the unit is in rough terrain or cover, this bonus does not apply as the terrain is already doing an adequate job.',
+        short: 'Armour +2 against Shooting, +1 when Defending. Not in terrain.',
+      },
     },
     fantasticalRules: [],
   },
@@ -448,6 +493,13 @@ export const unitsData: Units = {
           shootValue: 4,
         },
       },
+      'Fleet Footed': {
+        name: 'Fleet Footed',
+        points: 1,
+        description: 'This unit does not halve its movement in rough terrain.',
+        short: 'Move normally through rough terrain.',
+        add: ['Fleet Footed'],
+      },
     },
     fantasticalRules: [],
   },
@@ -469,7 +521,14 @@ export const unitsData: Units = {
       strengthPoints: 6,
     },
     rules: ['Hard to target', 'Skirmish', 'Evade', 'Fleet Footed'],
-    options: {},
+    options: {
+      'Good Shooters': {
+        name: 'Good Shooters',
+        points: 2,
+        description: 'Does not suffer the -1 penalty to Shoot Value when Skirmishing.',
+        short: 'No shoot penalty when Skirmishing.',
+      },
+    },
     fantasticalRules: [],
   },
   'Ravenous Hordes': {
