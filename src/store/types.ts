@@ -72,6 +72,7 @@ export type FantasticalRule = {
   short?: string;
   setStats?: Partial<UnitStats>;
   adjustStats?: Partial<UnitStats>;
+  leaderOnly?: boolean;
 };
 
 export type Rule = {
