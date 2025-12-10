@@ -24,15 +24,13 @@ import { toggleUIOption } from '../store/uiSlice';
 
 const SpellTable = () => {
   const dispatch = useAppDispatch();
-  const psychicData = useAppSelector((state) => getSpells(state));
+  const spellData = useAppSelector((state) => getSpells(state));
   const powersExpanded = useAppSelector((state) => state.ui.powersExpanded);
-  const [open, setOpen] = useState(
-    [...Array(Object.keys(psychicData))].map(() => false)
-  );
+  const [open, setOpen] = useState([...Array(Object.keys(spellData))].map(() => false));
 
-  const psycherInRoster = psychicData && Object.keys(psychicData).length > 0;
+  const casterInRoster = spellData && Object.keys(spellData).length > 0;
 
-  const handlePowerClick = (index: number) => {
+  const handleSpellClick = (index: number) => {
     const newOpen = [...open];
     newOpen[index] = !open[index];
     setOpen(newOpen);
@@ -40,7 +38,7 @@ const SpellTable = () => {
 
   return (
     <>
-      {psycherInRoster && (
+      {casterInRoster && (
         <Accordion
           expanded={powersExpanded}
           onChange={() => dispatch(toggleUIOption('powersExpanded'))}
@@ -73,7 +71,7 @@ const SpellTable = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Object.values(psychicData).map((power) => (
+                  {Object.values(spellData).map((power) => (
                     <TableRow key={power.name}>
                       <TableCell component="th" scope="row">
                         {power.name}
@@ -88,11 +86,11 @@ const SpellTable = () => {
               </Table>
             </TableContainer>
             <List sx={{ display: { md: 'none', xs: 'block' } }}>
-              {Object.values(psychicData).map((power, index) => (
+              {Object.values(spellData).map((power, index) => (
                 <Box key={index}>
                   <ListItem
                     key={power.name + 'small'}
-                    onClick={() => handlePowerClick(index)}
+                    onClick={() => handleSpellClick(index)}
                   >
                     <ListItemText primary={power.name} />
                     <Box width={25}></Box>
