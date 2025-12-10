@@ -28,6 +28,7 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
   const unit = useAppSelector((state) => state.roster.units[id]);
   const viewMode = useAppSelector((state) => state.ui.viewMode);
   const editMode = useAppSelector((state) => state.ui.editMode);
+  const edition = useAppSelector((state) => state.ui.edition);
 
   const [expanded, setExpanded] = React.useState(true);
   const handleExpandClick = () => setExpanded(!expanded);
@@ -78,7 +79,7 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
               <SpecialRules rules={unit.rules} />
             </>
           )}
-          <Trait onChange={handleChange} unit={unit} />
+          {edition !== 'second' && <Trait onChange={handleChange} unit={unit} />}
           <Spells onChange={handleChange} unit={unit} />
           {!viewMode && (
             <>
