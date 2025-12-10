@@ -31,7 +31,11 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
   if (unit.name === 'Unit') return <div></div>;
 
   const fantasticalRules = Object.keys(fantasticalRulesData).filter(
-    (rule) => !fantasticalRulesData[rule].exclude_units.includes(unit.name)
+    (rule) =>
+      !fantasticalRulesData[rule].exclude_units.includes(unit.name) &&
+      (fantasticalRulesData[rule].leaderOnly
+        ? unit.fantasticalRules.includes('Leader')
+        : true)
   );
 
   const handleChange = (e: SelectChangeEvent<string[]>) =>
