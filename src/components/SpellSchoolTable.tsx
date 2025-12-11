@@ -24,7 +24,7 @@ import { toggleUIOption } from '../store/uiSlice';
 
 const SpellSchoolTable = () => {
   const dispatch = useAppDispatch();
-  const spellData = useAppSelector((state) => getSpellSchools(state));
+  const spellData = useAppSelector(getSpellSchools);
   const powersExpanded = useAppSelector((state) => state.ui.powersExpanded);
   const [open, setOpen] = useState([...Array(Object.keys(spellData))].map(() => false));
 

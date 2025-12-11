@@ -4,7 +4,6 @@ import {
   Data,
   RootState,
   RosterState,
-  RosterUnits,
   Rules,
   Spells,
   Thunk,
@@ -97,7 +96,7 @@ export const setUnit =
   };
 
 export const getTotalPoints = createSelector(
-  (units: RosterUnits) => units,
+  (state: RootState) => state.roster.units,
   (units) => Object.values(units).reduce((acc, unit) => acc + unit.points, 0)
 );
 

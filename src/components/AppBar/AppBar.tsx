@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { newRoster } from '../../store/rosterSlice';
+import { getEdition } from '../../store/uiSlice';
 import InlineRules from '../MenuActions/InlineRules';
 import LoadList from '../MenuActions/LoadList';
 import SaveList from '../MenuActions/SaveList';
@@ -19,7 +20,7 @@ import TotalPoints from './TotalPoints';
 
 const AppBar = () => {
   const dispatch = useAppDispatch();
-  const edition = useAppSelector((state) => state.ui.edition);
+  const edition = useAppSelector(getEdition);
 
   return (
     <Box display="flex">

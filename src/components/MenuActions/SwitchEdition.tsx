@@ -3,14 +3,14 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { showFeedback } from '../../store/appStateSlice';
 import { newRoster } from '../../store/rosterSlice';
-import { updateUI } from '../../store/uiSlice';
+import { getEdition, updateUI } from '../../store/uiSlice';
 import MenuAction from './MenuAction';
 
 const SwitchEdition: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
   showText,
 }) => {
   const dispatch = useAppDispatch();
-  const edition = useAppSelector((state) => state.ui.edition);
+  const edition = useAppSelector(getEdition);
 
   const switchEdition = () => {
     const newEdition = edition === 'second' ? 'first' : 'second';

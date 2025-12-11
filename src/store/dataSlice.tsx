@@ -28,6 +28,7 @@ import {
   Spell,
   Thunk,
 } from './types';
+import { getEdition } from './uiSlice';
 
 export const getEmptyCustomData = (): CustomData => ({
   unitData: {},
@@ -125,7 +126,7 @@ export const importCustomData =
         });
       });
     });
-    const edition = getState().ui.edition;
+    const edition = getEdition(getState());
     getDataStore(edition)
       .setItem('data', state.customData)
       .catch((err) => console.log(err));
@@ -148,7 +149,7 @@ const removeAndDispatch =
       delete draft[targetState][target];
       delete draft.customData[targetState][target];
     });
-    const edition = getState().ui.edition;
+    const edition = getEdition(getState());
     getDataStore(edition)
       .setItem('data', state.customData)
       .catch((err) => console.log(err));

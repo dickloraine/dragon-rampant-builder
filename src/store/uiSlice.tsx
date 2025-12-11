@@ -1,7 +1,7 @@
-import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Action, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
 import { uiStore } from './persistantStorage';
-import { UIState } from './types';
+import { UIState, type RootState } from './types';
 
 const getInitialState = () => {
   try {
@@ -77,5 +77,10 @@ export const updateUI =
       .catch((err) => console.log(err));
     dispatch(_updateUI(options));
   };
+
+export const getEdition = createSelector(
+  (state: RootState) => state.ui.edition,
+  (edition) => (edition ? edition : 'first')
+);
 
 export default uiSlice.reducer;

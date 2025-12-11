@@ -3,6 +3,7 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { showFeedback } from '../../store/appStateSlice';
 import { getRosterStore } from '../../store/persistantStorage';
+import { getEdition } from '../../store/uiSlice';
 import { packRoster } from '../Roster';
 import MenuAction from './MenuAction';
 
@@ -12,7 +13,7 @@ const SaveList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
 }) => {
   const dispatch = useAppDispatch();
   const roster = useAppSelector((state) => state.roster);
-  const edition = useAppSelector((state) => state.ui.edition);
+  const edition = useAppSelector(getEdition);
   const rosterStore = getRosterStore(edition);
 
   const saveRoster = () => {

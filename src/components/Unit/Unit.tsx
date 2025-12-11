@@ -12,6 +12,7 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { removeUnit, updateUnit } from '../../store/rosterSlice';
 import { Unit as UnitType } from '../../store/types';
+import { getEdition } from '../../store/uiSlice';
 import ExpandIcon from '../ExpandIcon';
 import Actions from './Actions';
 import buildUnit from './buildUnit';
@@ -29,7 +30,7 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
   const unit = useAppSelector((state) => state.roster.units[id]);
   const viewMode = useAppSelector((state) => state.ui.viewMode);
   const editMode = useAppSelector((state) => state.ui.editMode);
-  const edition = useAppSelector((state) => state.ui.edition);
+  const edition = useAppSelector(getEdition);
 
   const [expanded, setExpanded] = React.useState(true);
   const handleExpandClick = () => setExpanded(!expanded);
@@ -80,7 +81,7 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
               <SpecialRules rules={unit.rules} />
             </>
           )}
-          {edition !== 'second' && <Trait onChange={handleChange} unit={unit} />}
+          {edition === 'first' && <Trait onChange={handleChange} unit={unit} />}
           {edition === 'second' ? (
             <SpellSchools onChange={handleChange} unit={unit} />
           ) : (

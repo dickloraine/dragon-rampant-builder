@@ -5,6 +5,7 @@ import { showFeedback, toggleForceInputUpdate } from '../../store/appStateSlice'
 import { getRosterStore } from '../../store/persistantStorage';
 import { setRoster } from '../../store/rosterSlice';
 import { CompactRosterState } from '../../store/types';
+import { getEdition } from '../../store/uiSlice';
 import ListDialog from '../ListDialog';
 import { unpackRoster } from '../Roster';
 import MenuAction from './MenuAction';
@@ -15,7 +16,7 @@ const LoadList: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
 }) => {
   const dispatch = useAppDispatch();
   const [savedRosters, setSavedRosters] = useState<string[]>([]);
-  const edition = useAppSelector((state) => state.ui.edition);
+  const edition = useAppSelector(getEdition);
   const rosterStore = getRosterStore(edition);
 
   const handleOpen = () => rosterStore.keys().then((keys) => setSavedRosters(keys));

@@ -12,7 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { getTotalPoints } from '../store/rosterSlice';
 import type { Unit } from '../store/types';
-import { toggleUIOption } from '../store/uiSlice';
+import { getEdition, toggleUIOption } from '../store/uiSlice';
 
 const checkMutualExclusive = (warnings: string[][], unit: Unit, ...rules: string[]) => {
   const foundRules = rules.filter((rule) => unit.fantasticalRules.includes(rule));
@@ -23,13 +23,13 @@ const checkMutualExclusive = (warnings: string[][], unit: Unit, ...rules: string
 
 const Validation = () => {
   const dispatch = useAppDispatch();
-  const edition = useAppSelector((state) => state.ui.edition);
+  const edition = useAppSelector(getEdition);
   const validationExpanded = useAppSelector((state) => state.ui.validationExpanded);
   const fantasticalRulesData = useAppSelector(
     (state) => state.data.fantasticalRulesData
   );
   const units = useAppSelector((state) => state.roster.units);
-  const armyCost = getTotalPoints(units);
+  const armyCost = useAppSelector(getTotalPoints);
   const warnings: string[][] = [];
 
   if (edition === 'second') {

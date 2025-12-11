@@ -5,6 +5,7 @@ import { showFeedback, toggleForceInputUpdate } from '../../store/appStateSlice'
 import { importCustomData } from '../../store/dataSlice';
 import { getDataStore, getRosterStore } from '../../store/persistantStorage';
 import type { CustomData } from '../../store/types';
+import { getEdition } from '../../store/uiSlice';
 import { emptyBackupState, type BackupState } from './Backup';
 import MenuAction from './MenuAction';
 
@@ -16,7 +17,7 @@ const Restore: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
 }) => {
   const dispatch = useAppDispatch();
   const fileDialog = React.useRef<HTMLInputElement>(null);
-  const currentEdition = useAppSelector((state) => state.ui.edition);
+  const currentEdition = useAppSelector(getEdition);
 
   const handleFileChosen = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileReader = new FileReader();

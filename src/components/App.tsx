@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import useUserTheme from '../hooks/useUserTheme';
 import { hydrateData } from '../store/dataSlice';
+import { getEdition } from '../store/uiSlice';
 import AppBar from './AppBar';
 import CustomizeMenu from './Customize/CustomizeMenu';
 import ListName from './ListName';
@@ -17,7 +18,7 @@ import Validation from './Validation';
 const App = () => {
   const theme = useUserTheme();
   const dispatch = useAppDispatch();
-  const edition = useAppSelector((state) => state.ui.edition);
+  const edition = useAppSelector(getEdition);
 
   useEffect(() => {
     dispatch(hydrateData(edition));
