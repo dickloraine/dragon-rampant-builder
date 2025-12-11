@@ -28,7 +28,7 @@ const SpellTable = () => {
   const powersExpanded = useAppSelector((state) => state.ui.powersExpanded);
   const [open, setOpen] = useState([...Array(Object.keys(spellData))].map(() => false));
 
-  const casterInRoster = spellData && Object.keys(spellData).length > 0;
+  if (!spellData || Object.keys(spellData).length === 0) return null;
 
   const handleSpellClick = (index: number) => {
     const newOpen = [...open];
@@ -37,91 +37,78 @@ const SpellTable = () => {
   };
 
   return (
-    <>
-      {casterInRoster && (
-        <Accordion
-          expanded={powersExpanded}
-          onChange={() => dispatch(toggleUIOption('powersExpanded'))}
-          sx={{ maxWidth: 1210 }}
-        >
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h3">Spell Table</Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ maxWidth: 800 }}>
-            <TableContainer sx={{ display: { xs: 'none', md: 'block' } }}>
-              <Table size="small" sx={{ minWidth: 650 }}>
-                <TableHead>
-                  <TableRow key="headpowertable">
-                    <TableCell sx={{ minWidth: 120 }}>Spell name</TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ display: { md: 'none', lg: 'block' } }}
-                    >
-                      Difficulty
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ display: { md: 'block', lg: 'none' } }}
-                    >
-                      Dif
-                    </TableCell>
-                    <TableCell>Target</TableCell>
-                    <TableCell>Duration</TableCell>
-                    <TableCell>Effect</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {Object.values(spellData).map((power) => (
-                    <TableRow key={power.name}>
-                      <TableCell component="th" scope="row">
-                        {power.name}
-                      </TableCell>
-                      <TableCell align="center">{power.difficulty}+</TableCell>
-                      <TableCell>{power.target}</TableCell>
-                      <TableCell>{power.duration}</TableCell>
-                      <TableCell>{power.effect}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <List sx={{ display: { md: 'none', xs: 'block' } }}>
-              {Object.values(spellData).map((power, index) => (
-                <Box key={index}>
-                  <ListItem
-                    key={power.name + 'small'}
-                    onClick={() => handleSpellClick(index)}
-                  >
-                    <ListItemText primary={power.name} />
-                    <Box width={25}></Box>
-                    {open[index] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                  </ListItem>
-                  <Collapse in={open[index]} timeout="auto" unmountOnExit>
-                    <List key={power.name + 'list'} dense sx={{ pl: 3 }}>
-                      <ListItem key={power.name + power.difficulty}>
-                        <ListItemText
-                          primary="Difficulty: "
-                          secondary={power.difficulty}
-                        />
-                      </ListItem>
-                      <ListItem key={power.name + power.target}>
-                        <ListItemText primary="Target: " secondary={power.target} />
-                      </ListItem>
-                      <ListItem key={power.name + power.duration}>
-                        <ListItemText primary="Duration: " secondary={power.duration} />
-                      </ListItem>
-                      <ListItem key={power.name + power.effect}>
-                        <ListItemText primary="Effect: " secondary={power.effect} />
-                      </ListItem>
-                    </List>
-                  </Collapse>
-                </Box>
+    <Accordion
+      expanded={powersExpanded}
+      onChange={() => dispatch(toggleUIOption('powersExpanded'))}
+      sx={{ maxWidth: 1210 }}
+    >
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography variant="h3">Spell Table</Typography>
+      </AccordionSummary>
+      <AccordionDetails sx={{ maxWidth: 800 }}>
+        <TableContainer sx={{ display: { xs: 'none', md: 'block' } }}>
+          <Table size="small" sx={{ minWidth: 650 }}>
+            <TableHead>
+              <TableRow key="headpowertable">
+                <TableCell sx={{ minWidth: 120 }}>Spell name</TableCell>
+                <TableCell align="center" sx={{ display: { md: 'none', lg: 'block' } }}>
+                  Difficulty
+                </TableCell>
+                <TableCell align="center" sx={{ display: { md: 'block', lg: 'none' } }}>
+                  Dif
+                </TableCell>
+                <TableCell>Target</TableCell>
+                <TableCell>Duration</TableCell>
+                <TableCell>Effect</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.values(spellData).map((power) => (
+                <TableRow key={power.name}>
+                  <TableCell component="th" scope="row">
+                    {power.name}
+                  </TableCell>
+                  <TableCell align="center">{power.difficulty}+</TableCell>
+                  <TableCell>{power.target}</TableCell>
+                  <TableCell>{power.duration}</TableCell>
+                  <TableCell>{power.effect}</TableCell>
+                </TableRow>
               ))}
-            </List>
-          </AccordionDetails>
-        </Accordion>
-      )}
-    </>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <List sx={{ display: { md: 'none', xs: 'block' } }}>
+          {Object.values(spellData).map((power, index) => (
+            <Box key={index}>
+              <ListItem
+                key={power.name + 'small'}
+                onClick={() => handleSpellClick(index)}
+              >
+                <ListItemText primary={power.name} />
+                <Box width={25}></Box>
+                {open[index] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </ListItem>
+              <Collapse in={open[index]} timeout="auto" unmountOnExit>
+                <List key={power.name + 'list'} dense sx={{ pl: 3 }}>
+                  <ListItem key={power.name + power.difficulty}>
+                    <ListItemText primary="Difficulty: " secondary={power.difficulty} />
+                  </ListItem>
+                  <ListItem key={power.name + power.target}>
+                    <ListItemText primary="Target: " secondary={power.target} />
+                  </ListItem>
+                  <ListItem key={power.name + power.duration}>
+                    <ListItemText primary="Duration: " secondary={power.duration} />
+                  </ListItem>
+                  <ListItem key={power.name + power.effect}>
+                    <ListItemText primary="Effect: " secondary={power.effect} />
+                  </ListItem>
+                </List>
+              </Collapse>
+            </Box>
+          ))}
+        </List>
+      </AccordionDetails>
+    </Accordion>
   );
 };
 
