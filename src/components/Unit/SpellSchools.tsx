@@ -44,7 +44,7 @@ const SpellSchools: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = (
         </FormLabel>
       )}
       <Container sx={{ mb: 0 }}>
-        {viewMode && <Typography variant="h4">Spells</Typography>}
+        {viewMode && <Typography variant="h4">Spell Schools</Typography>}
         {unit.spells && (
           <List dense>
             <Box marginLeft={'1rem'}>
