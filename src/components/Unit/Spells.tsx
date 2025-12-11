@@ -24,11 +24,11 @@ const Spells: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
   onChange,
 }) => {
   const [open, handleOpen, handleClose] = useOpen();
-  const powersData = useAppSelector((state) => state.data.spells);
+  const spellData = useAppSelector((state) => state.data.spells);
   const inlineRules = useAppSelector((state) => state.ui.inlineRules);
   const viewMode = useAppSelector((state) => state.ui.viewMode);
   const editMode = useAppSelector((state) => state.ui.editMode);
-  if (!unit.fantasticalRules.some((rule) => rule === 'Wizardlings')) return <div></div>;
+  if (!unit.fantasticalRules.some((rule) => rule === 'Wizardlings')) return null;
 
   const handleChange = (e: SelectChangeEvent<string[]>) =>
     onChange({ ...unit, spells: [...(e.target.value as string[])] });
@@ -47,12 +47,12 @@ const Spells: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
           <List dense>
             <Box marginLeft={!inlineRules ? '1rem' : 'inherit'}>
               {unit.spells.map((name, i, arr) => (
-                <Tooltip key={name} title={powersData[name]?.effect || ''}>
+                <Tooltip key={name} title={spellData[name]?.effect || ''}>
                   {unit.spells && !editMode && inlineRules ? (
                     <ListItem key={name}>
                       <ListItemText
                         primary={name}
-                        secondary={powersData[name]?.short || ''}
+                        secondary={spellData[name]?.short || ''}
                         sx={{ m: 0 }}
                         slotProps={{
                           primary: { variant: 'body2' },
@@ -84,12 +84,12 @@ const Spells: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
           input={<Input />}
           renderValue={() => ' '}
         >
-          {Object.keys(powersData).map((name) => (
+          {Object.keys(spellData).map((name) => (
             <MenuItem key={name} value={name} dense sx={{ maxWidth: 400 }}>
-              <Tooltip title={powersData[name].effect}>
+              <Tooltip title={spellData[name].effect}>
                 <ListItemText
                   primary={name}
-                  secondary={(inlineRules && powersData[name]?.short) || ''}
+                  secondary={(inlineRules && spellData[name]?.short) || ''}
                   sx={{ m: 0 }}
                   slotProps={{
                     primary: {

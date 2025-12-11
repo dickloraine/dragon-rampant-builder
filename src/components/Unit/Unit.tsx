@@ -14,14 +14,15 @@ import { removeUnit, updateUnit } from '../../store/rosterSlice';
 import { Unit as UnitType } from '../../store/types';
 import ExpandIcon from '../ExpandIcon';
 import Actions from './Actions';
+import buildUnit from './buildUnit';
 import FantasticalRules from './FantasticalRules';
 import Options from './Options';
 import SpecialRules from './SpecialRules';
 import Spells from './Spells';
+import SpellSchools from './SpellSchools';
 import StatBlock from './StatBlock';
 import Trait from './Trait';
 import UnitSelector from './UnitSelector';
-import buildUnit from './buildUnit';
 
 const Unit: React.FC<{ id: number }> = ({ id }) => {
   const dispatch = useAppDispatch();
@@ -80,7 +81,11 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
             </>
           )}
           {edition !== 'second' && <Trait onChange={handleChange} unit={unit} />}
-          <Spells onChange={handleChange} unit={unit} />
+          {edition === 'second' ? (
+            <SpellSchools onChange={handleChange} unit={unit} />
+          ) : (
+            <Spells onChange={handleChange} unit={unit} />
+          )}
           {!viewMode && (
             <>
               <Options onChange={handleChange} unit={unit} />

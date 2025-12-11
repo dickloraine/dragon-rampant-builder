@@ -10,6 +10,7 @@ import ListName from './ListName';
 import Roster from './Roster';
 import RulesSummary from './RulesSummary';
 import ShowFeedback from './ShowFeedback';
+import SpellSchoolTable from './SpellSchoolTable';
 import SpellTable from './SpellTable';
 import Validation from './Validation';
 
@@ -32,7 +33,7 @@ const App = () => {
           <Roster />
           <Validation />
           <RulesSummary />
-          <SpellTable />
+          {edition === 'second' ? <SpellSchoolTable /> : <SpellTable />}
           <ShowFeedback />
           <CustomizeMenu />
         </Container>

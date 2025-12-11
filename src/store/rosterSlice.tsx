@@ -9,6 +9,7 @@ import {
   Spells,
   Thunk,
   Unit,
+  type Spell,
 } from './types';
 
 const rosterInitialState: RosterState = {
@@ -139,6 +140,26 @@ export const getSpells = createSelector(
       (acc: Spells, powerName) => ({
         ...acc,
         [powerName]: rulesData[powerName],
+      }),
+      {}
+    );
+  }
+);
+
+type SpellSchoolsData = { [name: string]: Spell[] };
+export const getSpellSchools = createSelector(
+  (state: RootState) => state.roster.units,
+  (state: RootState) => state.data.spells,
+  (units, rulesData) => {
+    const unique_schools = new Set<string>();
+    units.forEach((unit) =>
+      unit.spells?.forEach((school) => unique_schools.add(school))
+    );
+
+    return [...unique_schools].sort().reduce(
+      (acc: SpellSchoolsData, school) => ({
+        ...acc,
+        [school]: Object.values(rulesData).filter((spell) => spell.school === school),
       }),
       {}
     );

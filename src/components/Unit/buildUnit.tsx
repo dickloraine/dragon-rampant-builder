@@ -67,7 +67,17 @@ const buildUnit = (unitToBuild: CompactUnit | Unit) => {
     }
   }
 
-  if (!unit.fantasticalRules.some((x) => x === 'Wizardlings'))
+  if (
+    !unit.fantasticalRules.some((x) =>
+      [
+        'Wizardlings',
+        'Spellcaster 1',
+        'Spellcaster 2',
+        'Spellcaster 3',
+        'Spellcaster 4',
+      ].includes(x)
+    )
+  )
     unit = { ...unit, spells: [] };
 
   if (!unit.fantasticalRules.some((x) => x === 'Leader'))

@@ -115,6 +115,15 @@ const Validation = () => {
         'Large - 4 Armor'
       );
 
+      const spellCount = unit.spells ? unit.spells.length : 0;
+      if (spellCount > 1 && unit.fantasticalRules.includes('Spellcaster 1'))
+        warnings.push([unit.name, 'Only 1 spell school allowed!']);
+      else if (spellCount > 2 && unit.fantasticalRules.includes('Spellcaster 2'))
+        warnings.push([unit.name, 'Only 2 spell schools allowed!']);
+      else if (spellCount > 3 && unit.fantasticalRules.includes('Spellcaster 3'))
+        warnings.push([unit.name, 'Only 3 spell schools allowed!']);
+      else if (spellCount > 4 && unit.fantasticalRules.includes('Spellcaster 4'))
+        warnings.push([unit.name, 'Only 4 spell schools allowed!']);
       checkMutualExclusive(
         warnings,
         unit,
