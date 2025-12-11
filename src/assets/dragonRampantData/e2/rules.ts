@@ -30,11 +30,21 @@ export const rulesData: Rules = {
     description: 'This unit does not halve its movement in rough terrain.',
     short: 'Move normally through rough terrain.',
   },
+  'Good Shooters': {
+    name: 'Good Shooters',
+    description: 'Does not suffer the -1 penalty to Shoot Value when Skirmishing.',
+    short: 'No shoot penalty when Skirmishing.',
+  },
   'Hard to target': {
     name: 'Hard to target',
     description:
       'Scouts count as Armour 2 versus Shooting and may only be targeted within 12".',
     short: 'Count as Armour 2 versus Shooting and may only be targeted within 12".',
+  },
+  Pikes: {
+    name: 'Pikes',
+    description: 'Defence Value becomes 3+ against Mounted units.',
+    short: 'Defence Value becomes 3+ against Mounted units.',
   },
   Ranger: {
     name: 'Ranger',
@@ -42,6 +52,12 @@ export const rulesData: Rules = {
       'This unit uses its normal Attack/Defence/Armour profile when fighting in rough terrain.',
     short:
       'Use the normal Attack/Defence/armor profile when fighting in rough terrain.',
+  },
+  Shielded: {
+    name: 'Shielded',
+    description:
+      'Unit increases their Armour by 2 against Shooting (to 4) and by 1 against Attacks when Defending (to 3). If the unit is in rough terrain or cover, this bonus does not apply as the terrain is already doing an adequate job.',
+    short: 'Armour +2 against Shooting, +1 when Defending. Not in terrain.',
   },
   Skirmish: {
     name: 'Skirmish',

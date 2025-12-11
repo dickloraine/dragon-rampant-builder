@@ -150,6 +150,7 @@ export const unitsData: Units = {
         points: 2,
         description: 'Does not suffer the -1 penalty to Shoot Value when Skirmishing.',
         short: 'No shoot penalty when Skirmishing.',
+        add: ['Good Shooters'],
       },
     },
     fantasticalRules: [],
@@ -316,8 +317,9 @@ export const unitsData: Units = {
         name: 'Pikes',
         points: 1,
         description:
-          'Defence Value becomes 3+ against Mounted units. Cannot be used with the Offensive option but may still form Wall of Spears. ',
+          'Defence Value becomes 3+ against Mounted units. Cannot be used with the Offensive option but may still form Wall of Spears.',
         short: 'Defence Value becomes 3+ against Mounted units.',
+        add: ['Pikes'],
       },
       'Short range missiles': {
         name: 'Short range missiles',
@@ -369,6 +371,7 @@ export const unitsData: Units = {
         description:
           'Defence Value becomes 3+ against Mounted units. Cannot be used with the Offensive option but may still form Wall of Spears. ',
         short: 'Defence Value becomes 3+ against Mounted units.',
+        add: ['Pikes'],
       },
       'Short range missiles': {
         name: 'Short range missiles',
@@ -461,6 +464,7 @@ export const unitsData: Units = {
         description:
           'Unit increases their Armour by 2 against Shooting (to 4) and by 1 against Attacks when Defending (to 3). If the unit is in rough terrain or cover, this bonus does not apply as the terrain is already doing an adequate job.',
         short: 'Armour +2 against Shooting, +1 when Defending. Not in terrain.',
+        add: ['Shielded'],
       },
     },
     fantasticalRules: [],
@@ -527,6 +531,7 @@ export const unitsData: Units = {
         points: 2,
         description: 'Does not suffer the -1 penalty to Shoot Value when Skirmishing.',
         short: 'No shoot penalty when Skirmishing.',
+        add: ['Good Shooters'],
       },
     },
     fantasticalRules: [],
