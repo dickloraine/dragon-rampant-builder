@@ -5,17 +5,20 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material';
+import { useAppSelector } from '../../../hooks/reduxHooks';
 import {
   FormContainer,
   SelectElement,
   TextFieldElement,
 } from '../../../libs/react-hook-form-mui';
-import { Spell } from '../../../store/types';
+import { Spell, spellSchools } from '../../../store/types';
+import { getEdition } from '../../../store/uiSlice';
 import range from '../../../utils/range';
 import { CustomFormProps } from '../common/useCustomizeForm';
 
 function SpellsForm(props: CustomFormProps<Spell>) {
   const { formContext, open, handleClose, handleAction } = props;
+  const edition = useAppSelector(getEdition);
 
   return (
     <Dialog open={open}>
@@ -30,6 +33,16 @@ function SpellsForm(props: CustomFormProps<Spell>) {
             margin="normal"
             fullWidth
           />
+          {edition === 'second' && (
+            <SelectElement
+              name="school"
+              label="School"
+              type="string"
+              margin="normal"
+              fullWidth
+              options={[...spellSchools]}
+            />
+          )}
           <SelectElement
             name="difficulty"
             label="Difficulty"
