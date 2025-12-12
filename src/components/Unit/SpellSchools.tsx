@@ -15,13 +15,15 @@ import {
 import React from 'react';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import useOpen from '../../hooks/useOpen';
-import { spellSchools, Unit } from '../../store/types';
+import { getSpellSchools } from '../../store/dataSlice';
+import { Unit } from '../../store/types';
 
 const SpellSchools: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
   unit,
   onChange,
 }) => {
   const [open, handleOpen, handleClose] = useOpen();
+  const spellSchools = useAppSelector(getSpellSchools);
   const viewMode = useAppSelector((state) => state.ui.viewMode);
   if (
     !unit.fantasticalRules.some((rule) =>

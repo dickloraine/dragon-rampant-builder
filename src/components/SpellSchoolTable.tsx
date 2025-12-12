@@ -19,12 +19,12 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { getSpellSchools } from '../store/rosterSlice';
+import { getActiveSpellSchools } from '../store/rosterSlice';
 import { toggleUIOption } from '../store/uiSlice';
 
 const SpellSchoolTable = () => {
   const dispatch = useAppDispatch();
-  const spellData = useAppSelector(getSpellSchools);
+  const spellData = useAppSelector(getActiveSpellSchools);
   const powersExpanded = useAppSelector((state) => state.ui.powersExpanded);
   const [open, setOpen] = useState([...Array(Object.keys(spellData))].map(() => false));
 

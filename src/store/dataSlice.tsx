@@ -115,6 +115,20 @@ export const selectAllRules = createSelector(
   })
 );
 
+export const getSpellSchools = createSelector(
+  (state: RootState) => state.data.spells,
+  (rulesData) => {
+    const unique_schools = new Set<string>();
+    Object.values(rulesData).forEach((spell) => {
+      if (spell.school) {
+        unique_schools.add(spell.school);
+      }
+    });
+
+    return [...unique_schools].sort();
+  }
+);
+
 export const importCustomData =
   (data: CustomData): Thunk =>
   (dispatch, getState) => {

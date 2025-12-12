@@ -146,7 +146,7 @@ export const getSpells = createSelector(
 );
 
 type SpellSchoolsData = { [name: string]: Spell[] };
-export const getSpellSchools = createSelector(
+export const getActiveSpellSchools = createSelector(
   (state: RootState) => state.roster.units,
   (state: RootState) => state.data.spells,
   (units, rulesData) => {
