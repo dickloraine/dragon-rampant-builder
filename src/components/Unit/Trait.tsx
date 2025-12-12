@@ -28,8 +28,6 @@ const Trait: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }> = ({
   const inlineRules = useAppSelector((state) => state.ui.inlineRules);
   const viewMode = useAppSelector((state) => state.ui.viewMode);
 
-  if (!unit.fantasticalRules.some((rule) => rule === 'Leader')) return <div></div>;
-
   const handleChange = (e: SelectChangeEvent<string>) =>
     onChange({ ...unit, trait: e.target.value });
 

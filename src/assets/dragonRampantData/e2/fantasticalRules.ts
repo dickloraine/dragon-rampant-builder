@@ -652,4 +652,12 @@ export const fantasticalRulesData: FantasticalRules = {
       "Leader-only upgrade. When deciding Attacker/Defender, you may add or subtract 1 from your total after seeing both players' rolls (choose whichever benefits you).",
     short: 'Leader can adjust the attacker/defender die result by ±1 once.',
   },
+  'Random leader traits': {
+    name: 'Random leader traits',
+    points: 0,
+    exclude_units: [],
+    leaderOnly: true,
+    description: 'Optional Rule. Use the random leader traits from first edition.',
+    short: 'Optional Rule. Use the random leader traits from first edition.',
+  },
 };

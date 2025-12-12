@@ -81,7 +81,11 @@ const Unit: React.FC<{ id: number }> = ({ id }) => {
               <SpecialRules rules={unit.rules} />
             </>
           )}
-          {edition === 'first' && <Trait onChange={handleChange} unit={unit} />}
+          {(edition === 'first' ||
+            unit.fantasticalRules.includes('Random leader traits')) &&
+            unit.fantasticalRules.includes('Leader') && (
+              <Trait onChange={handleChange} unit={unit} />
+            )}
           {edition === 'second' ? (
             <SpellSchools onChange={handleChange} unit={unit} />
           ) : (
