@@ -10,6 +10,7 @@ export const fantasticalRuleSchema: ObjectSchema<FantasticalRule> = yup.object({
   exclude_units: yup.array().of(yup.string().required()).required(),
   description: yup.string().required(),
   short: yup.string(),
+  leaderOnly: yup.boolean(),
   setStats: unitSetStatsSchema,
   adjustStats: unitAdjustStatsSchema,
 });
