@@ -74,6 +74,8 @@ export type FantasticalRule = {
   setStats?: Partial<UnitStats>;
   adjustStats?: Partial<UnitStats>;
   leaderOnly?: boolean;
+  disabledBy?: string[];
+  enabledBy?: string[];
 };
 
 export type Rule = {

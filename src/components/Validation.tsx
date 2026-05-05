@@ -11,23 +11,12 @@ import {
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { getTotalPoints } from '../store/rosterSlice';
-import type { Unit } from '../store/types';
 import { getEdition, toggleUIOption } from '../store/uiSlice';
-
-const checkMutualExclusive = (warnings: string[][], unit: Unit, ...rules: string[]) => {
-  const foundRules = rules.filter((rule) => unit.fantasticalRules.includes(rule));
-  if (foundRules.length > 1) {
-    warnings.push([unit.name, `${foundRules.join(' and ')} may not be used together!`]);
-  }
-};
 
 const Validation = () => {
   const dispatch = useAppDispatch();
   const edition = useAppSelector(getEdition);
   const validationExpanded = useAppSelector((state) => state.ui.validationExpanded);
-  const fantasticalRulesData = useAppSelector(
-    (state) => state.data.fantasticalRulesData
-  );
   const units = useAppSelector((state) => state.roster.units);
   const armyCost = useAppSelector(getTotalPoints);
   const warnings: string[][] = [];
@@ -80,40 +69,12 @@ const Validation = () => {
       if (unit.name !== 'Unit' && unit.points < 1)
         warnings.push([unit.name, 'No Unit may cost less than one point!']);
 
-      const leaderOnlyRules = unit.fantasticalRules.filter(
-        (rule) => fantasticalRulesData[rule].leaderOnly
-      );
-      if (leaderOnlyRules.length > 0 && !unit.fantasticalRules.includes('Leader')) {
-        warnings.push([
-          unit.name,
-          `Has to be a leader to use ${leaderOnlyRules.join(' and ')}!`,
-        ]);
-      }
-      if (unit.fantasticalRules.includes('Leader')) {
-        unit.fantasticalRules.forEach((rule) => {
-          if (['Concealment', 'Exploder', 'Well led', 'Were-creature'].includes(rule))
-            warnings.push([unit.name, `A Leader can´t have ${rule}!`]);
-        });
-      }
-
-      checkMutualExclusive(warnings, unit, 'Fearless', 'Fearful');
-      checkMutualExclusive(warnings, unit, 'Concealment', 'Flyer');
-      checkMutualExclusive(warnings, unit, 'Venomous', 'Berserk', 'Bloodthirsty');
-      checkMutualExclusive(warnings, unit, 'Blessed blades', 'Enchanted blades');
-
       if (unit.fantasticalRules.includes('Large - 2 Armor') && unit.stats.armor > 2)
         warnings.push([unit.name, 'Wrong armor amount for  Large!']);
       if (unit.fantasticalRules.includes('Large - 3 Armor') && unit.stats.armor !== 3)
         warnings.push([unit.name, 'Wrong armor amount for  Large!']);
-      if (unit.fantasticalRules.includes('Large - 4 Armor') && unit.stats.armor < 4)
+      if (unit.fantasticalRules.includes('Large - 4 Armor') && unit.stats.armor !== 4)
         warnings.push([unit.name, 'Wrong armor amount for  Large!']);
-      checkMutualExclusive(
-        warnings,
-        unit,
-        'Large - 2 Armor',
-        'Large - 3 Armor',
-        'Large - 4 Armor'
-      );
 
       const spellCount = unit.spells ? unit.spells.length : 0;
       if (spellCount > 1 && unit.fantasticalRules.includes('Spellcaster 1'))
@@ -124,25 +85,21 @@ const Validation = () => {
         warnings.push([unit.name, 'Only 3 spell schools allowed!']);
       else if (spellCount > 4 && unit.fantasticalRules.includes('Spellcaster 4'))
         warnings.push([unit.name, 'Only 4 spell schools allowed!']);
-      checkMutualExclusive(
-        warnings,
-        unit,
-        'Spellcaster 1',
-        'Spellcaster 2',
-        'Spellcaster 3',
-        'Spellcaster 4',
-        'Spell resistant',
-        'Super spell resistant'
-      );
-      checkMutualExclusive(
-        warnings,
-        unit,
-        'Spellcaster 1',
-        'Spellcaster 2',
-        'Spellcaster 3',
-        'Spellcaster 4',
-        'Ring of uncertain power'
-      );
+
+      if (
+        unit.fantasticalRules.some((r) =>
+          [
+            'Cleric - No undead',
+            'Cleric - some undead',
+            'Cleric - most undead',
+          ].includes(r)
+        ) &&
+        units.some((u) => u.fantasticalRules.includes('Undead'))
+      )
+        warnings.push([
+          unit.name,
+          'An army with a cleric must not have any undead units!',
+        ]);
 
       if (
         unit.fantasticalRules.includes('Unstoppable March of the Dead') &&
@@ -159,22 +116,6 @@ const Validation = () => {
         warnings.push([unit.name, 'No Unit may cost more than 10 points!']);
       if (unit.name !== 'Unit' && unit.points < 1)
         warnings.push([unit.name, 'No Unit may cost less than one point!']);
-      if (
-        unit.options.includes('Short range missiles') &&
-        unit.options.includes('Mixed Weapons')
-      )
-        warnings.push([
-          unit.name,
-          'Short range missiles and Mixed Weapons may not be used together!',
-        ]);
-      if (
-        unit.fantasticalRules.includes('Unstoppable March of the Dead') &&
-        !unit.fantasticalRules.includes('Leader')
-      )
-        warnings.push([
-          unit.name,
-          'Only a leader can take "Unstoppable March of the Dead"',
-        ]);
     }
   }
 

@@ -30,16 +30,30 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
 
   if (unit.name === 'Unit') return <div></div>;
 
-  const fantasticalRules = Object.keys(fantasticalRulesData).filter(
-    (rule) =>
-      !fantasticalRulesData[rule].exclude_units.includes(unit.name) &&
-      (fantasticalRulesData[rule].leaderOnly
-        ? unit.fantasticalRules.includes('Leader')
-        : true)
-  );
+  const resolveRules = (
+    rules: string[],
+    unitRules: string[] = unit.fantasticalRules
+  ): string[] =>
+    rules.filter(
+      (rule) =>
+        (!fantasticalRulesData[rule].exclude_units.includes(unit.name) ||
+          fantasticalRulesData[rule].enabledBy?.some((r) => unitRules.includes(r))) &&
+        (fantasticalRulesData[rule].leaderOnly ? unitRules.includes('Leader') : true)
+    );
+
+  const fantasticalRules = resolveRules(Object.keys(fantasticalRulesData));
+
+  const handleRulesChange = (rules: string[]) =>
+    onChange({
+      ...unit,
+      fantasticalRules: [...resolveRules(rules, rules)],
+    });
 
   const handleChange = (e: SelectChangeEvent<string[]>) =>
-    onChange({ ...unit, fantasticalRules: [...(e.target.value as string[])] });
+    handleRulesChange(e.target.value as string[]);
+
+  const handleRemove = (name: string) =>
+    handleRulesChange(unit.fantasticalRules.filter((v) => v !== name));
 
   return (
     <>
@@ -52,19 +66,7 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
         unit.fantasticalRules.map((name) => (
           <div key={name}>
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={true}
-                  onChange={() =>
-                    onChange({
-                      ...unit,
-                      fantasticalRules: [
-                        ...unit.fantasticalRules.filter((v) => v !== name),
-                      ],
-                    })
-                  }
-                />
-              }
+              control={<Checkbox checked={true} onChange={() => handleRemove(name)} />}
               label={
                 <Tooltip title={fantasticalRulesData[name].description}>
                   <Typography>
@@ -93,7 +95,15 @@ const FantasticalRules: React.FC<{ unit: Unit; onChange: (unit: Unit) => void }>
           renderValue={() => ' '}
         >
           {fantasticalRules.map((name) => (
-            <MenuItem key={name} value={name} dense sx={{ maxWidth: 400 }}>
+            <MenuItem
+              key={name}
+              value={name}
+              disabled={fantasticalRulesData[name].disabledBy?.some((r) =>
+                unit.fantasticalRules.includes(r)
+              )}
+              dense
+              sx={{ maxWidth: 400 }}
+            >
               <Tooltip title={fantasticalRulesData[name].description}>
                 <ListItemText
                   primary={

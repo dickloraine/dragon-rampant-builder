@@ -187,6 +187,7 @@ export const fantasticalRulesData: FantasticalRules = {
     name: 'Unstoppable March of the Dead',
     points: 0,
     exclude_units: [],
+    leaderOnly: true,
     description:
       'This is a Leader trait usable by a Warband consisting only of units from the Graveyard Dwellers list (see later); it may be selected instead of the rolled Trait if you roll an 8 or higher on the Leader Skills table. Your Warband only takes Courage tests for casualties from Attacking or Shooting, and when Rallying.',
     short:

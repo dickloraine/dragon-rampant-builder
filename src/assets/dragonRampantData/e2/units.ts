@@ -305,6 +305,7 @@ export const unitsData: Units = {
       Offensive: {
         name: 'Offensive',
         points: 2,
+        disabledBy: ['Pikes'],
         description:
           'Attack Value becomes 4+. The unit may no longer form a Wall of Spears.',
         short: 'Attack Value 4+. Remove Wall of Spears.',
@@ -316,6 +317,7 @@ export const unitsData: Units = {
       Pikes: {
         name: 'Pikes',
         points: 1,
+        disabledBy: ['Offensive'],
         description:
           'Defence Value becomes 3+ against Mounted units. Cannot be used with the Offensive option but may still form Wall of Spears.',
         short: 'Defence Value becomes 3+ against Mounted units.',
@@ -357,6 +359,7 @@ export const unitsData: Units = {
       Offensive: {
         name: 'Offensive',
         points: 2,
+        disabledBy: ['Pikes', 'Mixed Weapons'],
         description:
           'Attack Value becomes 4+. The unit may no longer form a Wall of Spears.',
         short: 'Attack Value 4+. Remove Wall of Spears.',
@@ -368,6 +371,7 @@ export const unitsData: Units = {
       Pikes: {
         name: 'Pikes',
         points: 1,
+        disabledBy: ['Offensive', 'Mixed Weapons'],
         description:
           'Defence Value becomes 3+ against Mounted units. Cannot be used with the Offensive option but may still form Wall of Spears. ',
         short: 'Defence Value becomes 3+ against Mounted units.',
@@ -376,6 +380,7 @@ export const unitsData: Units = {
       'Short range missiles': {
         name: 'Short range missiles',
         points: 1,
+        disabledBy: ['Mixed Weapons'],
         description: 'Shoot 6+/Range 6" hitting on 5+.',
         short: 'Shoot 6+, shoot value 5+/6".',
         setStats: {
@@ -387,6 +392,7 @@ export const unitsData: Units = {
       'Mixed Weapons': {
         name: 'Mixed Weapons',
         points: 2,
+        disabledBy: ['Offensive', 'Pikes', 'Short range missiles'],
         description: 'Shoot 6+, Range 12" hitting on 5+. Remove Wall of Spears.',
         short: 'Shoot 6+, shoot value 5+/6". Remove Wall of Spears.',
         setStats: {

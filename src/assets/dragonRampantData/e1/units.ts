@@ -337,6 +337,7 @@ export const unitsData: Units = {
         points: 1,
         description: 'Shoot 6+/Range 6" hitting on 5+.',
         short: 'Shoot 6+, shoot value 5+/6".',
+        disabledBy: ['Mixed Weapons'],
         setStats: {
           shoot: 6,
           shootValue: 5,
@@ -348,6 +349,7 @@ export const unitsData: Units = {
         points: 2,
         description: 'Shoot 6+, Range 12" hitting on 5+. Remove Wall of Spears.',
         short: 'Shoot 6+, shoot value 5+/6". Remove Wall of Spears.',
+        disabledBy: ['Short range missiles'],
         setStats: {
           shoot: 6,
           shootValue: 5,
