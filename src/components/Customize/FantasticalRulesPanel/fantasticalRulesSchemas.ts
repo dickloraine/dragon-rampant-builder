@@ -13,6 +13,8 @@ export const fantasticalRuleSchema: ObjectSchema<FantasticalRule> = yup.object({
   leaderOnly: yup.boolean(),
   setStats: unitSetStatsSchema,
   adjustStats: unitAdjustStatsSchema,
+  disabledBy: yup.array().of(yup.string().required()),
+  enabledBy: yup.array().of(yup.string().required()),
 });
 
 export const emptyFantasticalRule: FantasticalRule = {
