@@ -30,14 +30,19 @@ const About: React.FC<{ onClose?: () => void; showText?: boolean }> = ({
         <DialogContent>
           <Typography variant="body1">
             A simple Army Builder for the tabletop game{' '}
-            {<a href="https://ospreypublishing.com/xenos-rampant">Xenos Rampant</a>}.
+            {
+              <a href="https://www.ospreypublishing.com/uk/dragon-rampant-second-edition-9781472868640">
+                Dragon Rampant
+              </a>
+            }
+            .
           </Typography>
           <Box display="flex" sx={{ mt: 3 }}>
             <Chip
               label="View on Github"
               icon={<GitHubIcon />}
               component="a"
-              href="https://github.com/dickloraine/xenos-rampant-builder"
+              href="https://github.com/dickloraine/dragon-rampant-builder"
               clickable
             />
             <Box flexGrow={1}></Box>
